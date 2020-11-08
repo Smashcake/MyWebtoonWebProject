@@ -24,7 +24,19 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Webtoon> Webtoons { get; set; }
+
+        public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<Episode> Episodes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
+
+        public DbSet<Page> Pages { get; set; }
+
+        public DbSet<WebtoonsSubscribers> WebtoonsSubscribers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -47,6 +59,8 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<WebtoonsSubscribers>().HasKey(wb => new { wb.SubscriberId, wb.WebtoonId });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

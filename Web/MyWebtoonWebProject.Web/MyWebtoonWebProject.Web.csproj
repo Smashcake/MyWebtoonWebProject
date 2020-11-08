@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9" />
     <ProjectReference Include="..\..\MyWebtoonWebProject.Common\MyWebtoonWebProject.Common.csproj" />
     <ProjectReference Include="..\..\Data\MyWebtoonWebProject.Data.Models\MyWebtoonWebProject.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\MyWebtoonWebProject.Data\MyWebtoonWebProject.Data.csproj" />
