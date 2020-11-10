@@ -39,10 +39,12 @@
 
         public ApplicationUser Author { get; set; }
 
-        public DayOfWeek UploadDay { get; set; }
+        public Enums.DayOfWeek UploadDay { get; set; }
 
         public virtual ICollection<Episode> Episodes { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public bool Completed { get; set; }
     }
 }

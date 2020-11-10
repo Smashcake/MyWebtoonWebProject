@@ -1,0 +1,16 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Genres
+@model CreateGenreInputModel
+@{
+    ViewBag.Title = "Create Genre";
+}
+    <form method="post" class="row">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group col-md-8">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Your desired genre" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary"/>
+    </form>

@@ -1,10 +1,43 @@
-﻿<h1>Hello from createWebtoon view</h1>
+﻿@using MyWebtoonWebProject.Web.ViewModels.Webtoons;
+@model CreateWebtoonInputModel
+@{
+    ViewBag.Title = "Create Webtoon";
+}
 
-<h1>Current Time: @DateTime.UtcNow</h1>
+    <form method="post" class="row" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
 
+        <div style="width:300px" class="form-control col-md-6">
+            <label asp-for="Cover"></label>
+            <input asp-for="Cover" class="form-control" />
+            <span asp-validation-for="Cover" class="text-danger"></span>
+        </div>
 
-<form action="/" method="post" class="form-control" >
-    <label>Title</label>
-    <input type="text" name="Title" value="" placeholder="Title" />
-    <input type="submit" />
-</form>
+        <div style="width:300px" class="form-control cold-md-6">
+            <label asp-for="Genre"></label>
+            <select asp-for="Genre" asp-items="ViewBag.Genres" class="form-control">
+                <option value="">Choose Genre</option>
+            </select>
+        </div>
+
+        <div style="width:300px" class="form-control cold-md-6">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div style="width:300px" class="form-control cold-md-6">
+            <label asp-for="Synopsis"></label>
+            <textarea rows="4" asp-for="Synopsis" class="form-control"></textarea>
+            <span asp-validation-for="Synopsis" class="text-danger"></span>
+        </div>
+
+        <div style="width:300px" class="form-control cold-md-6">
+            <label asp-for="UploadDay"></label>
+            <select asp-for="UploadDay" class="form-control"
+                    asp-items="@Html.GetEnumSelectList<DayOfWeek>()">
+            </select>
+        </div>
+
+        <input type="submit" class="btn btn-primary" />
+    </form>
