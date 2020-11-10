@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
@@ -17,7 +18,7 @@
             this.dbContext = dbContext;
         }
 
-        public async void CreateWebtoon(CreateWebtoonInputModel input)
+        public async Task<int> CreateWebtoon(CreateWebtoonInputModel input)
         {
             string topFolder = @"c:\MyWebtoonWebProject\Webtoons";
             string webtoonFolder = Path.Combine(topFolder, input.Title);
@@ -29,7 +30,7 @@
                 await input.Cover.CopyToAsync(fs);
             }
 
-            var webtoonGenre = this.dbContext.Genres.FirstOrDefault(g => g.Id == input.Genre);
+            var webtoonGenre = this.dbContext.Genres.First(g => g.Name == input.Genre);
 
             var webtoon = new Webtoon
             {
@@ -45,7 +46,7 @@
             };
 
             this.dbContext.Webtoons.Add(webtoon);
-            await this.dbContext.SaveChangesAsync();
+            return await this.dbContext.SaveChangesAsync();
         }
     }
 }

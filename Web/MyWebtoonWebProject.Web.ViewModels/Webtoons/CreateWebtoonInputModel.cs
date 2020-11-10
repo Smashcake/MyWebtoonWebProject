@@ -1,9 +1,11 @@
 ﻿namespace MyWebtoonWebProject.Web.ViewModels.Webtoons
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Http;
     using MyWebtoonWebProject.Common.ValidationAttributes;
+    using MyWebtoonWebProject.Data.Models;
     using MyWebtoonWebProject.Data.Models.Enums;
 
     public class CreateWebtoonInputModel

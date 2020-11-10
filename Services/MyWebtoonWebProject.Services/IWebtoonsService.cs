@@ -1,9 +1,11 @@
 ﻿namespace MyWebtoonWebProject.Services
 {
+    using System.Threading.Tasks;
+
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
     public interface IWebtoonsService
     {
-        void CreateWebtoon(CreateWebtoonInputModel input);
+        Task<int> CreateWebtoon(CreateWebtoonInputModel input);
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace MyWebtoonWebProject.Services
 {
     using System.Linq;
+    using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
@@ -15,11 +16,11 @@
             this.dbContext = dbContext;
         }
 
-        public void CreateGenre(CreateGenreInputModel input)
+        public async Task<int> CreateGenre(CreateGenreInputModel input)
         {
             if (this.dbContext.Genres.Any(g => g.Name == input.Name))
             {
-                return;
+                return -1;
             }
 
             var genreToAdd = new Genre
@@ -27,7 +28,7 @@
                 Name = input.Name,
             };
             this.dbContext.Genres.Add(genreToAdd);
-            this.dbContext.SaveChangesAsync();
+            return await this.dbContext.SaveChangesAsync();
         }
     }
 }
