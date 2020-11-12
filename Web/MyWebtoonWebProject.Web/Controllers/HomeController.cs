@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using MyWebtoonWebProject.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using MyWebtoonWebProject.Web.ViewModels;
 
     public class HomeController : BaseController
     {

@@ -3,41 +3,39 @@
 @model CreateWebtoonInputModel
 @{
     ViewBag.Title = "Create Webtoon";
+    var genres = this.Model.Genres.Select(g => new SelectListItem(g.Value, g.Key));
 }
 
-    <form method="post" class="row" enctype="multipart/form-data">
+    <form method="post" class="col-md-9 offset-md-3" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div style="width:300px" class="form-control col-md-6">
-            <label asp-for="Cover">Cover</label>
+        <div class="form-group col-md-6">
+            <label asp-for="Cover"></label>
             <input asp-for="Cover" class="form-control" />
             <span asp-validation-for="Cover" class="text-danger"></span>
         </div>
 
-        <div style="width:300px" class="form-control cold-md-6">
-            <label asp-for="Genre">Genre</label>
-            <select class="form-control" name="Genre">
-                <option>Fantasy</option>
-                <option>Heartwarming</option>
-            </select>
+        <div class="form-group cold-md-2">
+            <label asp-for="GenreId">Genre</label>
+            <select asp-for="GenreId" class="form-control" asp-items="genres"></select>
         </div>
 
-        <div style="width:300px" class="form-control cold-md-6">
+        <div class="form-group cold-md-2">
             <label asp-for="Title">Title</label>
             <input asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
 
-        <div style="width:300px" class="form-control cold-md-6">
+        <div class="form-group cold-md-2">
             <label asp-for="Synopsis">Synopsis</label>
             <textarea rows="4" asp-for="Synopsis" class="form-control"></textarea>
             <span asp-validation-for="Synopsis" class="text-danger"></span>
         </div>
 
-        <div style="width:300px" class="form-control cold-md-6">
+        <div class="form-group cold-md-2">
             <label asp-for="UploadDay">Upload Day</label>
             <select asp-for="UploadDay" class="form-control"
-                    asp-items="@Html.GetEnumSelectList<DayOfWeek>()">
+                    asp-items="@Html.GetEnumSelectList<MyWebtoonWebProject.Data.Models.Enums.DayOfWeek>()">
             </select>
         </div>
 

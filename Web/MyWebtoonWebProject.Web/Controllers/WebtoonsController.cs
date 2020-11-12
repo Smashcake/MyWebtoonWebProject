@@ -1,7 +1,7 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
     using System.Security.Claims;
-
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyWebtoonWebProject.Services;
@@ -10,30 +10,35 @@
     public class WebtoonsController : BaseController
     {
         private readonly IWebtoonsService webtoonsService;
+        private readonly IGenresService genresService;
 
-        public WebtoonsController(IWebtoonsService webtoonsService)
+        public WebtoonsController(IWebtoonsService webtoonsService, IGenresService genresService)
         {
             this.webtoonsService = webtoonsService;
+            this.genresService = genresService;
         }
 
         [Authorize]
         public IActionResult CreateWebtoon()
         {
-            return this.View();
+            var viewModel = new CreateWebtoonInputModel();
+            viewModel.Genres = this.genresService.GetAllAsKeyValuePairs();
+            return this.View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateWebtoon(CreateWebtoonInputModel input)
+        public async Task<IActionResult> CreateWebtoon(CreateWebtoonInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                input.Genres = this.genresService.GetAllAsKeyValuePairs();
+                return this.View(input);
             }
 
             input.AuthorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            this.webtoonsService.CreateWebtoon(input);
+            await this.webtoonsService.CreateWebtoonAsync(input);
             return this.Redirect("/");
         }
     }

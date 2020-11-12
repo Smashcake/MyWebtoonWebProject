@@ -2,16 +2,6 @@
 {
     using System.Reflection;
 
-    using MyWebtoonWebProject.Data;
-    using MyWebtoonWebProject.Data.Common;
-    using MyWebtoonWebProject.Data.Common.Repositories;
-    using MyWebtoonWebProject.Data.Models;
-    using MyWebtoonWebProject.Data.Repositories;
-    using MyWebtoonWebProject.Data.Seeding;
-    using MyWebtoonWebProject.Services.Mapping;
-    using MyWebtoonWebProject.Services.Messaging;
-    using MyWebtoonWebProject.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -20,7 +10,17 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
+    using MyWebtoonWebProject.Data;
+    using MyWebtoonWebProject.Data.Common;
+    using MyWebtoonWebProject.Data.Common.Repositories;
+    using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Repositories;
+    using MyWebtoonWebProject.Data.Seeding;
     using MyWebtoonWebProject.Services;
+    using MyWebtoonWebProject.Services.Mapping;
+    using MyWebtoonWebProject.Services.Messaging;
+    using MyWebtoonWebProject.Web.ViewModels;
 
     public class Startup
     {

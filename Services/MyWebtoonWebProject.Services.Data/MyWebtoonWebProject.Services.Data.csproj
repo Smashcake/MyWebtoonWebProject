@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MyWebtoonWebProject.Data.Common\MyWebtoonWebProject.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\MyWebtoonWebProject.Data.Models\MyWebtoonWebProject.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\MyWebtoonWebProject.Data\MyWebtoonWebProject.Data.csproj" />
+    <ProjectReference Include="..\..\Web\MyWebtoonWebProject.Web.ViewModels\MyWebtoonWebProject.Web.ViewModels.csproj" />
     <ProjectReference Include="..\MyWebtoonWebProject.Services.Mapping\MyWebtoonWebProject.Services.Mapping.csproj" />
   </ItemGroup>
 

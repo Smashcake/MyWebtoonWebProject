@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels.Genres;
+    using System.Threading.Tasks;
 
     public class GenresController : BaseController
     {
@@ -22,14 +23,14 @@
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateGenre(CreateGenreInputModel input)
+        public async Task<IActionResult> CreateGenre(CreateGenreInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
 
-            this.genresService.CreateGenre(input);
+            await this.genresService.CreateGenreAsync(input);
             return this.Redirect("/");
         }
     }

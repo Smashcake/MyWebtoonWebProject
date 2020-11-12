@@ -5,7 +5,6 @@
 
     using Microsoft.AspNetCore.Http;
     using MyWebtoonWebProject.Common.ValidationAttributes;
-    using MyWebtoonWebProject.Data.Models;
     using MyWebtoonWebProject.Data.Models.Enums;
 
     public class CreateWebtoonInputModel
@@ -15,7 +14,7 @@
         [MaxLength(30)]
         public string Title { get; set; }
 
-        public string Genre { get; set; }
+        public string GenreId { get; set; }
 
         [Required]
         [MaxLength(600)]
@@ -29,5 +28,7 @@
         public IFormFile Cover { get; set; }
 
         public DayOfWeek UploadDay { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>> Genres { get; set; }
     }
 }
