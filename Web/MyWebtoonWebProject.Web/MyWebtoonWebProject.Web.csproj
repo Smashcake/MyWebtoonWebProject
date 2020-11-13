@@ -37,4 +37,8 @@
     <ProjectReference Include="..\MyWebtoonWebProject.Web.Infrastructure\MyWebtoonWebProject.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\MyWebtoonWebProject.Web.ViewModels\MyWebtoonWebProject.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Webtoons\" />
+  </ItemGroup>
 </Project>

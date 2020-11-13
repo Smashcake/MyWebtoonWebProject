@@ -7,7 +7,7 @@
 
     public interface IGenresService
     {
-        Task<int> CreateGenreAsync(CreateGenreInputModel input);
+        Task CreateGenreAsync(CreateGenreInputModel input);
 
         IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs();
     }

@@ -1,11 +1,14 @@
 ﻿namespace MyWebtoonWebProject.Services
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
     public interface IWebtoonsService
     {
-        Task<int> CreateWebtoonAsync(CreateWebtoonInputModel input);
+        Task CreateWebtoonAsync(CreateWebtoonInputModel input);
+
+        ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
     }
 }

@@ -1,28 +1,32 @@
 ﻿namespace MyWebtoonWebProject.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data;
-    using MyWebtoonWebProject.Data.Common.Repositories;
     using MyWebtoonWebProject.Data.Models;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
     public class WebtoonsService : IWebtoonsService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IDeletableEntityRepository<Webtoon> webtoonsRepository;
 
-        public WebtoonsService(ApplicationDbContext dbContext, IDeletableEntityRepository<Webtoon> webtoonsRepository)
+        public WebtoonsService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.webtoonsRepository = webtoonsRepository;
         }
 
-        public async Task<int> CreateWebtoonAsync(CreateWebtoonInputModel input)
+        public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
         {
-            string topFolder = @"c:\MyWebtoonWebProject\Webtoons";
+            if (this.dbContext.Webtoons.Any(w => w.Title == input.Title))
+            {
+                throw new ArgumentException("Webtoon already exists!");
+            }
+
+            string topFolder = @"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons";
             string webtoonFolder = Path.Combine(topFolder, input.Title);
             Directory.CreateDirectory(webtoonFolder);
 
@@ -36,7 +40,7 @@
             {
                 Title = input.Title,
                 Synopsis = input.Synopsis,
-                CoverPhoto = coverPhotoPath,
+                CoverPhoto = input.Title + "/cover.png",
                 GenreId = input.GenreId,
                 UploadDay = input.UploadDay,
                 AuthorId = input.AuthorId,
@@ -45,10 +49,23 @@
                 Completed = false,
             };
 
-            await this.webtoonsRepository.AddAsync(webtoon);
-            await this.webtoonsRepository.SaveChangesAsync();
+            await this.dbContext.Webtoons.AddAsync(webtoon);
+            await this.dbContext.SaveChangesAsync();
+        }
 
-            return 0;
+        public ICollection<GetWebtoonInfoViewModel> GetAllWebtoons()
+        {
+            var webtoons = this.dbContext.Webtoons.Select(w => new GetWebtoonInfoViewModel
+            {
+                Author = w.Author.UserName,
+                Title = w.Title,
+                CoverPhoto = w.CoverPhoto,
+                Genre = w.Genre.Name,
+                Id = w.Id,
+                Likes = w.Episodes.Sum(e => e.Likes),
+            }).ToList();
+
+            return webtoons;
         }
     }
 }

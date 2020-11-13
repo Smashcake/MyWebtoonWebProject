@@ -2,6 +2,7 @@
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyWebtoonWebProject.Services;
@@ -44,7 +45,7 @@
 
         public IActionResult GetAllWebtoons(GetAllWebtoonsViewModel input)
         {
-
+            input.Webtoons = this.webtoonsService.GetAllWebtoons();
             return this.View(input);
         }
     }

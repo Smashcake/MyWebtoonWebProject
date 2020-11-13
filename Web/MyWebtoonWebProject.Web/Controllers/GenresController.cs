@@ -1,10 +1,11 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels.Genres;
-    using System.Threading.Tasks;
 
     public class GenresController : BaseController
     {

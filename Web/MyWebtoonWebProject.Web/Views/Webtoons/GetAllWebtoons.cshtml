@@ -1,4 +1,26 @@
-﻿@using System;
-<h1>Hello from the all webtoons view</h1>
+﻿@using MyWebtoonWebProject.Web.ViewModels.Webtoons;
+@model GetAllWebtoonsViewModel;
+@{
+    ViewBag.Title = "Webtoons";
+}
 
-<p>@DateTime.UtcNow</p>
+<ul class="list-unstyled">
+    @foreach (var webtoon in Model.Webtoons)
+    {
+        <li>
+            <a href="/Webtoons/GetWebtoon?id=@webtoon.Id">
+                <img src="~/Webtoons/@webtoon.CoverPhoto" alt="" width="210px" height="210px" />
+                <div class="text-info">
+                    <p>@webtoon.Title</p>
+                    <p>@webtoon.Author</p>
+                    <p>@webtoon.Genre</p>
+                    <p>@webtoon.Likes</p>
+                </div>
+            </a>
+        </li>
+    }
+
+</ul>
+
+
+
