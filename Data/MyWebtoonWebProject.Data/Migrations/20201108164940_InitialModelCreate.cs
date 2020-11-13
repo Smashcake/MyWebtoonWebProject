@@ -15,7 +15,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 20, nullable: false)
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
                 },
                 constraints: table =>
                 {

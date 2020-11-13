@@ -41,5 +41,11 @@
             await this.webtoonsService.CreateWebtoonAsync(input);
             return this.Redirect("/");
         }
+
+        public IActionResult GetAllWebtoons(GetAllWebtoonsViewModel input)
+        {
+
+            return this.View(input);
+        }
     }
 }
