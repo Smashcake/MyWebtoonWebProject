@@ -48,5 +48,11 @@
             input.Webtoons = this.webtoonsService.GetAllWebtoons();
             return this.View(input);
         }
+
+        public IActionResult GetWebtoon(string id)
+        {
+            var input = this.webtoonsService.GetWebtoon(id);
+            return this.View(input);
+        }
     }
 }

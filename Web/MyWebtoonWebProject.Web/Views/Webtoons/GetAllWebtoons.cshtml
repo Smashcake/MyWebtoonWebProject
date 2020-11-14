@@ -8,9 +8,9 @@
     @foreach (var webtoon in Model.Webtoons)
     {
         <li>
-            <a href="/Webtoons/GetWebtoon?id=@webtoon.Id">
+            <a href="/Webtoons/GetWebtoon?id=@webtoon.Id" style="position: relative;">
                 <img src="~/Webtoons/@webtoon.CoverPhoto" alt="" width="210px" height="210px" />
-                <div class="text-info">
+                <div style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px" >
                     <p>@webtoon.Title</p>
                     <p>@webtoon.Author</p>
                     <p>@webtoon.Genre</p>

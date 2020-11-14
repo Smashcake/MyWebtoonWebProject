@@ -67,5 +67,24 @@
 
             return webtoons;
         }
+
+        public WebtoonInfoViewModel GetWebtoon(string id)
+        {
+            var webtoon = this.dbContext.Webtoons
+                .Where(w => w.Id == id).Select(w => new WebtoonInfoViewModel
+                {
+                    Author = w.Author,
+                    Episodes = w.Episodes,
+                    Id = w.Id,
+                    GenreName = w.Genre.Name,
+                    Synopsis = w.Synopsis,
+                    Title = w.Title,
+                    CoverPhoto = w.CoverPhoto,
+                    UploadDay = w.UploadDay.ToString(),
+                    Reviews= w.Reviews,
+                }).FirstOrDefault();
+
+            return webtoon;
+        }
     }
 }

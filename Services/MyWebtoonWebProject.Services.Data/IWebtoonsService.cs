@@ -10,5 +10,7 @@
         Task CreateWebtoonAsync(CreateWebtoonInputModel input);
 
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
+
+        WebtoonInfoViewModel GetWebtoon(string id);
     }
 }
