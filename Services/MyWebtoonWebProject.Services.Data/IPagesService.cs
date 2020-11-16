@@ -6,6 +6,6 @@
 
     public interface IPagesService
     {
-        void AddPages(IEnumerable<IFormFile> pages);
+        void AddPages(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId);
     }
 }
