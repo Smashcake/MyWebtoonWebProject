@@ -1,0 +1,15 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Episodes;
+@model AddEpisodeInputModel;
+@{
+    ViewBag.Title = "Add Episode";
+}
+
+<form method="post" class="form-group">
+    <div class="col-md-8">
+        <p>Please select the pages you wish your episode to have IN ORDER.</p>
+        <label asp-for="Pages"></label>
+        <input asp-for="Pages" class="form-control">
+        <span asp-validation-for="Pages"></span>
+    </div>
+    <input type="hidden" value="@Model.WebtoonId">
+</form>
