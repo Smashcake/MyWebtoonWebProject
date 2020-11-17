@@ -22,7 +22,7 @@
 
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
         {
-            var webtoon = this.dbContext.Webtoons.FirstOrDefault(w => w.Id == input.WebtoonId);
+            var webtoon = this.dbContext.Webtoons.FirstOrDefault(w => w.TitleNumber == input.TitleNumber);
             var episodesCount = webtoon.Episodes.Count + 1;
             string episodeName = "Episode" + episodesCount;
             string topFolder = $@"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons\{webtoon.Title}";
@@ -33,7 +33,7 @@
             {
                 Name = episodeName,
                 Views = 0,
-                WebtoonId = input.WebtoonId,
+                WebtoonId = webtoon.Id,
                 IsDeleted = false,
                 Likes = 0,
                 UploadedOn = DateTime.UtcNow,

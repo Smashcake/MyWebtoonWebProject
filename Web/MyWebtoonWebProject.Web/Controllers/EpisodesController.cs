@@ -1,9 +1,11 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc;
+
     using MyWebtoonWebProject.Services.Data;
     using MyWebtoonWebProject.Web.ViewModels.Episodes;
-    using System.Threading.Tasks;
 
     public class EpisodesController : Controller
     {
@@ -14,11 +16,11 @@
             this.episodesService = episodesService;
         }
 
-        public IActionResult AddEpisode(string id)
+        public IActionResult AddEpisode(string titleNumber)
         {
             var input = new AddEpisodeInputModel
             {
-                WebtoonId = id,
+                TitleNumber = titleNumber,
             };
             return this.View(input);
         }
@@ -27,7 +29,7 @@
         public async Task<IActionResult> AddEpisode(AddEpisodeInputModel input)
         {
             await this.episodesService.AddEpisodeAsync(input);
-            return this.Redirect($"/Webtoons/GetWebtoon?id={input.WebtoonId}");
+            return this.Redirect($"/Webtoons/GetWebtoon?id={input.TitleNumber}");
         }
     }
 }

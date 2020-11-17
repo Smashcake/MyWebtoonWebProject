@@ -20,6 +20,8 @@
 
         public string Synopsis { get; set; }
 
+        public string TitleNumber { get; set; }
+
         public ICollection<Episode> Episodes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }

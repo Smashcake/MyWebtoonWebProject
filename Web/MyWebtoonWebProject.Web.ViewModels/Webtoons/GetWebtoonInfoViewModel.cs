@@ -13,5 +13,7 @@
         public string Genre { get; set; }
 
         public int Likes { get; set; }
+
+        public string TitleNumber { get; set; }
     }
 }

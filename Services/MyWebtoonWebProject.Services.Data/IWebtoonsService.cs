@@ -11,6 +11,6 @@
 
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
 
-        WebtoonInfoViewModel GetWebtoon(string id);
+        WebtoonInfoViewModel GetWebtoon(string titleNumber);
     }
 }

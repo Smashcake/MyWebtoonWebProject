@@ -47,6 +47,7 @@
                 CreatedOn = DateTime.UtcNow,
                 Rating = 0M,
                 Completed = false,
+                TitleNumber = (this.dbContext.Webtoons.Count() + 1).ToString(),
             };
 
             await this.dbContext.Webtoons.AddAsync(webtoon);
@@ -61,17 +62,17 @@
                 Title = w.Title,
                 CoverPhoto = w.CoverPhoto,
                 Genre = w.Genre.Name,
-                Id = w.Id,
                 Likes = w.Episodes.Sum(e => e.Likes),
+                TitleNumber = w.TitleNumber,
             }).ToList();
 
             return webtoons;
         }
 
-        public WebtoonInfoViewModel GetWebtoon(string id)
+        public WebtoonInfoViewModel GetWebtoon(string titleNumber)
         {
             var webtoon = this.dbContext.Webtoons
-                .Where(w => w.Id == id).Select(w => new WebtoonInfoViewModel
+                .Where(w => w.TitleNumber == titleNumber).Select(w => new WebtoonInfoViewModel
                 {
                     Author = w.Author,
                     Episodes = w.Episodes,
@@ -82,6 +83,7 @@
                     CoverPhoto = w.CoverPhoto,
                     UploadDay = w.UploadDay.ToString(),
                     Reviews = w.Reviews,
+                    TitleNumber = w.TitleNumber,
                 }).FirstOrDefault();
 
             return webtoon;

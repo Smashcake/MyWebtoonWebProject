@@ -46,5 +46,7 @@
         public virtual ICollection<Review> Reviews { get; set; }
 
         public bool Completed { get; set; }
+
+        public string TitleNumber { get; set; }
     }
 }

@@ -49,9 +49,9 @@
             return this.View(input);
         }
 
-        public IActionResult GetWebtoon(string id)
+        public IActionResult GetWebtoon(string titleNumber)
         {
-            var input = this.webtoonsService.GetWebtoon(id);
+            var input = this.webtoonsService.GetWebtoon(titleNumber);
             return this.View(input);
         }
     }

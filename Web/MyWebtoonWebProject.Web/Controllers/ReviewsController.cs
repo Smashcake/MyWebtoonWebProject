@@ -4,5 +4,9 @@
 
     public class ReviewsController : Controller
     {
+        public IActionResult LeaveReview(string id)
+        {
+            return this.View();
+        }
     }
 }

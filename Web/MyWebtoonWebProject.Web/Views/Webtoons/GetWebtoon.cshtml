@@ -42,7 +42,7 @@
         </p>
         @if(Model.Author.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-        <a class="btn btn-secondary"  asp-controller="Episodes" asp-action="AddEpisode" asp-route-id="@Model.Id">Add Episode</a>
+        <a class="btn btn-secondary"  asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
         }
 
     </div>
@@ -56,6 +56,6 @@
                 </li>
             }
         </ul>
-        <a class="btn btn-secondary" asp-controller="Reviews" asp-action="AddReview" asp-route-id="@Model.Id">Leave a review.</a>
+        <a class="btn btn-secondary" asp-controller="Reviews" asp-action="AddReview" asp-route-TitleNumber="@Model.TitleNumber">Leave a review.</a>
     </div>
 </div>

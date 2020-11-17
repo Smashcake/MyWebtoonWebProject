@@ -8,7 +8,7 @@
 
     public class AddEpisodeInputModel
     {
-        public string WebtoonId { get; set; }
+        public string TitleNumber { get; set; }
 
         [Required]
         [IsValidImageAttribute]
