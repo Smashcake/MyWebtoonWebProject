@@ -1,6 +1,5 @@
 ﻿namespace MyWebtoonWebProject.Web.ViewModels.Webtoons
 {
-
     public class GetWebtoonInfoViewModel
     {
         public string CoverPhoto { get; set; }

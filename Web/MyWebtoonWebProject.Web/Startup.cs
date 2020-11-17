@@ -18,6 +18,7 @@
     using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Data.Seeding;
     using MyWebtoonWebProject.Services;
+    using MyWebtoonWebProject.Services.Data;
     using MyWebtoonWebProject.Services.Mapping;
     using MyWebtoonWebProject.Services.Messaging;
     using MyWebtoonWebProject.Web.ViewModels;
@@ -65,6 +66,8 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IGenresService, GenresService>();
             services.AddTransient<IWebtoonsService, WebtoonsService>();
+            services.AddTransient<IPagesService, PagesService>();
+            services.AddTransient<IEpisodesService, EpisodesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

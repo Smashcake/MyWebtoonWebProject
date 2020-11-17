@@ -1,8 +1,9 @@
 ﻿namespace MyWebtoonWebProject.Data.Configurations
 {
-    using MyWebtoonWebProject.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using MyWebtoonWebProject.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

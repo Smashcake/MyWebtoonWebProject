@@ -81,7 +81,7 @@
                     Title = w.Title,
                     CoverPhoto = w.CoverPhoto,
                     UploadDay = w.UploadDay.ToString(),
-                    Reviews= w.Reviews,
+                    Reviews = w.Reviews,
                 }).FirstOrDefault();
 
             return webtoon;

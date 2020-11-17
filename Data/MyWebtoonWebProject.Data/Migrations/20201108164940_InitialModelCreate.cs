@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyWebtoonWebProject.Data.Migrations
+﻿namespace MyWebtoonWebProject.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class InitialModelCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +38,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     Rating = table.Column<decimal>(nullable: false),
                     GenreId = table.Column<string>(nullable: true),
                     AuthorId = table.Column<string>(nullable: true),
-                    UploadDay = table.Column<int>(nullable: false)
+                    UploadDay = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -69,7 +70,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     Likes = table.Column<int>(nullable: false),
                     Views = table.Column<int>(nullable: false),
                     UploadedOn = table.Column<DateTime>(nullable: false),
-                    WebtoonId = table.Column<string>(nullable: true)
+                    WebtoonId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -95,7 +96,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     WebtoonId = table.Column<string>(nullable: true),
                     ReviewInfo = table.Column<string>(maxLength: 800, nullable: false),
                     Likes = table.Column<int>(nullable: false),
-                    Dislikes = table.Column<int>(nullable: false)
+                    Dislikes = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -119,7 +120,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 columns: table => new
                 {
                     SubscriberId = table.Column<string>(nullable: false),
-                    WebtoonId = table.Column<string>(nullable: false)
+                    WebtoonId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -153,7 +154,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     Dislikes = table.Column<int>(nullable: false),
                     PostedOn = table.Column<DateTime>(nullable: false),
                     CommentInfo = table.Column<string>(maxLength: 300, nullable: false),
-                    CommentId = table.Column<string>(nullable: true)
+                    CommentId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -184,7 +185,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     EpisodeId = table.Column<string>(nullable: true),
-                    FilePath = table.Column<string>(nullable: false)
+                    FilePath = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -302,7 +303,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {

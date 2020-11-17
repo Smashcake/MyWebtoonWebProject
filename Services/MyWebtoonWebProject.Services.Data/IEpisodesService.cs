@@ -1,9 +1,11 @@
 ﻿namespace MyWebtoonWebProject.Services.Data
 {
+    using System.Threading.Tasks;
+
     using MyWebtoonWebProject.Web.ViewModels.Episodes;
 
     public interface IEpisodesService
     {
-        void AddEpisode(AddEpisodeInputModel input);
+        Task AddEpisodeAsync(AddEpisodeInputModel input);
     }
 }

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
     using MyWebtoonWebProject.Data;
@@ -16,7 +17,7 @@
             this.dbContext = dbContext;
         }
 
-        public async void AddPages(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId)
+        public async Task<ICollection<Page>> AddPagesAsync(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId)
         {
             var pagesToReturn = new List<Page>();
             var pageCounter = 0;

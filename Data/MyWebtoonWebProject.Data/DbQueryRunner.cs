@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
-    using MyWebtoonWebProject.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+
+    using MyWebtoonWebProject.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

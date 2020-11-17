@@ -4,11 +4,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using MyWebtoonWebProject.Common;
-    using MyWebtoonWebProject.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
+    using MyWebtoonWebProject.Common;
+    using MyWebtoonWebProject.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

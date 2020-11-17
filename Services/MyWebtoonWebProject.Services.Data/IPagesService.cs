@@ -1,11 +1,13 @@
 ﻿namespace MyWebtoonWebProject.Services.Data
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
+    using MyWebtoonWebProject.Data.Models;
 
     public interface IPagesService
     {
-        void AddPages(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId);
+        Task<ICollection<Page>> AddPagesAsync(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId);
     }
 }

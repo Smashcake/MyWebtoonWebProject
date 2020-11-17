@@ -2,9 +2,9 @@
 {
     using System.Linq;
 
-    using MyWebtoonWebProject.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+
+    using MyWebtoonWebProject.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {
