@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using MyWebtoonWebProject.Services.Data;
@@ -16,6 +17,7 @@
             this.episodesService = episodesService;
         }
 
+        [Authorize]
         public IActionResult AddEpisode(string titleNumber)
         {
             var input = new AddEpisodeInputModel
@@ -25,6 +27,7 @@
             return this.View(input);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddEpisode(AddEpisodeInputModel input)
         {

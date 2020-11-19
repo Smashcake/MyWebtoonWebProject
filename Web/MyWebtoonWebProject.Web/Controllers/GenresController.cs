@@ -16,13 +16,13 @@
             this.genresService = genresService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public IActionResult CreateGenre()
         {
             return this.View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> CreateGenre(CreateGenreInputModel input)
         {

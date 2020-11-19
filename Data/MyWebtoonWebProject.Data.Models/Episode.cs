@@ -25,8 +25,6 @@
 
         public int Views { get; set; }
 
-        public DateTime UploadedOn { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string WebtoonId { get; set; }

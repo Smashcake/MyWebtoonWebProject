@@ -1,0 +1,61 @@
+﻿a, p, div, td, tr, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+.list-unstyled {
+    display: flex;
+    background-color: #cfcfcf;
+}
+
+#webtoon {
+    border: 5px solid #ffffff;
+    margin: 10px;
+    position: relative;
+    display: block;
+}
+
+#coverPhoto {
+    width: 210px;
+    height: 210px;
+}
+
+#cardInfo {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    width: 157px;
+    height: 178px;
+    color: #000;
+    font-family: Hind_M,SimHei,Verdana,Arial, Helvetica, sans-serif;
+}
+
+#cardTitle {
+    font-weight: bold;
+    width: 157px;
+    font-size: 18px;
+    line-height: 18px;
+    padding-top: 5px;
+    word-wrap: break-word;
+}
+
+#cardAuthor {
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 14px;
+    word-wrap: break-word;
+}
+
+#cardGenre {
+    height: 17px;
+    margin: 3px 0 0 -1px;
+}
+
+#cardLikes {
+    height: 16px;
+    margin-left: 3px;
+    font-size: 14px;
+    line-height: 17px;
+    font-family: Verdana, !important;
+    color: #00dc64;
+}
