@@ -8,6 +8,7 @@
 
     using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Web.ViewModels.Episodes;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
     public class WebtoonsService : IWebtoonsService
@@ -75,7 +76,12 @@
                 .Where(w => w.TitleNumber == titleNumber).Select(w => new WebtoonInfoViewModel
                 {
                     Author = w.Author,
-                    Episodes = w.Episodes,
+                    Episodes = w.Episodes.Select(e => new EpisodeWebtoonViewModel
+                    {
+                        EpisodeNumber = e.Name,
+                        CreatedOn = e.CreatedOn,
+                        Likes = e.Likes,
+                    }),
                     Id = w.Id,
                     GenreName = w.Genre.Name,
                     Synopsis = w.Synopsis,

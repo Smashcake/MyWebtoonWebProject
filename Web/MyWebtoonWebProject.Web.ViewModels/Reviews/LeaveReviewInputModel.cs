@@ -3,7 +3,5 @@
     public class LeaveReviewInputModel
     {
         public string WebtoonTitleNumber { get; set; }
-
-
     }
 }

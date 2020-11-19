@@ -20,11 +20,15 @@
     <div name="Details" class="col-md-5">
         <span name="Note"></span>
         <span>Episodes</span>
-        <ul>
+        <ul class="list-unstyled">
             @foreach (var episode in Model.Episodes)
             {
-                <li>
-
+                <li id="episodeCard" style="display:inline">
+                    <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                    <p>@episode.EpisodeNumber</p>
+                    <p>@episode.CreatedOn</p>
+                    <p>@episode.Likes</p>
+                    </a>
                 </li>
             }
         </ul>

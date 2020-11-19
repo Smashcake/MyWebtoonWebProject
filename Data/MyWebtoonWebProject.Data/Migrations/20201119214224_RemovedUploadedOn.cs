@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyWebtoonWebProject.Data.Migrations
+﻿namespace MyWebtoonWebProject.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class RemovedUploadedOn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

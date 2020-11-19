@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Web.ViewModels.Episodes;
 
     public class WebtoonInfoViewModel
     {
@@ -22,7 +23,7 @@
 
         public string TitleNumber { get; set; }
 
-        public ICollection<Episode> Episodes { get; set; }
+        public IEnumerable<EpisodeWebtoonViewModel> Episodes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
     }
