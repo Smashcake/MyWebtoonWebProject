@@ -15,7 +15,7 @@
                     return false;
                 }
 
-                if (file.Length > 10 * 1024 * 1024)
+                if (file.Length > 2 * 1024 * 1024)
                 {
                     return false;
                 }

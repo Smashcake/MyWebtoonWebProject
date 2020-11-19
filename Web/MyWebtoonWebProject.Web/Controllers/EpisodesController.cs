@@ -29,10 +29,10 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddEpisode(AddEpisodeInputModel input)
+        public async Task<IActionResult> AddEpisodeAsync(AddEpisodeInputModel input)
         {
             await this.episodesService.AddEpisodeAsync(input);
-            return this.Redirect($"/Webtoons/GetWebtoon?id={input.TitleNumber}");
+            return this.Redirect("/");
         }
     }
 }
