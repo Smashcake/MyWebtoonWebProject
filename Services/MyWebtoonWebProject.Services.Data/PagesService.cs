@@ -8,14 +8,15 @@
     using Microsoft.AspNetCore.Http;
     using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Repositories;
 
     public class PagesService : IPagesService
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly IPagesRepository pagesRepository;
 
-        public PagesService(ApplicationDbContext dbContext)
+        public PagesService(IPagesRepository pagesRepository)
         {
-            this.dbContext = dbContext;
+            this.pagesRepository = pagesRepository;
         }
 
         public async Task<ICollection<Page>> AddPagesAsync(IEnumerable<IFormFile> pages, string episodeDirectory, string episodeId)
@@ -31,7 +32,8 @@
                 }
 
                 pageCounter++;
-                string pagePath = episodeDirectory + $"/page{pageCounter}.png";
+                string pageName = $"/page{pageCounter}.png";
+                string pagePath = episodeDirectory + pageName;
                 using (FileStream fs = new FileStream(pagePath, FileMode.Create))
                 {
                     await page.CopyToAsync(fs);
@@ -39,11 +41,11 @@
 
                 var currentPage = new Page
                 {
-                    FilePath = pagePath,
+                    FilePath = pageName,
                     EpisodeId = episodeId,
                 };
 
-                await this.dbContext.Pages.AddAsync(currentPage);
+                await this.pagesRepository.AddAsync(currentPage);
 
                 pagesToReturn.Add(currentPage);
             }

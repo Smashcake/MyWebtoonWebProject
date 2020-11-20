@@ -7,20 +7,21 @@
 
     using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Web.ViewModels.Genres;
 
     public class GenresService : IGenresService
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly IGenresRepository genresRepository;
 
-        public GenresService(ApplicationDbContext dbContext)
+        public GenresService(IGenresRepository genresRepository)
         {
-            this.dbContext = dbContext;
+            this.genresRepository = genresRepository;
         }
 
         public async Task CreateGenreAsync(CreateGenreInputModel input)
         {
-            if (this.dbContext.Genres.Any(g => g.Name == input.Name))
+            if (this.genresRepository.GenreExist(input.Name))
             {
                 throw new ArgumentException("Genre already exists!");
             }
@@ -29,13 +30,13 @@
             {
                 Name = input.Name,
             };
-            await this.dbContext.Genres.AddAsync(genreToAdd);
-            await this.dbContext.SaveChangesAsync();
+            await this.genresRepository.AddAsync(genreToAdd);
+            await this.genresRepository.SaveChangesAsync();
         }
 
         public IEnumerable<KeyValuePair<string, string>> GetAllAsKeyValuePairs()
         {
-            return this.dbContext.Genres.Select(g => new
+            return this.genresRepository.AllAsNoTracking().Select(g => new
             {
                 g.Id,
                 g.Name,

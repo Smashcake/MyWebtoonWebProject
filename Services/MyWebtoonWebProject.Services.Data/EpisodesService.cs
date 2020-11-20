@@ -5,25 +5,26 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Http;
-    using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Web.ViewModels.Episodes;
 
     public class EpisodesService : IEpisodesService
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly IWebtoonsRepository webtoonsRepository;
+        private readonly IEpisodesRepository episodesRepository;
         private readonly IPagesService pagesService;
 
-        public EpisodesService(ApplicationDbContext dbContext, IPagesService pagesService)
+        public EpisodesService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IPagesService pagesService)
         {
-            this.dbContext = dbContext;
+            this.webtoonsRepository = webtoonsRepository;
+            this.episodesRepository = episodesRepository;
             this.pagesService = pagesService;
         }
 
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
         {
-            var webtoon = this.dbContext.Webtoons.FirstOrDefault(w => w.TitleNumber == input.TitleNumber);
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(input.TitleNumber);
             var episodesCount = webtoon.Episodes.Count + 1;
             string episodeName = "Episode" + episodesCount;
             string topFolder = $@"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons\{webtoon.Title}";
@@ -42,26 +43,8 @@
 
             episode.Pages = this.pagesService.AddPagesAsync(input.Pages, episodeFolder, episode.Id).Result;
 
-            await this.dbContext.Episodes.AddAsync(episode);
-            await this.dbContext.SaveChangesAsync();
-        }
-
-        private bool IsImageValid(object value)
-        {
-            if (value is IFormFile file)
-            {
-                if (!(file.FileName.EndsWith(".png") || file.FileName.EndsWith(".jpg") || file.FileName.EndsWith(".jpeg")))
-                {
-                    return false;
-                }
-
-                if (file.Length > 10 * 1024 * 1024)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            await this.episodesRepository.AddAsync(episode);
+            await this.episodesRepository.SaveChangesAsync();
         }
     }
 }
