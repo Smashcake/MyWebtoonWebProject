@@ -8,5 +8,7 @@
     public interface IEpisodesRepository : IDeletableEntityRepository<Episode>
     {
         ICollection<Episode> GetEpisodesByWebtoonId(string webtoonId);
+
+        Episode GetEpisodeByWebtoonTitleNumber(string webtoonTitleNumber, string episodeNumber);
     }
 }

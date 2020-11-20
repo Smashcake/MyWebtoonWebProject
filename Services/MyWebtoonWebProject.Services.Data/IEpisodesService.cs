@@ -7,5 +7,7 @@
     public interface IEpisodesService
     {
         Task AddEpisodeAsync(AddEpisodeInputModel input);
+
+        GetEpisodeViewModel GetEpisode(string webtoonTitleNumber, string episodeNumber);
     }
 }

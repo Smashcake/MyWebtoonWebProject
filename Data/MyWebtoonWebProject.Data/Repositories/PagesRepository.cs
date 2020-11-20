@@ -1,5 +1,8 @@
 ﻿namespace MyWebtoonWebProject.Data.Repositories
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using MyWebtoonWebProject.Data.Models;
 
     public class PagesRepository : EfRepository<Page>, IPagesRepository
@@ -8,5 +11,12 @@
             : base(context)
         {
         }
+
+        public ICollection<string> GetPagePathsForEpisodeByEpisodeId(string episodeId) =>
+            this.DbSet
+                .Where(p => p.EpisodeId == episodeId)
+                .OrderBy(p => p.FilePath)
+                .Select(p => p.FilePath)
+                .ToList();
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -23,6 +24,8 @@
         {
             var pagesToReturn = new List<Page>();
             var pageCounter = 0;
+
+            pages.OrderBy(p => p.FileName);
 
             foreach (var page in pages)
             {

@@ -1,0 +1,16 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Episodes
+@model GetEpisodeViewModel
+@{
+    ViewBag.Title = Model.EpisodeNumber;
+}
+
+<div id="body" class="col-md-8 offset-md-2">
+    <ul class="list-unstyled">
+        @foreach (var pageSrc in Model.PagesPaths)
+        {
+            <li>
+                <img src="~/Webtoons/@Model.WebtoonTitle/@Model.EpisodeNumber/@pageSrc"/>
+            </li>
+        }
+    </ul>
+</div>

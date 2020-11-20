@@ -34,5 +34,11 @@
             await this.episodesService.AddEpisodeAsync(input);
             return this.Redirect("/");
         }
+
+        public IActionResult GetEpisode(string webtoonNumber, string episodeNumber)
+        {
+            var viewModel = this.episodesService.GetEpisode(webtoonNumber, episodeNumber);
+            return this.View(viewModel);
+        }
     }
 }
