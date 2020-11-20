@@ -13,7 +13,9 @@
 
         public string Title { get; set; }
 
-        public ApplicationUser Author { get; set; }
+        public string AuthorId { get; set; }
+
+        public string AuthorName { get; set; }
 
         public string GenreName { get; set; }
 

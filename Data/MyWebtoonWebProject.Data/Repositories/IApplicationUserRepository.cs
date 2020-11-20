@@ -3,10 +3,8 @@
     using MyWebtoonWebProject.Data.Common.Repositories;
     using MyWebtoonWebProject.Data.Models;
 
-    public interface IGenresRepository : IRepository<Genre>
+    public interface IApplicationUserRepository : IDeletableEntityRepository<ApplicationUser>
     {
-        bool GenreExist(string name);
-
-        Genre GetGenreByWebtoonGenreId(string webtoonGenresId);
+        public string GetAuthorUsername(string webtoonAuthorId);
     }
 }

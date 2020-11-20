@@ -14,5 +14,9 @@
         public bool GenreExist(string name) =>
             this.DbSet
                 .Any(g => g.Name == name);
+
+        public Genre GetGenreByWebtoonGenreId(string webtoonGenreId) =>
+            this.DbSet
+                .FirstOrDefault(g => g.Id == webtoonGenreId);
     }
 }

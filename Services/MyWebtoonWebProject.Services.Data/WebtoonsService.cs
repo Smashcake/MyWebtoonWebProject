@@ -14,10 +14,16 @@
     public class WebtoonsService : IWebtoonsService
     {
         private readonly IWebtoonsRepository webtoonsRepository;
+        private readonly IEpisodesRepository episodesRepository;
+        private readonly IGenresRepository genresRepository;
+        private readonly IApplicationUserRepository applicationUserRepository;
 
-        public WebtoonsService(IWebtoonsRepository webtoonsRepository)
+        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
+            this.episodesRepository = episodesRepository;
+            this.genresRepository = genresRepository;
+            this.applicationUserRepository = applicationUserRepository;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -78,9 +84,13 @@
             var webtoon = this.webtoonsRepository
                 .GetWebtoonByTitleNumber(titleNumber);
 
-            return webtoon == null ? null : new WebtoonInfoViewModel
+            webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
+            webtoon.Genre = this.genresRepository.GetGenreByWebtoonGenreId(webtoon.GenreId);
+
+            return new WebtoonInfoViewModel
             {
-                Author = webtoon.Author,
+                AuthorName = this.applicationUserRepository.GetAuthorUsername(webtoon.AuthorId),
+                AuthorId = webtoon.AuthorId,
                 Episodes = webtoon.Episodes.Select(e => new EpisodeWebtoonViewModel
                 {
                     EpisodeNumber = e.Name,

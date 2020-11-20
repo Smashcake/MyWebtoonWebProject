@@ -12,7 +12,7 @@
     <div style="position:absolute;top:0;left:0;transform:translate(100%,40%);">
         <h2 style="color:forestgreen">@Model.GenreName</h2>
         <h1 style="text-align:center">@Model.Title</h1>
-        <h3>@Model.Author.UserName</h3>
+        <h3>@Model.AuthorName</h3>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
         <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word; width:300px; height:125px" name="Synopsis">
             @Model.Synopsis
         </p>
-        @if(Model.Author.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        @if(Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
         <a class="btn btn-secondary"  asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
         }

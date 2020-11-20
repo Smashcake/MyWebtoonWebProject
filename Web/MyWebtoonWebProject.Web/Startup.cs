@@ -61,6 +61,11 @@
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+            services.AddTransient<IPagesRepository, PagesRepository>();
+            services.AddTransient<IWebtoonsRepository, WebtoonsRepository>();
+            services.AddTransient<IEpisodesRepository, EpisodesRepository>();
+            services.AddTransient<IGenresRepository, GenresRepository>();
+            services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
