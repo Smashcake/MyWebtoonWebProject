@@ -19,19 +19,51 @@
 <div name="Body" class="col-md-8">
     <div name="Details" class="col-md-5">
         <span name="Note"></span>
-        <span>Episodes</span>
-        <ul class="list-unstyled">
-            @foreach (var episode in Model.Episodes)
-            {
-                <li id="episodeCard" style="display:inline">
-                    <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
-                    <p>@episode.EpisodeNumber</p>
-                    <p>@episode.CreatedOn</p>
-                    <p>@episode.Likes</p>
-                    </a>
-                </li>
-            }
-        </ul>
+        <div name="EpisodeInfo">
+            <span>Episodes</span>
+            <ul class="list-unstyled">
+                @foreach (var episode in Model.Episodes)
+                {
+                    <li id="episodeCard" style="display:inline">
+                        <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                            <p>@episode.EpisodeNumber</p>
+                            <p>@episode.CreatedOn</p>
+                            <p>@episode.Likes</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @if (!Model.HasPreviousEpisodePage) { <text>disabled</text> } ">
+                        <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.PreviousEpisodePage">Previous</a>
+                    </li>
+                    @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+                    {
+                        if (i > 0)
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                        }
+                    }
+                    <li class="page-item active">
+                        <span class="page-link">
+                            @Model.PageNumber
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                    @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+                    {
+                        if (i <= Model.EpisodePagesCount)
+                        {
+                            <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                        }
+                    }
+                    <li class="page-item" @if (!Model.HasNextEpisodePage) { <text> disabled</text> }>
+                        <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
     <div name="Side" class="col-md-3 offset-md-11">
         <ul>
@@ -44,9 +76,9 @@
         <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word; width:300px; height:125px" name="Synopsis">
             @Model.Synopsis
         </p>
-        @if(Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-        <a class="btn btn-secondary"  asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
+            <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
         }
 
     </div>

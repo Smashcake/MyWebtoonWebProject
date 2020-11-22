@@ -79,7 +79,7 @@
             return webtoons;
         }
 
-        public WebtoonInfoViewModel GetWebtoon(string titleNumber)
+        public WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage)
         {
             var webtoon = this.webtoonsRepository
                 .GetWebtoonByTitleNumber(titleNumber);
@@ -96,7 +96,11 @@
                     EpisodeNumber = e.Name,
                     CreatedOn = e.CreatedOn,
                     Likes = e.Likes,
-                }),
+                })
+                .OrderByDescending(e => e.EpisodeNumber)
+                .Skip((page - 1) * episodesPerPage)
+                .Take(episodesPerPage),
+                EpisodesCount = webtoon.Episodes.Count,
                 Id = webtoon.Id,
                 GenreName = webtoon.Genre.Name,
                 Synopsis = webtoon.Synopsis,

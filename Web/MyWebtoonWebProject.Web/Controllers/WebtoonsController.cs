@@ -49,9 +49,12 @@
             return this.View(input);
         }
 
-        public IActionResult GetWebtoon(string titleNumber)
+        public IActionResult GetWebtoon(string titleNumber, int id = 1)
         {
-            var input = this.webtoonsService.GetWebtoon(titleNumber);
+            const int episodesPerPage = 10;
+            var input = this.webtoonsService.GetWebtoon(titleNumber, id, episodesPerPage);
+            input.PageNumber = id;
+            input.EpisodesPerPage = episodesPerPage;
             return this.View(input);
         }
     }

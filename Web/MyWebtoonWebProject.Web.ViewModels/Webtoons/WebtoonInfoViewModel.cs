@@ -1,5 +1,6 @@
 ﻿namespace MyWebtoonWebProject.Web.ViewModels.Webtoons
 {
+    using System;
     using System.Collections.Generic;
 
     using MyWebtoonWebProject.Data.Models;
@@ -28,5 +29,21 @@
         public IEnumerable<EpisodeWebtoonViewModel> Episodes { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
+
+        public int PageNumber { get; set; }
+
+        public bool HasPreviousEpisodePage => this.PageNumber > 1;
+
+        public int PreviousEpisodePage => this.PageNumber - 1;
+
+        public bool HasNextEpisodePage => this.PageNumber < this.EpisodePagesCount;
+
+        public int NextEpisodePage => this.PageNumber + 1;
+
+        public int EpisodePagesCount => (int)Math.Ceiling((double)this.EpisodesCount / this.EpisodesPerPage);
+
+        public int EpisodesPerPage { get; set; }
+
+        public int EpisodesCount { get; set; }
     }
 }
