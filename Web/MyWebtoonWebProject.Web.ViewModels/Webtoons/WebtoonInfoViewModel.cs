@@ -10,9 +10,9 @@
     {
         public string CoverPhoto { get; set; }
 
-        public string Id { get; set; }
-
         public string Title { get; set; }
+
+        public bool IsUserSubscribed { get; set; }
 
         public string AuthorId { get; set; }
 

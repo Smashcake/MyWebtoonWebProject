@@ -11,6 +11,6 @@
 
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
 
-        WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage);
+        WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage, string userId);
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data.Models;
@@ -17,13 +18,15 @@
         private readonly IEpisodesRepository episodesRepository;
         private readonly IGenresRepository genresRepository;
         private readonly IApplicationUserRepository applicationUserRepository;
+        private readonly IWebtoonsSubscribersRepository webtoonsSubscribersRepository;
 
-        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository)
+        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository, IWebtoonsSubscribersRepository webtoonsSubscribersRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
             this.genresRepository = genresRepository;
             this.applicationUserRepository = applicationUserRepository;
+            this.webtoonsSubscribersRepository = webtoonsSubscribersRepository;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -79,7 +82,7 @@
             return webtoons;
         }
 
-        public WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage)
+        public WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage, string userId)
         {
             var webtoon = this.webtoonsRepository
                 .GetWebtoonByTitleNumber(titleNumber);
@@ -100,8 +103,8 @@
                 .OrderByDescending(e => e.EpisodeNumber)
                 .Skip((page - 1) * episodesPerPage)
                 .Take(episodesPerPage),
+                IsUserSubscribed = this.webtoonsSubscribersRepository.IsUserSubscribed(webtoon.Id, userId),
                 EpisodesCount = webtoon.Episodes.Count,
-                Id = webtoon.Id,
                 GenreName = webtoon.Genre.Name,
                 Synopsis = webtoon.Synopsis,
                 Title = webtoon.Title,

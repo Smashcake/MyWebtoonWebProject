@@ -16,7 +16,7 @@
         private readonly IPagesRepository pagesRepository;
         private readonly IPagesService pagesService;
 
-        public EpisodesService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository,IPagesRepository pagesRepository, IPagesService pagesService)
+        public EpisodesService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IPagesRepository pagesRepository, IPagesService pagesService)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;

@@ -7,7 +7,7 @@
     using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels.Genres;
 
-    public class GenresController : BaseController
+    public class GenresController : Controller
     {
         private readonly IGenresService genresService;
 

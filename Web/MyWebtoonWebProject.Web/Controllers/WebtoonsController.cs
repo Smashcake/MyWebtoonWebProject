@@ -8,7 +8,7 @@
     using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
-    public class WebtoonsController : BaseController
+    public class WebtoonsController : Controller
     {
         private readonly IWebtoonsService webtoonsService;
         private readonly IGenresService genresService;
@@ -51,8 +51,9 @@
 
         public IActionResult GetWebtoon(string titleNumber, int id = 1)
         {
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             const int episodesPerPage = 10;
-            var input = this.webtoonsService.GetWebtoon(titleNumber, id, episodesPerPage);
+            var input = this.webtoonsService.GetWebtoon(titleNumber, id, episodesPerPage, currentUserId);
             input.PageNumber = id;
             input.EpisodesPerPage = episodesPerPage;
             return this.View(input);
