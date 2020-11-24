@@ -10,6 +10,19 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @(this.User.Identity.Name)!</a>
         </li>
+        <li>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Get Started!
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a asp-area="" asp-controller="ApplicationUsers" asp-action="GetUserSubscribtions">Subscribed</a>
+                    <a asp-area="" asp-controller="ApplicationUsers" asp-action="GetUserComments">Comments</a>
+                    <br />
+                    <a asp-area="" asp-controller="ApplicationUsers" asp-action="GetUserReviews">Reviews</a>
+                </div>
+            </div>
+        </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
             <li class="nav-item">
