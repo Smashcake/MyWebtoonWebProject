@@ -19,14 +19,16 @@
         private readonly IGenresRepository genresRepository;
         private readonly IApplicationUserRepository applicationUserRepository;
         private readonly IWebtoonsSubscribersRepository webtoonsSubscribersRepository;
+        private readonly IReviewsRepository reviewsRepository;
 
-        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository, IWebtoonsSubscribersRepository webtoonsSubscribersRepository)
+        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository, IWebtoonsSubscribersRepository webtoonsSubscribersRepository, IReviewsRepository reviewsRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
             this.genresRepository = genresRepository;
             this.applicationUserRepository = applicationUserRepository;
             this.webtoonsSubscribersRepository = webtoonsSubscribersRepository;
+            this.reviewsRepository = reviewsRepository;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -88,6 +90,7 @@
                 .GetWebtoonByTitleNumber(titleNumber);
 
             webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
+            webtoon.Reviews = this.reviewsRepository.GetReviewsByWebtoonId(webtoon.Id);
             webtoon.Genre = this.genresRepository.GetGenreByWebtoonGenreId(webtoon.GenreId);
 
             return new WebtoonInfoViewModel
@@ -110,7 +113,15 @@
                 Title = webtoon.Title,
                 CoverPhoto = webtoon.CoverPhoto,
                 UploadDay = webtoon.UploadDay.ToString(),
-                Reviews = webtoon.Reviews,
+                Reviews = webtoon.Reviews.Select(r => new ReviewsWebtoonViewModel
+                {
+                    ReviewId = r.Id,
+                    ReviewInfo = r.ReviewInfo,
+                    AuthorUsername = r.ReviewAuthor.UserName,
+                    CreatedOn = r.CreatedOn,
+                    Likes = r.Likes,
+                    Dislikes = r.Dislikes,
+                }),
                 TitleNumber = webtoon.TitleNumber,
             };
         }

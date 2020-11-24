@@ -28,7 +28,7 @@
 
         public IEnumerable<EpisodeWebtoonViewModel> Episodes { get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
+        public IEnumerable<ReviewsWebtoonViewModel> Reviews { get; set; }
 
         public int PageNumber { get; set; }
 
