@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MyWebtoonWebProject.Web.Views.ApplicationUsers
-{
-    public class GetUserReviews
-    {
-    }
+﻿@using System.Security.Claims
+@model MyWebtoonWebProject.Web.ViewModels.Reviews.ApplicationUserReviewsViewModel
+@{
+    ViewBag.Title = this.User.FindFirstValue(ClaimTypes.NameIdentifier) + "'s Reviews";
 }
+
+<ul>
+    @foreach (var review in Model.Reviews)
+    {
+        <li>Hello</li>
+    }
+</ul>

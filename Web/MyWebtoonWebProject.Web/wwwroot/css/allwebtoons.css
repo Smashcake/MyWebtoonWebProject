@@ -5,7 +5,7 @@
 
 .list-unstyled {
     display: flex;
-    background-color: #cfcfcf;
+    background-color: rgba(230, 230, 230, 0.89);
 }
 
 #webtoon {

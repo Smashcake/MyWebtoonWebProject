@@ -1,5 +1,5 @@
-﻿
-@using System.Security.Claims
+﻿@using System.Security.Claims
+@model MyWebtoonWebProject.Web.ViewModels.Webtoons.GetAllWebtoonsViewModel
 @{
     var currentUserUsername = this.User.FindFirstValue(ClaimTypes.Name);
     ViewBag.Title = currentUserUsername + "'s Subscribtions";
@@ -18,7 +18,7 @@
                     <p id="cardTitle">@webtoon.Title</p>
                     <p id="cardAuthor">@webtoon.Author</p>
                     <p id="cardGenre">@webtoon.Genre</p>
-                    <p id="cardLikes">@webtoon.Likes</p>
+                    <p id="cardLikes"><i class="fas fa-heart"></i> @webtoon.Likes</p>
                 </div>
             </a>
         </li>

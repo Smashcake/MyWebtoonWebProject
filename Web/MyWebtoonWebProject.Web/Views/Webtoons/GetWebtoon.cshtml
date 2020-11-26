@@ -9,7 +9,7 @@
     <span>
         <img src="~/Webtoons/@Model.CoverPhoto" height="240px">
     </span>
-    <div style="position:absolute;top:0;left:0;transform:translate(100%,40%);">
+    <div style="position:absolute;top:0;left:0;transform:translate(200%,40%);">
         <h2 style="color:forestgreen">@Model.GenreName</h2>
         <h1 style="text-align:center">@Model.Title</h1>
         <h3>@Model.AuthorName</h3>
@@ -21,15 +21,15 @@
         <span name="Note"></span>
         <div name="EpisodeInfo">
             <span>Episodes</span>
-            <ul class="list-unstyled">
+            <ul class="list-group">
                 @foreach (var episode in Model.Episodes)
                 {
-                    <li id="episodeCard">
-                        <div class="form-inline">
-                            <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
-                                <p>@episode.EpisodeNumber</p>
-                                <p>@episode.CreatedOn</p>
-                                <p>@episode.Likes</p>
+                    <li id="episodeCard" class="list-group-item">
+                        <div >
+                            <a class="d-block" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                                <p># @episode.EpisodeNumber.Replace("Episode",string.Empty)</p>
+                                <p><i class="fas fa-calendar"></i> @episode.CreatedOn.ToString("dd-MM-yyyy")</p>
+                                <p><i class="fas fa-thumbs-up"></i> @episode.Likes</p>
                             </a>
                         </div>
                     </li>
@@ -89,17 +89,17 @@
     </div>
     <div name="Reviews" class="col-md-5">
         <span>Reviews</span>
-        <ul class="list-unstyled">
+        <ul class="list-group">
             @foreach (var review in Model.Reviews)
             {
-                <li>
+                <li class="list-group-item">
                     <div>
                         <p><i class="fas fa-user"></i> Author: @review.AuthorUsername</p>
                         <div class="form-inline">
                             <p>@review.ReviewInfo</p>
-                            <p>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-                            <p>Likes: @review.Likes</p>
-                            <p>Dislikes: @review.Dislikes</p>
+                            <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
+                            <p><i class="fas fa-thumbs-up"></i>Likes: @review.Likes</p>
+                            <p><i class="fas fa-thumbs-down"></i>Dislikes: @review.Dislikes</p>
                         </div>
                     </div>
                 </li>
