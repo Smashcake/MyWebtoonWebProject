@@ -113,7 +113,8 @@
                 Title = webtoon.Title,
                 CoverPhoto = webtoon.CoverPhoto,
                 UploadDay = webtoon.UploadDay.ToString(),
-                Reviews = webtoon.Reviews.Select(r => new ReviewsWebtoonViewModel
+                Reviews = webtoon.Reviews
+                .Select(r => new ReviewsWebtoonViewModel
                 {
                     ReviewId = r.Id,
                     ReviewInfo = r.ReviewInfo,

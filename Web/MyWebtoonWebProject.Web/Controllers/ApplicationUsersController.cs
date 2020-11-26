@@ -3,7 +3,9 @@
     using System.Security.Claims;
 
     using Microsoft.AspNetCore.Mvc;
+
     using MyWebtoonWebProject.Services.Data;
+    using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
     public class ApplicationUsersController : Controller
     {
@@ -14,10 +16,11 @@
             this.appicationUsersService = appicationUsersService;
         }
 
-        public ActionResult<string> GetUserSubscribtions()
+        public IActionResult GetUserSubscribtions(GetAllWebtoonsViewModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return "Hello from userSubscribtions";
+            input.Webtoons = this.appicationUsersService.GetUserSubscribtions(userId);
+            return this.View(input);
         }
 
         public ActionResult<string> GetUserComments()
