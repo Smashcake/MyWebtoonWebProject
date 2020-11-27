@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyWebtoonWebProject.Data.Migrations
+﻿namespace MyWebtoonWebProject.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddedNavigationalVoteTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
                     CommentId = table.Column<string>(nullable: false),
-                    Vote = table.Column<int>(nullable: false)
+                    Vote = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -57,7 +57,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
                     EpisodeId = table.Column<string>(nullable: false),
-                    HasLiked = table.Column<bool>(nullable: false)
+                    HasLiked = table.Column<bool>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -82,7 +82,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 {
                     ApplicationUserId = table.Column<string>(nullable: false),
                     ReviewId = table.Column<string>(nullable: false),
-                    Vote = table.Column<int>(nullable: false)
+                    Vote = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

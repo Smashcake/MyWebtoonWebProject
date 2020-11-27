@@ -7,5 +7,7 @@
     public interface IReviewsService
     {
         Task AddReview(LeaveReviewInputModel input);
+
+        ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId);
     }
 }

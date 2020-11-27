@@ -9,8 +9,45 @@
         @foreach (var pageSrc in Model.PagesPaths)
         {
             <li>
-                <img src="~/Webtoons/@Model.WebtoonTitle/@Model.EpisodeNumber/@pageSrc"/>
+                <img src="~/Webtoons/@Model.WebtoonTitle/@Model.EpisodeNumber/@pageSrc" />
             </li>
         }
     </ul>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <textarea id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
+        <button class="btn btn-secondary" id="commentButton">Submit</button>
+    }
+    @*<ul class="list-group">
+        @foreach (var comment in Model.Comments)
+        {
+            <li class="list-group-item">
+                hello
+            </li>
+        }
+    </ul>*@
 </div>
+
+@section Scripts{
+    <script>
+        $("#commentButton").click(function () {
+            var userInput = $("#userComment").val();
+            var episodeNumber = @Model.EpisodeNumber.ToString();
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { episodeNumber: episodeNumber, userComment: userInput }
+            $.ajax({
+                type: "POST",
+                url: "/api/Comments",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                contentType: 'application/json',
+            });
+        });
+    </script>
+}

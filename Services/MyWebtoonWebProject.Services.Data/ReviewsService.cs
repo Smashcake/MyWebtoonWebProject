@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Models.Enums;
     using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Web.ViewModels.Reviews;
 
@@ -41,6 +42,14 @@
             {
                 throw new ArgumentException("You already gave a review for this webtoon.");
             }
+        }
+
+        public ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId)
+        {
+            var review = this.reviewsRepository.All().FirstOrDefault(r => r.Id == reviewId);
+            var reviewLikes = review.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.UpVote) ? 1 : 0);
+            var reviewDislikes = review.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
+            return new ReviewVoteResponseModel { Likes = reviewLikes, Dislikes = reviewDislikes };
         }
     }
 }

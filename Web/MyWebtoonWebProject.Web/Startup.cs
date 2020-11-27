@@ -72,6 +72,7 @@
             services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddTransient<IWebtoonsSubscribersRepository, WebtoonsSubscribersRepository>();
             services.AddTransient<IReviewsRepository, ReviewsRepository>();
+            services.AddTransient<IReviewsVotesRepository, ReviewsVotesRepository>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
@@ -82,6 +83,7 @@
             services.AddTransient<IWebtoonsSubscribersService, WebtoonsSubscribersService>();
             services.AddTransient<IReviewsService, ReviewsService>();
             services.AddTransient<IAppicationUsersService, ApplicationUsersService>();
+            services.AddTransient<IReviewsVotesService, ReviewsVotesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

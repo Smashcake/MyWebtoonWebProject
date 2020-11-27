@@ -29,7 +29,7 @@
                     Author = w.Author.UserName,
                     CoverPhoto = w.CoverPhoto,
                     Genre = w.Genre.Name,
-                    Likes = w.Episodes.Sum(e => e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0)),
+                    //Likes = w.Episodes.Sum(e => e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0)),
                     Title = w.Title,
                     TitleNumber = w.TitleNumber,
                 }).ToList();

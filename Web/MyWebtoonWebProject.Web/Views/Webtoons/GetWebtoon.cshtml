@@ -25,9 +25,9 @@
                 @foreach (var episode in Model.Episodes)
                 {
                     <li id="episodeCard" class="list-group-item">
-                        <div >
+                        <div>
                             <a class="d-block" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
-                                <p># @episode.EpisodeNumber.Replace("Episode",string.Empty)</p>
+                                <p># @episode.EpisodeNumber.Replace("Episode", string.Empty)</p>
                                 <p><i class="fas fa-calendar"></i> @episode.CreatedOn.ToString("dd-MM-yyyy")</p>
                                 <p><i class="fas fa-thumbs-up"></i> @episode.Likes</p>
                             </a>
@@ -95,11 +95,21 @@
                 <li class="list-group-item">
                     <div>
                         <p><i class="fas fa-user"></i> Author: @review.AuthorUsername</p>
-                        <div class="form-inline">
+                        <div>
                             <p>@review.ReviewInfo</p>
                             <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-                            <p><i class="fas fa-thumbs-up"></i>Likes: @review.Likes</p>
-                            <p><i class="fas fa-thumbs-down"></i>Dislikes: @review.Dislikes</p>
+                            <div>
+                                <a href="#" onclick="sendReviewVote(@review.ReviewId, true)">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    Likes: @review.Likes
+                                </a>
+                            </div>
+                            <div>
+                                <a href="#" onclick="sendReviewVote(@review.ReviewId, false)">
+                                    <i class="fas fa-thumbs-down"></i>
+                                    Dislikes: @review.Dislikes
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -114,6 +124,25 @@
 </div>
 <form method="post" id="antiForgeryForm"></form>
 @section Scripts{
+    <script>
+        function sendReviewVote(reviewId, isUpvote) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { reviewId: reviewId, isUpvote: isUpvote }
+            $.ajax({
+                type: "POST",
+                url: "/api/ReviewsVotes",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                contentType: 'application/json',
+            });
+        };
+    </script>
+
     <script>
         $("#reviewButton").click(function () {
             var userInput = $("#userReview").val();
