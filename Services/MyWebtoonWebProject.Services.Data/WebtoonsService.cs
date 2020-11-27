@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using MyWebtoonWebProject.Data.Models;
+    using MyWebtoonWebProject.Data.Models.Enums;
     using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Web.ViewModels.Episodes;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
@@ -76,7 +76,8 @@
                     Title = w.Title,
                     CoverPhoto = w.CoverPhoto,
                     Genre = w.Genre.Name,
-                    Likes = w.Episodes.Sum(e => e.Likes),
+                    Likes = w.Episodes.Sum(
+                        e => e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0)),
                     TitleNumber = w.TitleNumber,
                 })
                 .ToList();
@@ -101,7 +102,7 @@
                 {
                     EpisodeNumber = e.Name,
                     CreatedOn = e.CreatedOn,
-                    Likes = e.Likes,
+                    Likes = e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0),
                 })
                 .OrderByDescending(e => e.EpisodeNumber)
                 .Skip((page - 1) * episodesPerPage)
@@ -120,8 +121,8 @@
                     ReviewInfo = r.ReviewInfo,
                     AuthorUsername = r.ReviewAuthor.UserName,
                     CreatedOn = r.CreatedOn,
-                    Likes = r.Likes,
-                    Dislikes = r.Dislikes,
+                    Likes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.UpVote) ? 1 : 0),
+                    Dislikes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0),
                 }),
                 TitleNumber = webtoon.TitleNumber,
             };

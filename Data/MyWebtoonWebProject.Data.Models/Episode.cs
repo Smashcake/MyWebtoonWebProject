@@ -13,6 +13,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.Pages = new HashSet<Page>();
             this.Comments = new HashSet<Comment>();
+            this.EpisodeLikes = new HashSet<EpisodeLike>();
         }
 
         [Required]
@@ -21,7 +22,7 @@
 
         public virtual ICollection<Page> Pages { get; set; }
 
-        public int Likes { get; set; }
+        public virtual ICollection<EpisodeLike> EpisodeLikes { get; set; }
 
         public int Views { get; set; }
 

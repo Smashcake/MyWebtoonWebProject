@@ -39,7 +39,6 @@
                 Views = 0,
                 WebtoonId = webtoon.Id,
                 IsDeleted = false,
-                Likes = 0,
                 CreatedOn = DateTime.UtcNow,
             };
 

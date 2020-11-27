@@ -12,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Comments = new HashSet<Comment>();
+            this.CommentVotes = new HashSet<CommentVote>();
         }
 
         public string CommentAuthorId { get; set; }
@@ -22,9 +23,7 @@
 
         public Episode Episode { get; set; }
 
-        public int Likes { get; set; }
-
-        public int Dislikes { get; set; }
+        public virtual ICollection<CommentVote> CommentVotes { get; set; }
 
         public DateTime PostedOn { get; set; }
 

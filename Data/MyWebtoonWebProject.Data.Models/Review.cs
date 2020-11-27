@@ -1,6 +1,7 @@
 ﻿namespace MyWebtoonWebProject.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyWebtoonWebProject.Data.Common.Models;
@@ -10,6 +11,7 @@
         public Review()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.ReviewVotes = new HashSet<ReviewVote>();
         }
 
         public string ReviewAuthorId { get; set; }
@@ -24,8 +26,6 @@
         [MaxLength(800)]
         public string ReviewInfo { get; set; }
 
-        public int Likes { get; set; }
-
-        public int Dislikes { get; set; }
+        public virtual ICollection<ReviewVote> ReviewVotes { get; set; }
     }
 }

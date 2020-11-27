@@ -35,6 +35,12 @@
 
         public DbSet<Page> Pages { get; set; }
 
+        public DbSet<EpisodeLike> EpisodeLikes { get; set; }
+
+        public DbSet<CommentVote> CommentVotes { get; set; }
+
+        public DbSet<ReviewVote> ReviewVotes { get; set; }
+
         public DbSet<WebtoonsSubscribers> WebtoonsSubscribers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -59,6 +65,9 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<WebtoonsSubscribers>().HasKey(wb => new { wb.SubscriberId, wb.WebtoonId });
+            builder.Entity<EpisodeLike>().HasKey(el => new { el.ApplicationUserId, el.EpisodeId });
+            builder.Entity<CommentVote>().HasKey(cv => new { cv.ApplicationUserId, cv.CommentId });
+            builder.Entity<ReviewVote>().HasKey(rv => new { rv.ApplicationUserId, rv.ReviewId });
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);

@@ -4,9 +4,9 @@ namespace MyWebtoonWebProject.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using MyWebtoonWebProject.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+
+    using MyWebtoonWebProject.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
