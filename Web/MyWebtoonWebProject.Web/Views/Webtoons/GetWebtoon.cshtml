@@ -26,7 +26,7 @@
                 {
                     <li id="episodeCard" class="list-group-item">
                         <div>
-                            <a class="d-block" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                            <a class="d-inline-flex" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
                                 <p># @episode.EpisodeNumber.Replace("Episode", string.Empty)</p>
                                 <p><i class="fas fa-calendar"></i> @episode.CreatedOn.ToString("dd-MM-yyyy")</p>
                                 <p><i class="fas fa-thumbs-up"></i> @episode.Likes</p>
@@ -93,23 +93,25 @@
             @foreach (var review in Model.Reviews)
             {
                 <li class="list-group-item">
-                    <div>
+                    <div class="d-md-block">
                         <p><i class="fas fa-user"></i> Author: @review.AuthorUsername</p>
                         <div>
                             <p>@review.ReviewInfo</p>
                             <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-                            <div>
-                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, true)">
-                                    <i class="fas fa-thumbs-up"></i>
-                                    Likes: <p id="reviewLikes">@review.Likes</p>
+                            <div class="d-inline-flex">
+                                <div>
+                                    <a href="#" onclick="sendReviewVote(@review.ReviewNumber, true)">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        Likes: <p id="reviewLikes">@review.Likes</p>
 
-                                </a>
-                            </div>
-                            <div>
-                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, false)">
-                                    <i class="fas fa-thumbs-down"></i>
-                                    Dislikes: <p id="reviewDislikes">@review.Dislikes</p>
-                                </a>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#" onclick="sendReviewVote(@review.ReviewNumber, false)">
+                                        <i class="fas fa-thumbs-down"></i>
+                                        Dislikes: <p id="reviewDislikes">@review.Dislikes</p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

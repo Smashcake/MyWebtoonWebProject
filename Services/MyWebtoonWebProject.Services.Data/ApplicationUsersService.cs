@@ -46,9 +46,11 @@
                 {
                     CreatedOn = r.CreatedOn,
                     WebtoonTitle = r.Webtoon.Title,
+                    WebtoonTitleNumber = r.Webtoon.TitleNumber,
                     ReviewInfo = r.ReviewInfo,
                     Likes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.UpVote) ? 1 : 0),
                     Dislikes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0),
+                    CoverPhoto = r.Webtoon.CoverPhoto,
                 }).ToList();
 
             return reviewsInfo;

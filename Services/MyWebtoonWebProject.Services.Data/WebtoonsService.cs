@@ -51,7 +51,9 @@
             string webtoonFolder = Path.Combine(topFolder, input.Title);
             Directory.CreateDirectory(webtoonFolder);
 
-            string coverPhotoPath = webtoonFolder + "/cover.png";
+            var extention = Path.GetExtension(input.Cover.FileName).TrimStart('.');
+
+            string coverPhotoPath = webtoonFolder + $"/cover.{extention}";
             using (FileStream fs = new FileStream(coverPhotoPath, FileMode.Create))
             {
                 await input.Cover.CopyToAsync(fs);
@@ -61,7 +63,7 @@
             {
                 Title = input.Title,
                 Synopsis = input.Synopsis,
-                CoverPhoto = input.Title + "/cover.png",
+                CoverPhoto = input.Title + $"/cover.{extention}",
                 GenreId = input.GenreId,
                 UploadDay = input.UploadDay,
                 AuthorId = input.AuthorId,
@@ -103,7 +105,7 @@
 
             foreach (var review in webtoon.Reviews)
             {
-                review.ReviewVotes = this.reviewsVotesRepository.GetReviewVotes(review.ReviewNumber);
+                review.ReviewVotes = this.reviewsVotesRepository.GetReviewVotes(review.Id);
             }
 
             return new WebtoonInfoViewModel

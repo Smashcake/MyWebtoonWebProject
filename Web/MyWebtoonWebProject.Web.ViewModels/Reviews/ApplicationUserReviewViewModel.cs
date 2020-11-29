@@ -8,6 +8,10 @@
 
         public string WebtoonTitle { get; set; }
 
+        public string WebtoonTitleNumber { get; set; }
+
+        public string CoverPhoto { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int Likes { get; set; }

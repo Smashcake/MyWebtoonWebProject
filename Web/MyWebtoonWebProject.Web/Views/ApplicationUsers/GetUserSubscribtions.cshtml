@@ -1,8 +1,7 @@
 ﻿@using System.Security.Claims
 @model MyWebtoonWebProject.Web.ViewModels.Webtoons.GetAllWebtoonsViewModel
 @{
-    var currentUserUsername = this.User.FindFirstValue(ClaimTypes.Name);
-    ViewBag.Title = currentUserUsername + "'s Subscribtions";
+    ViewBag.Title = this.User.FindFirstValue(ClaimTypes.Name) + "'s Subscribtions";
 }
 
 
