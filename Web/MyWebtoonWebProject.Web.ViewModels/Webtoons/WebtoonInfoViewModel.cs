@@ -30,6 +30,8 @@
 
         public IEnumerable<ReviewsWebtoonViewModel> Reviews { get; set; }
 
+        public bool DoesCurrentUserHaveAReview { get; set; }
+
         public int PageNumber { get; set; }
 
         public bool HasPreviousEpisodePage => this.PageNumber > 1;

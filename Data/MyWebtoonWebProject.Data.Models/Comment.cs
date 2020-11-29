@@ -32,5 +32,7 @@
         public string CommentInfo { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public string CommentNumber { get; set; }
     }
 }

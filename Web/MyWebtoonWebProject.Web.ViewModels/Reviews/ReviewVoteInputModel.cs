@@ -2,7 +2,7 @@
 {
     public class ReviewVoteInputModel
     {
-        public string ReviewId { get; set; }
+        public string ReviewNumber { get; set; }
 
         public bool IsUpVote { get; set; }
     }

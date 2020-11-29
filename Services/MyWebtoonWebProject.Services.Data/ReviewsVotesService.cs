@@ -10,14 +10,18 @@
     public class ReviewsVotesService : IReviewsVotesService
     {
         private readonly IReviewsVotesRepository reviewsVotesRepository;
+        private readonly IReviewsRepository reviewsRepository;
 
-        public ReviewsVotesService(IReviewsVotesRepository reviewsVotesRepository)
+        public ReviewsVotesService(IReviewsVotesRepository reviewsVotesRepository, IReviewsRepository reviewsRepository)
         {
             this.reviewsVotesRepository = reviewsVotesRepository;
+            this.reviewsRepository = reviewsRepository;
         }
 
-        public async Task UserVote(string reviewId, bool isUpvote, string userId)
+        public async Task UserVote(string reviewNumber, bool isUpvote, string userId)
         {
+            var reviewId = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber).Id;
+
             var userVote = this.reviewsVotesRepository.GetReviewVoteByIds(reviewId, userId);
             if (userVote != null)
             {

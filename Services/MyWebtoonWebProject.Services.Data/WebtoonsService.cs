@@ -20,8 +20,16 @@
         private readonly IApplicationUserRepository applicationUserRepository;
         private readonly IWebtoonsSubscribersRepository webtoonsSubscribersRepository;
         private readonly IReviewsRepository reviewsRepository;
+        private readonly IReviewsVotesRepository reviewsVotesRepository;
 
-        public WebtoonsService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IGenresRepository genresRepository, IApplicationUserRepository applicationUserRepository, IWebtoonsSubscribersRepository webtoonsSubscribersRepository, IReviewsRepository reviewsRepository)
+        public WebtoonsService(
+            IWebtoonsRepository webtoonsRepository,
+            IEpisodesRepository episodesRepository,
+            IGenresRepository genresRepository,
+            IApplicationUserRepository applicationUserRepository,
+            IWebtoonsSubscribersRepository webtoonsSubscribersRepository,
+            IReviewsRepository reviewsRepository,
+            IReviewsVotesRepository reviewsVotesRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
@@ -29,6 +37,7 @@
             this.applicationUserRepository = applicationUserRepository;
             this.webtoonsSubscribersRepository = webtoonsSubscribersRepository;
             this.reviewsRepository = reviewsRepository;
+            this.reviewsVotesRepository = reviewsVotesRepository;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -92,6 +101,11 @@
             webtoon.Reviews = this.reviewsRepository.GetReviewsByWebtoonId(webtoon.Id);
             webtoon.Genre = this.genresRepository.GetGenreByWebtoonGenreId(webtoon.GenreId);
 
+            foreach (var review in webtoon.Reviews)
+            {
+                review.ReviewVotes = this.reviewsVotesRepository.GetReviewVotes(review.ReviewNumber);
+            }
+
             return new WebtoonInfoViewModel
             {
                 AuthorName = this.applicationUserRepository.GetAuthorUsername(webtoon.AuthorId),
@@ -112,10 +126,11 @@
                 Title = webtoon.Title,
                 CoverPhoto = webtoon.CoverPhoto,
                 UploadDay = webtoon.UploadDay.ToString(),
+                DoesCurrentUserHaveAReview = webtoon.Reviews.Any(r => r.ReviewAuthorId == userId),
                 Reviews = webtoon.Reviews
                 .Select(r => new ReviewsWebtoonViewModel
                 {
-                    ReviewId = r.Id,
+                    ReviewNumber = r.ReviewNumber,
                     ReviewInfo = r.ReviewInfo,
                     AuthorUsername = r.ReviewAuthor.UserName,
                     CreatedOn = r.CreatedOn,

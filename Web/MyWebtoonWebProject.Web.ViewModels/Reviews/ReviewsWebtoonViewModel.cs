@@ -4,7 +4,7 @@
 
     public class ReviewsWebtoonViewModel
     {
-        public string ReviewId { get; set; }
+        public string ReviewNumber { get; set; }
 
         public string ReviewInfo { get; set; }
 

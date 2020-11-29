@@ -27,5 +27,7 @@
         public string ReviewInfo { get; set; }
 
         public virtual ICollection<ReviewVote> ReviewVotes { get; set; }
+
+        public string ReviewNumber { get; set; }
     }
 }

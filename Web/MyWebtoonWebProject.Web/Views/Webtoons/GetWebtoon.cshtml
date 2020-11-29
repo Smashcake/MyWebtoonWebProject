@@ -60,7 +60,7 @@
                             <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
                         }
                     }
-                    <li class="page-item" @if (!Model.HasNextEpisodePage) { <text> disabled</text> }>
+                    <li class="page-item @if (!Model.HasNextEpisodePage) { <text>disabled</text> } ">
                         <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
                     </li>
                 </ul>
@@ -99,15 +99,16 @@
                             <p>@review.ReviewInfo</p>
                             <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
                             <div>
-                                <a href="#" onclick="sendReviewVote(@review.ReviewId, true)">
+                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, true)">
                                     <i class="fas fa-thumbs-up"></i>
-                                    Likes: @review.Likes
+                                    Likes: <p id="reviewLikes">@review.Likes</p>
+
                                 </a>
                             </div>
                             <div>
-                                <a href="#" onclick="sendReviewVote(@review.ReviewId, false)">
+                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, false)">
                                     <i class="fas fa-thumbs-down"></i>
-                                    Dislikes: @review.Dislikes
+                                    Dislikes: <p id="reviewDislikes">@review.Dislikes</p>
                                 </a>
                             </div>
                         </div>
@@ -115,7 +116,7 @@
                 </li>
             }
         </ul>
-        @if (User.Identity.IsAuthenticated)
+        @if (User.Identity.IsAuthenticated && Model.DoesCurrentUserHaveAReview == false)
         {
             <textarea id="userReview" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Leave a review"></textarea>
             <button class="btn btn-secondary" id="reviewButton">Submit</button>
@@ -125,9 +126,9 @@
 <form method="post" id="antiForgeryForm"></form>
 @section Scripts{
     <script>
-        function sendReviewVote(reviewId, isUpvote) {
+        function sendReviewVote(reviewNumber, isUpvote) {
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-            var data = { reviewId: reviewId, isUpvote: isUpvote }
+            var data = { reviewNumber: reviewNumber.toString(), isUpvote: isUpvote }
             $.ajax({
                 type: "POST",
                 url: "/api/ReviewsVotes",
@@ -136,14 +137,13 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log(data);
+                    $('#reviewLikes').html(data.likes);
+                    $('#reviewDislikes').html(data.dislikes);
                 },
                 contentType: 'application/json',
             });
         };
-    </script>
 
-    <script>
         $("#reviewButton").click(function () {
             var userInput = $("#userReview").val();
             var webtoonTitleNumber = @Model.TitleNumber;
@@ -162,9 +162,7 @@
                 contentType: 'application/json',
             });
         });
-    </script>
 
-    <script>
         $("#subscribe").click(function () {
             var webtoonTitleNumber = @Model.TitleNumber;
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();

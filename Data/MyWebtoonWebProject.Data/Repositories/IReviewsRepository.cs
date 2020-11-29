@@ -8,5 +8,9 @@
     public interface IReviewsRepository : IDeletableEntityRepository<Review>
     {
         ICollection<Review> GetReviewsByWebtoonId(string id);
+
+        int GetReviewsCount();
+
+        Review GetReviewByReviewNumber(string reviewNumber);
     }
 }

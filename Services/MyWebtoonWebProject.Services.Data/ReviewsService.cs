@@ -33,6 +33,7 @@
                     ReviewAuthorId = input.UserId,
                     WebtoonId = webtoonId,
                     ReviewInfo = input.UserReview,
+                    ReviewNumber = (this.reviewsRepository.GetReviewsCount() + 1).ToString(),
                 };
 
                 await this.reviewsRepository.AddAsync(review);
@@ -44,9 +45,9 @@
             }
         }
 
-        public ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId)
+        public ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewNumber)
         {
-            var review = this.reviewsRepository.All().FirstOrDefault(r => r.Id == reviewId);
+            var review = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber);
             var reviewLikes = review.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.UpVote) ? 1 : 0);
             var reviewDislikes = review.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
             return new ReviewVoteResponseModel { Likes = reviewLikes, Dislikes = reviewDislikes };

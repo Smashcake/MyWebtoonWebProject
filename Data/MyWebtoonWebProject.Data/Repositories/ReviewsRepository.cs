@@ -12,9 +12,16 @@
         {
         }
 
+        public Review GetReviewByReviewNumber(string reviewNumber)
+        {
+            return this.DbSet.FirstOrDefault(r => r.ReviewNumber == reviewNumber);
+        }
+
         public ICollection<Review> GetReviewsByWebtoonId(string webtoonId)
         {
             return this.DbSet.Where(r => r.WebtoonId == webtoonId).ToList();
         }
+
+        public int GetReviewsCount() => this.DbSet.Count();
     }
 }
