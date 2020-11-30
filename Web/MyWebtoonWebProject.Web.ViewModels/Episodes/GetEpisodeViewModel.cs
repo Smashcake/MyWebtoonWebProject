@@ -8,7 +8,13 @@
     {
         public string WebtoonTitle { get; set; }
 
+        public string WebtoonTitleNumber { get; set; }
+
+        public string EpisodeTitle { get; set; }
+
         public string EpisodeNumber { get; set; }
+
+        public int Likes { get; set; }
 
         public ICollection<string> PagesPaths { get; set; }
 

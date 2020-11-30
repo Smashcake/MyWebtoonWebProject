@@ -9,5 +9,7 @@
         Task AddEpisodeAsync(AddEpisodeInputModel input);
 
         GetEpisodeViewModel GetEpisode(string webtoonTitleNumber, string episodeNumber);
+
+        string GetEpisodeId(string webtoonTitleNumber, string episodeNumber);
     }
 }

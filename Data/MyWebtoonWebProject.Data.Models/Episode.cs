@@ -20,6 +20,8 @@
         [MaxLength(30)]
         public string Name { get; set; }
 
+        public string EpisodeNumber { get; set; }
+
         public virtual ICollection<Page> Pages { get; set; }
 
         public virtual ICollection<EpisodeLike> EpisodeLikes { get; set; }

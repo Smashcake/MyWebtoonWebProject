@@ -1,7 +1,7 @@
 ﻿@using MyWebtoonWebProject.Web.ViewModels.Episodes
 @model GetEpisodeViewModel
 @{
-    ViewBag.Title = Model.EpisodeNumber;
+    ViewBag.Title = Model.EpisodeTitle;
 }
 
 <div id="body" class="col-md-8 offset-md-2">
@@ -9,25 +9,29 @@
         @foreach (var pageSrc in Model.PagesPaths)
         {
             <li>
-                <img src="~/Webtoons/@Model.WebtoonTitle/@Model.EpisodeNumber/@pageSrc" />
+                <img src="~/Webtoons/@Model.WebtoonTitle/@Model.EpisodeTitle/@pageSrc" />
             </li>
         }
     </ul>
 
     @if (User.Identity.IsAuthenticated)
     {
+        <button class="btn btn-success offset-md-6" onclick="likeEpisode(@Model.WebtoonTitleNumber,@Model.EpisodeNumber)"><i class="fas fa-heart"></i>Like <span id="episodeLikes">@Model.Likes</span></button>
+        <br />
         <textarea id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
         <button class="btn btn-secondary" id="commentButton">Submit</button>
     }
     @*<ul class="list-group">
-        @foreach (var comment in Model.Comments)
-        {
-            <li class="list-group-item">
-                hello
-            </li>
-        }
-    </ul>*@
+            @foreach (var comment in Model.Comments)
+            {
+                <li class="list-group-item">
+                    hello
+                </li>
+            }
+        </ul>*@
+
 </div>
+<form method="post" id="antiForgeryForm"></form>
 
 @section Scripts{
     <script>
@@ -49,5 +53,22 @@
                 contentType: 'application/json',
             });
         });
+
+        function likeEpisode(webtoonTitleNumber,episodeNumber) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { webtoonTitleNumber: webtoonTitleNumber.toString(), episodeNumber: episodeNumber.toString() }
+            $.ajax({
+                type: "POST",
+                url: "/api/EpisodesLikes",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    $('#episodeLikes').html(data);
+                },
+                contentType: "application/json",
+            });
+        };
     </script>
 }

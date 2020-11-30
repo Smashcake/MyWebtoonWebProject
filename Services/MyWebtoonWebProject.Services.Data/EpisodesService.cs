@@ -15,13 +15,20 @@
         private readonly IEpisodesRepository episodesRepository;
         private readonly IPagesRepository pagesRepository;
         private readonly IPagesService pagesService;
+        private readonly IEpisodesLikesService episodesLikesService;
 
-        public EpisodesService(IWebtoonsRepository webtoonsRepository, IEpisodesRepository episodesRepository, IPagesRepository pagesRepository, IPagesService pagesService)
+        public EpisodesService(
+            IWebtoonsRepository webtoonsRepository,
+            IEpisodesRepository episodesRepository,
+            IPagesRepository pagesRepository,
+            IPagesService pagesService,
+            IEpisodesLikesService episodesLikesService)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
             this.pagesRepository = pagesRepository;
             this.pagesService = pagesService;
+            this.episodesLikesService = episodesLikesService;
         }
 
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
@@ -40,6 +47,7 @@
                 WebtoonId = webtoon.Id,
                 IsDeleted = false,
                 CreatedOn = DateTime.UtcNow,
+                EpisodeNumber = (episodesCount + 1).ToString(),
             };
 
             episode.Pages = this.pagesService.AddPagesAsync(input.Pages, episodeFolder, episode.Id).Result;
@@ -52,10 +60,18 @@
         {
             var viewModel = new GetEpisodeViewModel();
             var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumber(webtoonTitleNumber, episodeNumber);
-            viewModel.EpisodeNumber = episode.Name;
+            viewModel.EpisodeTitle = episode.Name;
+            viewModel.EpisodeNumber = episode.EpisodeNumber;
+            viewModel.WebtoonTitleNumber = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).TitleNumber;
             viewModel.WebtoonTitle = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Title;
             viewModel.PagesPaths = this.pagesRepository.GetPagePathsForEpisodeByEpisodeId(episode.Id);
+            viewModel.Likes = this.episodesLikesService.GetEpisodeLikes(episode.Id);
             return viewModel;
+        }
+
+        public string GetEpisodeId(string webtoonTitleNumber, string episodeNumber)
+        {
+            return this.episodesRepository.All().FirstOrDefault(e => e.Webtoon.TitleNumber == webtoonTitleNumber && e.EpisodeNumber == episodeNumber).Id;
         }
     }
 }
