@@ -34,5 +34,7 @@
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string CommentNumber { get; set; }
+
+        public string ParentId { get; set; }
     }
 }

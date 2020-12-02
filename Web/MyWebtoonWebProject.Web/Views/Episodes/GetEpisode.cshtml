@@ -37,9 +37,10 @@
     <script>
         $("#commentButton").click(function () {
             var userInput = $("#userComment").val();
-            var episodeNumber = @Model.EpisodeNumber.ToString();
+            var webtoonTitleNumber = @Model.WebtoonTitleNumber;
+            var episodeNumber = @Model.EpisodeNumber;
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-            var data = { episodeNumber: episodeNumber, userComment: userInput }
+            var data = { webtoonTitleNumber: webtoonTitleNumber.toString(), episodeNumber: episodeNumber.toString(), userComment: userInput, parentId: null}
             $.ajax({
                 type: "POST",
                 url: "/api/Comments",
@@ -48,7 +49,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log(data);
+                    console.log("succsess");
                 },
                 contentType: 'application/json',
             });

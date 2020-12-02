@@ -9,6 +9,7 @@
     using MyWebtoonWebProject.Data.Models;
     using MyWebtoonWebProject.Data.Models.Enums;
     using MyWebtoonWebProject.Data.Repositories;
+    using MyWebtoonWebProject.Services.Data;
     using MyWebtoonWebProject.Web.ViewModels.Episodes;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
@@ -21,6 +22,7 @@
         private readonly IWebtoonsSubscribersRepository webtoonsSubscribersRepository;
         private readonly IReviewsRepository reviewsRepository;
         private readonly IReviewsVotesRepository reviewsVotesRepository;
+        private readonly IEpisodesLikesService episodesLikesService;
 
         public WebtoonsService(
             IWebtoonsRepository webtoonsRepository,
@@ -29,7 +31,8 @@
             IApplicationUserRepository applicationUserRepository,
             IWebtoonsSubscribersRepository webtoonsSubscribersRepository,
             IReviewsRepository reviewsRepository,
-            IReviewsVotesRepository reviewsVotesRepository)
+            IReviewsVotesRepository reviewsVotesRepository,
+            IEpisodesLikesService episodesLikesService)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
@@ -38,6 +41,7 @@
             this.webtoonsSubscribersRepository = webtoonsSubscribersRepository;
             this.reviewsRepository = reviewsRepository;
             this.reviewsVotesRepository = reviewsVotesRepository;
+            this.episodesLikesService = episodesLikesService;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -116,7 +120,7 @@
                 {
                     EpisodeNumber = e.Name,
                     CreatedOn = e.CreatedOn,
-                    Likes = e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0),
+                    Likes = this.episodesLikesService.GetEpisodeLikes(e.Id),
                 })
                 .OrderByDescending(e => e.EpisodeNumber)
                 .Skip((page - 1) * episodesPerPage)
