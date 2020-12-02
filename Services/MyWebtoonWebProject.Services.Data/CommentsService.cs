@@ -26,7 +26,7 @@
             {
                 CommentAuthorId = userId,
                 EpisodeId = episodeId,
-                PostedOn = DateTime.UtcNow,
+                CreatedOn = DateTime.UtcNow,
                 CommentInfo = input.UserComment,
                 CommentNumber = (this.commentsRepository.Count() + 1).ToString(),
                 ParentId = input.ParentId,

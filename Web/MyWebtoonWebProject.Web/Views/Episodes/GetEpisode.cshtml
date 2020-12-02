@@ -21,14 +21,18 @@
         <textarea id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
         <button class="btn btn-secondary" id="commentButton">Submit</button>
     }
-    @*<ul class="list-group">
+    <ul class="list-group">
             @foreach (var comment in Model.Comments)
             {
                 <li class="list-group-item">
-                    hello
+                    <div class="d-md-inline-flex">
+                    <p>@comment.PostedOn.ToString("dd-MM-yyyy")</p>
+                    <p>@comment.CommentAuthorId</p>
+                    </div>
+                    <p>@comment.CommentInfo</p>
                 </li>
             }
-        </ul>*@
+        </ul>
 
 </div>
 <form method="post" id="antiForgeryForm"></form>

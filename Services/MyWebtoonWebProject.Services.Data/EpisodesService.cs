@@ -16,19 +16,22 @@
         private readonly IPagesRepository pagesRepository;
         private readonly IPagesService pagesService;
         private readonly IEpisodesLikesService episodesLikesService;
+        private readonly ICommentsRepository commentsRepository;
 
         public EpisodesService(
             IWebtoonsRepository webtoonsRepository,
             IEpisodesRepository episodesRepository,
             IPagesRepository pagesRepository,
             IPagesService pagesService,
-            IEpisodesLikesService episodesLikesService)
+            IEpisodesLikesService episodesLikesService,
+            ICommentsRepository commentsRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
             this.pagesRepository = pagesRepository;
             this.pagesService = pagesService;
             this.episodesLikesService = episodesLikesService;
+            this.commentsRepository = commentsRepository;
         }
 
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
@@ -66,6 +69,7 @@
             viewModel.WebtoonTitle = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Title;
             viewModel.PagesPaths = this.pagesRepository.GetPagePathsForEpisodeByEpisodeId(episode.Id);
             viewModel.Likes = this.episodesLikesService.GetEpisodeLikes(episode.Id);
+            viewModel.Comments = this.commentsRepository.GetEpisodeComments(episode.Id);
             return viewModel;
         }
 

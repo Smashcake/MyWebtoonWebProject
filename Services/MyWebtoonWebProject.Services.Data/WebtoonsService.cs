@@ -92,6 +92,8 @@
                     CoverPhoto = w.CoverPhoto,
                     Genre = w.Genre.Name,
                     TitleNumber = w.TitleNumber,
+                    Episodes = this.episodesRepository.GetEpisodesByWebtoonId(w.Id),
+                    //Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
                 })
                 .ToList();
 
