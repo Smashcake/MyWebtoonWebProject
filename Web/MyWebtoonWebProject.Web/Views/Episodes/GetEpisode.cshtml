@@ -16,29 +16,64 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <button class="btn btn-success offset-md-6" onclick="likeEpisode(@Model.WebtoonTitleNumber,@Model.EpisodeNumber)"><i class="fas fa-heart"></i>Like <span id="episodeLikes">@Model.Likes</span></button>
-        <br />
-        <textarea id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
+        <div class="o">
+            <button class="btn btn-success offset-md-6" onclick="likeEpisode(@Model.WebtoonTitleNumber,@Model.EpisodeNumber)"><i class="fas fa-heart"></i>Like <span id="episodeLikes">@Model.Likes</span></button>
+            <br />
+        </div>
+        <textarea class="col-md-7" id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
         <button class="btn btn-secondary" id="commentButton">Submit</button>
     }
-    <ul class="list-group">
-            @foreach (var comment in Model.Comments)
+    <ul class="list-group col-md-8">
+        @foreach (var comment in Model.Comments)
+        {
+            if (comment.ParentId == null)
             {
                 <li class="list-group-item">
-                    <div class="d-md-inline-flex">
-                    <p>@comment.PostedOn.ToString("dd-MM-yyyy")</p>
-                    <p>@comment.CommentAuthorId</p>
-                    </div>
+                    <p><i class="fas fa-user"></i> @comment.CommentAuthorId</p>
                     <p>@comment.CommentInfo</p>
+                    <p><i class="fas fa-calendar"></i> @comment.PostedOn.ToString("dd-MM-yyyy")</p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div>
+                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReply" aria-expanded="false" aria-controls="collapseExample">
+                                Reply
+                            </button>
+                            <textarea class="collapse" id="commentReply" cols="35" rows="5" maxlength="800" required spellcheck="false"></textarea>
+                            <input type="hidden" id="replyParentId" value="@comment.Id">
+                            <button class="btn btn-outline-primary" id="replyButton">Post</button>
+                        </div>
+                    }
                 </li>
             }
-        </ul>
+        }
+    </ul>
 
 </div>
 <form method="post" id="antiForgeryForm"></form>
 
 @section Scripts{
     <script>
+        $("#replyButton").click(function () {
+            var userReply = $("#commentReply").val();
+            var webtoonTitleNumber = @Model.WebtoonTitleNumber;
+            var episodeNumber = @Model.EpisodeNumber;
+            var parentId = $("#replyParentId").val();
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { webtoonTitleNumber: webtoonTitleNumber.toString(), episodeNumber: episodeNumber.toString(), userComment: userReply, parentId: parentId }
+            $.ajax({
+                type: "POST",
+                url: "/api/Comments",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log("succsess");
+                },
+                contentType: 'application/json',
+            });
+        });
+
         $("#commentButton").click(function () {
             var userInput = $("#userComment").val();
             var webtoonTitleNumber = @Model.WebtoonTitleNumber;

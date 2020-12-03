@@ -32,6 +32,12 @@
                 ParentId = input.ParentId,
             };
 
+            if (comment.ParentId != null)
+            {
+                var parentComment = this.commentsRepository.All().FirstOrDefault(c => c.Id == comment.ParentId);
+                parentComment.Comments.Add(comment);
+            }
+
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
         }
