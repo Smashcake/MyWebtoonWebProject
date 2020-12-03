@@ -28,22 +28,46 @@
         {
             if (comment.ParentId == null)
             {
-                <li class="list-group-item">
-                    <p><i class="fas fa-user"></i> @comment.CommentAuthorId</p>
-                    <p>@comment.CommentInfo</p>
-                    <p><i class="fas fa-calendar"></i> @comment.PostedOn.ToString("dd-MM-yyyy")</p>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div>
-                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReply" aria-expanded="false" aria-controls="collapseExample">
-                                Reply
-                            </button>
-                            <textarea class="collapse" id="commentReply" cols="35" rows="5" maxlength="800" required spellcheck="false"></textarea>
-                            <input type="hidden" id="replyParentId" value="@comment.Id">
-                            <button class="btn btn-outline-primary" id="replyButton">Post</button>
-                        </div>
-                    }
-                </li>
+        <li class="list-group-item">
+            <p><i class="fas fa-user"></i> @comment.CommentAuthorId</p>
+            <p>@comment.CommentInfo</p>
+            <p><i class="fas fa-calendar"></i> @comment.PostedOn.ToString("dd-MM-yyyy")</p>
+            <div class="d-inline-flex">
+                <div>
+                    <a href="#" onclick="sendCommentVote(@comment.CommentNumber, true)">
+                        <i class="fas fa-thumbs-up"></i>
+                        Likes: <p id="commentLikes">@*@comment.Likes*@</p>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" onclick="sendCommentVote(@comment.CommentNumber, false)">
+                        <i class="fas fa-thumbs-down"></i>
+                        Dislikes: <p id="commentDislikes">@*@comment.Dislikes*@</p>
+                    </a>
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReplies" aria-expanded="false" aria-controls="collapseExample">
+                        Replies @comment.Comments.Count
+                    </button>
+                    <ul class="list-group col-md-8 collapse" id="commentReplies">
+                        @foreach (var reply in comment.Comments)
+                        {
+                            <li class="list-group-item">
+                                <p><i class="fas fa-user"></i> @reply.CommentAuthorId</p>
+                                <p>@reply.CommentInfo</p>
+                                <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
+                            </li>
+                        }
+                    </ul>
+                    <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>
+                    <input type="hidden" id="replyParentId" value="@comment.Id">
+                    <button class="btn btn-outline-primary" id="replyButton">Reply</button>
+                </div>
+            }
+        </li>
             }
         }
     </ul>
@@ -53,6 +77,25 @@
 
 @section Scripts{
     <script>
+        function sendCommentVote(commentNumber, isUpvote) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { commentNumber: commentNumber.toString(), isUpvote: isUpvote }
+            $.ajax({
+                type: "POST",
+                url: "/api/CommentsVotes",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log(data);
+                    //$('#reviewLikes').html(data.likes);
+                    //$('#reviewDislikes').html(data.dislikes);
+                },
+                contentType: 'application/json',
+            });
+        };
+
         $("#replyButton").click(function () {
             var userReply = $("#commentReply").val();
             var webtoonTitleNumber = @Model.WebtoonTitleNumber;

@@ -75,6 +75,7 @@
             services.AddTransient<IReviewsVotesRepository, ReviewsVotesRepository>();
             services.AddTransient<IEpisodesLikesRepository, EpisodesLikesRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<ICommentsVotesRepository, CommentsVotesRepository>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
@@ -88,6 +89,7 @@
             services.AddTransient<IReviewsVotesService, ReviewsVotesService>();
             services.AddTransient<IEpisodesLikesService, EpisodesLikesService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<ICommentsVotesService, CommentsVotesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

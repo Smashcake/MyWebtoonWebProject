@@ -1,5 +1,6 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -25,6 +26,11 @@
         [Authorize]
         public async Task<IActionResult> CreateComment(CommentInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                throw new ArgumentException("Invalid data");
+            }
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.CreateComment(input, userId);
             return this.RedirectToAction($"GetEpisode", "Episodes", new { webtoonTitleNumber = input.WebtoonTitleNumber, episodeNumber = input.EpisodeNumber });

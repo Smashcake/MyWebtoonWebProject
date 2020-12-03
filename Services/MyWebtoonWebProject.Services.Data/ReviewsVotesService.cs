@@ -18,25 +18,25 @@
             this.reviewsRepository = reviewsRepository;
         }
 
-        public async Task UserVote(string reviewNumber, bool isUpvote, string userId)
+        public async Task UserReviewVote(string reviewNumber, bool isUpVote, string userId)
         {
             var reviewId = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber).Id;
 
-            var userVote = this.reviewsVotesRepository.GetReviewVoteByIds(reviewId, userId);
-            if (userVote != null)
+            var userReviewVote = this.reviewsVotesRepository.GetReviewVoteByIds(reviewId, userId);
+            if (userReviewVote != null)
             {
-                userVote.Vote = isUpvote ? VoteType.UpVote : VoteType.DownVote;
+                userReviewVote.Vote = isUpVote ? VoteType.UpVote : VoteType.DownVote;
             }
             else
             {
-                userVote = new ReviewVote
+                userReviewVote = new ReviewVote
                 {
                     ReviewId = reviewId,
                     ApplicationUserId = userId,
-                    Vote = isUpvote ? VoteType.UpVote : VoteType.DownVote,
+                    Vote = isUpVote ? VoteType.UpVote : VoteType.DownVote,
                 };
 
-                await this.reviewsVotesRepository.AddAsync(userVote);
+                await this.reviewsVotesRepository.AddAsync(userReviewVote);
             }
 
             await this.reviewsVotesRepository.SaveChangesAsync();

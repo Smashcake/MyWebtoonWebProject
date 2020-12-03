@@ -10,5 +10,7 @@
         public int Count();
 
         ICollection<Comment> GetEpisodeComments(string episodeId);
+
+        public Comment GetCommentByCommentNumber(string commentNumber);
     }
 }

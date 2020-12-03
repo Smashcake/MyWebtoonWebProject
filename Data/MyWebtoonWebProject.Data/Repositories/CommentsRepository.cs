@@ -19,5 +19,10 @@
         {
             return this.DbSet.Where(c => c.EpisodeId == episodeId).ToList();
         }
+
+        public Comment GetCommentByCommentNumber(string commentNumber)
+        {
+            return this.DbSet.FirstOrDefault(c => c.CommentNumber == commentNumber);
+        }
     }
 }
