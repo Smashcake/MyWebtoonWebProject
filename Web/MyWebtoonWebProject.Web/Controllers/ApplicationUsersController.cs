@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using MyWebtoonWebProject.Services.Data;
+    using MyWebtoonWebProject.Web.ViewModels.Comments;
     using MyWebtoonWebProject.Web.ViewModels.Reviews;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
@@ -24,10 +25,11 @@
             return this.View(input);
         }
 
-        public ActionResult<string> GetUserComments()
+        public IActionResult GetUserComments(ApplicationUserCommentsViewModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return "Hello from userComments";
+            input.Comments = this.appicationUsersService.GetUserComments(userId);
+            return this.View(input);
         }
 
         public IActionResult GetUserReviews(ApplicationUserReviewsViewModel input)

@@ -5,6 +5,7 @@
 
     using MyWebtoonWebProject.Data.Models.Enums;
     using MyWebtoonWebProject.Data.Repositories;
+    using MyWebtoonWebProject.Web.ViewModels.Comments;
     using MyWebtoonWebProject.Web.ViewModels.Reviews;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
 
@@ -12,11 +13,13 @@
     {
         private readonly IWebtoonsRepository webtoonsRepository;
         private readonly IReviewsRepository reviewsRepository;
+        private readonly ICommentsRepository commentsRepository;
 
-        public ApplicationUsersService(IWebtoonsRepository webtoonsRepository, IReviewsRepository reviewsRepository)
+        public ApplicationUsersService(IWebtoonsRepository webtoonsRepository, IReviewsRepository reviewsRepository, ICommentsRepository commentsRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.reviewsRepository = reviewsRepository;
+            this.commentsRepository = commentsRepository;
         }
 
         public ICollection<GetWebtoonInfoViewModel> GetUserSubscribtions(string userId)
@@ -54,6 +57,23 @@
                 }).ToList();
 
             return reviewsInfo;
+        }
+
+        public ICollection<ApplicationUserCommentViewModel> GetUserComments(string userId)
+        {
+            var commentsInfo = this.commentsRepository
+                .All()
+                .Where(c => c.CommentAuthorId == userId)
+                .Select(c => new ApplicationUserCommentViewModel
+                {
+                    CommentInfo = c.CommentInfo,
+                    CreatedOn = c.CreatedOn,
+                    EpisodeNumber = c.Episode.EpisodeNumber,
+                    WebtoonTitle = c.Episode.Webtoon.Title,
+                    WebtoonTitleNumber = c.Episode.Webtoon.TitleNumber,
+                }).ToList();
+
+            return commentsInfo;
         }
     }
 }
