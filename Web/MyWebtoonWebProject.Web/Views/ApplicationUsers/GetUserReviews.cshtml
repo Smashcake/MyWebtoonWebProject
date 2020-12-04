@@ -10,12 +10,38 @@
         <li class="list-group-item">
             <img src="~/Webtoons/@review.CoverPhoto" width="480px" height="240px" class="offset-6">
             <div class="d-md-inline-flex">
-            <a asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@review.WebtoonTitleNumber">@review.WebtoonTitle</a>
-            <p><i class="fas fa-calendar"></i> Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-            <p>@review.ReviewInfo</p>
-            <p><i class="fas fa-thumbs-up"></i> Likes: @review.Likes</p>
-            <p><i class="fas fa-thumbs-down"></i> Dislikes: @review.Dislikes</p>
+                <a asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@review.WebtoonTitleNumber">@review.WebtoonTitle</a>
+                <p><i class="fas fa-calendar"></i> Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
+                <p>@review.ReviewInfo</p>
+                <p><i class="fas fa-thumbs-up"></i> Likes: @review.Likes</p>
+                <p><i class="fas fa-thumbs-down"></i> Dislikes: @review.Dislikes</p>
+                @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == review.ReviewAuthorId)
+                {
+                    <button class="btn btn-secondary" onclick="deleteReview(@review.ReviewNumber)">DELETE</button>
+                }
             </div>
         </li>
     }
 </ul>
+
+<form method="post" id="antiForgeryForm"></form>
+@section Scripts{
+    <script>
+        function deleteReview(reviewNumber) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { reviewNumber: reviewNumber.toString() }
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Reviews",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log("works!");
+                },
+                contentType: 'application/json',
+            });
+        };
+    </script>
+}

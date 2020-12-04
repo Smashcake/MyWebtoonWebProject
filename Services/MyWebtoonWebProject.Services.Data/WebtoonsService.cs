@@ -141,6 +141,7 @@
                     ReviewNumber = r.ReviewNumber,
                     ReviewInfo = r.ReviewInfo,
                     AuthorUsername = r.ReviewAuthor.UserName,
+                    AuthorId = r.ReviewAuthorId,
                     CreatedOn = r.CreatedOn,
                     Likes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.UpVote) ? 1 : 0),
                     Dislikes = r.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0),

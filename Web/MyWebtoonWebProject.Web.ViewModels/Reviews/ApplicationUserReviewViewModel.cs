@@ -6,6 +6,10 @@
     {
         public string ReviewInfo { get; set; }
 
+        public string ReviewNumber { get; set; }
+
+        public string ReviewAuthorId { get; set; }
+
         public string WebtoonTitle { get; set; }
 
         public string WebtoonTitleNumber { get; set; }

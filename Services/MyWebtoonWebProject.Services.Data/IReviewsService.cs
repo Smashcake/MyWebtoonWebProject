@@ -8,6 +8,8 @@
     {
         Task AddReview(LeaveReviewInputModel input);
 
+        Task DeleteReview(string reviewNumber, string userId);
+
         ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId);
     }
 }

@@ -52,5 +52,18 @@
             var reviewDislikes = review.ReviewVotes.Sum(rv => rv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
             return new ReviewVoteResponseModel { Likes = reviewLikes, Dislikes = reviewDislikes };
         }
+
+        public async Task DeleteReview(string reviewNumber, string userId)
+        {
+            var review = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber);
+
+            if (review.ReviewAuthorId != userId)
+            {
+                throw new ArgumentException("Invalid action taken!");
+            }
+
+            this.reviewsRepository.Delete(review);
+            await this.reviewsRepository.SaveChangesAsync();
+        }
     }
 }

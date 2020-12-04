@@ -10,6 +10,8 @@
 
         public string AuthorUsername { get; set; }
 
+        public string AuthorId { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int Likes { get; set; }

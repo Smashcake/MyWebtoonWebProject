@@ -113,6 +113,10 @@
                                     </a>
                                 </div>
                             </div>
+                            @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == review.AuthorId)
+                            {
+                                <button class="btn btn-secondary" onclick="deleteReview(@review.ReviewNumber)">DELETE</button>
+                            }
                         </div>
                     </div>
                 </li>
@@ -128,6 +132,23 @@
 <form method="post" id="antiForgeryForm"></form>
 @section Scripts{
     <script>
+        function deleteReview(reviewNumber) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { reviewNumber: reviewNumber.toString() }
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Reviews",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    console.log("works!");
+                },
+                contentType: 'application/json',
+            });
+        };
+
         function sendReviewVote(reviewNumber, isUpvote) {
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
             var data = { reviewNumber: reviewNumber.toString(), isUpvote: isUpvote }
