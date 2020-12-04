@@ -35,5 +35,19 @@
             await this.commentsService.CreateComment(input, userId);
             return this.RedirectToAction($"GetEpisode", "Episodes", new { webtoonTitleNumber = input.WebtoonTitleNumber, episodeNumber = input.EpisodeNumber });
         }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult<bool>> DeleteComment(CommentDeleteInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new ArgumentException("Invalid data");
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.commentsService.DeleteComment(input.CommentNumber, userId);
+            return true;
+        }
     }
 }

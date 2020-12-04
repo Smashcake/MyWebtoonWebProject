@@ -8,6 +8,10 @@
 
         public string WebtoonTitleNumber { get; set; }
 
+        public string CommentAuthorId { get; set; }
+
+        public string CommentNumber { get; set; }
+
         public string EpisodeNumber { get; set; }
 
         public string CommentInfo { get; set; }

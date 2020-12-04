@@ -1,4 +1,5 @@
-﻿@using MyWebtoonWebProject.Web.ViewModels.Episodes
+﻿@using System.Security.Claims
+@using MyWebtoonWebProject.Web.ViewModels.Episodes
 @model GetEpisodeViewModel
 @{
     ViewBag.Title = Model.EpisodeTitle;
@@ -28,46 +29,54 @@
         {
             if (comment.ParentId == null)
             {
-        <li class="list-group-item">
-            <p><i class="fas fa-user"></i> @comment.CommentAuthorId</p>
-            <p>@comment.CommentInfo</p>
-            <p><i class="fas fa-calendar"></i> @comment.PostedOn.ToString("dd-MM-yyyy")</p>
-            <div class="d-inline-flex">
-                <div>
-                    <a href="#" onclick="sendCommentVote(@comment.CommentNumber, true)">
-                        <i class="fas fa-thumbs-up"></i>
-                        Likes: <p id="commentLikes">@*@comment.Likes*@</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" onclick="sendCommentVote(@comment.CommentNumber, false)">
-                        <i class="fas fa-thumbs-down"></i>
-                        Dislikes: <p id="commentDislikes">@*@comment.Dislikes*@</p>
-                    </a>
-                </div>
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div>
-                    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReplies" aria-expanded="false" aria-controls="collapseExample">
-                        Replies @comment.Comments.Count
-                    </button>
-                    <ul class="list-group col-md-8 collapse" id="commentReplies">
-                        @foreach (var reply in comment.Comments)
+                <li class="list-group-item">
+                    <p><i class="fas fa-user"></i> @comment.CommentAuthorId</p>
+                    <p>@comment.CommentInfo</p>
+                    <p><i class="fas fa-calendar"></i> @comment.CreatedOn.ToString("dd-MM-yyyy")</p>
+                    <div class="d-inline-flex">
+                        <div>
+                            <a href="#" onclick="sendCommentVote(@comment.CommentNumber, true)">
+                                <i class="fas fa-thumbs-up"></i>
+                                Likes: <p id="commentLikes">@*@comment.Likes*@</p>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" onclick="sendCommentVote(@comment.CommentNumber, false)">
+                                <i class="fas fa-thumbs-down"></i>
+                                Dislikes: <p id="commentDislikes">@*@comment.Dislikes*@</p>
+                            </a>
+                        </div>
+                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.CommentAuthorId)
                         {
-                            <li class="list-group-item">
-                                <p><i class="fas fa-user"></i> @reply.CommentAuthorId</p>
-                                <p>@reply.CommentInfo</p>
-                                <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
-                            </li>
+                            <button class="btn btn-secondary" onclick="deleteComment(@comment.CommentNumber)">DELETE</button>
                         }
-                    </ul>
-                    <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>
-                    <input type="hidden" id="replyParentId" value="@comment.Id">
-                    <button class="btn btn-outline-primary" id="replyButton">Reply</button>
-                </div>
-            }
-        </li>
+                        <div>
+                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReplies" aria-expanded="false" aria-controls="collapseExample">
+                                Replies @comment.Comments.Count
+                            </button>
+                            <ul class="list-group col-md-8 collapse" id="commentReplies">
+                                @foreach (var reply in comment.Comments)
+                                {
+                                    <li class="list-group-item">
+                                        <p><i class="fas fa-user"></i> @reply.CommentAuthorId</p>
+                                        <p>@reply.CommentInfo</p>
+                                        <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
+                                        @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
+                                        {
+                                            <button class="btn btn-secondary" onclick="deleteComment(@reply.CommentNumber)">DELETE</button>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                            <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>
+                            <input type="hidden" id="replyParentId" value="@comment.Id">
+                            <button class="btn btn-outline-primary" id="replyButton">Reply</button>
+                        </div>
+                    }
+                </li>
             }
         }
     </ul>
@@ -77,6 +86,23 @@
 
 @section Scripts{
     <script>
+        function deleteComment(commentNumber) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { commentNumber: commentNumber.toString() }
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Comments",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                   //TODO: REDIRECT TO SAME PAGE
+                },
+                contentType: 'application/json',
+            });
+        };
+
         function sendCommentVote(commentNumber, isUpvote) {
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
             var data = { commentNumber: commentNumber.toString(), isUpvote: isUpvote }
@@ -111,7 +137,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log("succsess");
+                    //console.log("succsess");
                 },
                 contentType: 'application/json',
             });

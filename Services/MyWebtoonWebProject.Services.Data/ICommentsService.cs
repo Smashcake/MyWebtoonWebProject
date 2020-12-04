@@ -7,5 +7,7 @@
     public interface ICommentsService
     {
         Task CreateComment(CommentInputModel input, string userId);
+
+        Task DeleteComment(string commentNumber, string userId);
     }
 }

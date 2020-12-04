@@ -67,6 +67,8 @@
                 .Select(c => new ApplicationUserCommentViewModel
                 {
                     CommentInfo = c.CommentInfo,
+                    CommentAuthorId = c.CommentAuthorId,
+                    CommentNumber = c.CommentNumber,
                     CreatedOn = c.CreatedOn,
                     EpisodeNumber = c.Episode.EpisodeNumber,
                     WebtoonTitle = c.Episode.Webtoon.Title,

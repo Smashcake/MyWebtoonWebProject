@@ -41,5 +41,20 @@
             await this.commentsRepository.AddAsync(comment);
             await this.commentsRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteComment(string commentNumber, string userId)
+        {
+            var comment = this.commentsRepository.GetCommentByCommentNumber(commentNumber);
+
+            if (comment.CommentAuthorId != userId)
+            {
+                throw new ArgumentException("Invalid action taken!");
+            }
+            else
+            {
+                this.commentsRepository.Delete(comment);
+                await this.commentsRepository.SaveChangesAsync();
+            }
+        }
     }
 }
