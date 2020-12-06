@@ -15,7 +15,7 @@
         public ICollection<string> GetPagePathsForEpisodeByEpisodeId(string episodeId) =>
             this.DbSet
                 .Where(p => p.EpisodeId == episodeId)
-                .OrderBy(p => p.FilePath)
+                .OrderBy(p => p.PageNumber)
                 .Select(p => p.FilePath)
                 .ToList();
     }

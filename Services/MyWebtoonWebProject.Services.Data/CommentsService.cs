@@ -19,7 +19,7 @@
             this.episodesService = episodesService;
         }
 
-        public async Task CreateComment(CommentInputModel input, string userId)
+        public async Task CreateCommentAsync(CommentInputModel input, string userId)
         {
             var episodeId = this.episodesService.GetEpisodeId(input.WebtoonTitleNumber, input.EpisodeNumber);
             var comment = new Comment
@@ -42,7 +42,7 @@
             await this.commentsRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteComment(string commentNumber, string userId)
+        public async Task DeleteCommentAsync(string commentNumber, string userId)
         {
             var comment = this.commentsRepository.GetCommentByCommentNumber(commentNumber);
 

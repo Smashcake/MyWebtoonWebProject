@@ -27,7 +27,7 @@
         public async Task<ActionResult<ReviewVoteResponseModel>> Vote(ReviewVoteInputModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsVotesService.UserReviewVote(input.ReviewNumber, input.IsUpVote, userId);
+            await this.reviewsVotesService.UserReviewVoteAsync(input.ReviewNumber, input.IsUpVote, userId);
             var likesAndDislikes = this.reviewsService.ReviewLikesAndDislikes(input.ReviewNumber);
             return new ReviewVoteResponseModel { Likes = likesAndDislikes.Likes, Dislikes = likesAndDislikes.Dislikes };
         }

@@ -6,9 +6,9 @@
 
     public interface IReviewsService
     {
-        Task AddReview(LeaveReviewInputModel input);
+        Task AddReviewAsync(LeaveReviewInputModel input);
 
-        Task DeleteReview(string reviewNumber, string userId);
+        Task DeleteReviewAsync(string reviewNumber, string userId);
 
         ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId);
     }

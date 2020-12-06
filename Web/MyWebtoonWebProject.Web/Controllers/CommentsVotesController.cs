@@ -24,7 +24,7 @@
         public async Task<ActionResult<string>> Vote(CommentVoteInputModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.commentsVotesService.UserCommentVote(input.CommentNumber, input.IsUpVote, userId);
+            await this.commentsVotesService.UserCommentVoteAsync(input.CommentNumber, input.IsUpVote, userId);
             return "success";
         }
     }

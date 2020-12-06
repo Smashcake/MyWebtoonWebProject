@@ -28,7 +28,7 @@
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var episodeId = this.episodesService.GetEpisodeId(input.WebtoonTitleNumber, input.EpisodeNumber);
-            await this.episodesLikesService.UserLike(episodeId, userId);
+            await this.episodesLikesService.UserLikeAsync(episodeId, userId);
             return this.episodesLikesService.GetEpisodeLikes(episodeId);
         }
     }

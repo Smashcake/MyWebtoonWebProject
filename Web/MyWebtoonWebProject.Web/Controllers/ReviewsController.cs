@@ -25,7 +25,7 @@
         public async Task<ActionResult<bool>> LeaveReview(LeaveReviewInputModel input)
         {
             input.UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsService.AddReview(input);
+            await this.reviewsService.AddReviewAsync(input);
             return true;
         }
 
@@ -34,7 +34,7 @@
         public async Task<ActionResult<bool>> DeleteReview(DeleteReviewInputModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsService.DeleteReview(input.ReviewNumber, userId);
+            await this.reviewsService.DeleteReviewAsync(input.ReviewNumber, userId);
             return true;
         }
     }

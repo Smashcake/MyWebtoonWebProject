@@ -20,7 +20,7 @@
             this.webtoonsRepository = webtoonsRepository;
         }
 
-        public async Task AddReview(LeaveReviewInputModel input)
+        public async Task AddReviewAsync(LeaveReviewInputModel input)
         {
             var webtoonId = this.webtoonsRepository.GetWebtoonByTitleNumber(input.WebtoonTitleNumber).Id;
             var review = this.reviewsRepository.All().FirstOrDefault(r => r.ReviewAuthorId == input.UserId && r.WebtoonId == webtoonId);
@@ -53,7 +53,7 @@
             return new ReviewVoteResponseModel { Likes = reviewLikes, Dislikes = reviewDislikes };
         }
 
-        public async Task DeleteReview(string reviewNumber, string userId)
+        public async Task DeleteReviewAsync(string reviewNumber, string userId)
         {
             var review = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber);
 

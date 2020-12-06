@@ -3,9 +3,9 @@
     padding: 0;
 }
 
-.list-unstyled {
+#webtoons {
     display: flex;
-    background-color: rgba(230, 230, 230, 0.89);
+    background-color: #e4e4e4
 }
 
 #webtoon {
@@ -27,11 +27,11 @@
     width: 157px;
     height: 178px;
     color: #000;
+    font-weight: bold;
     font-family: Hind_M,SimHei,Verdana,Arial, Helvetica, sans-serif;
 }
 
 #cardTitle {
-    font-weight: bold;
     width: 157px;
     font-size: 18px;
     line-height: 18px;
@@ -41,12 +41,13 @@
 
 #cardAuthor {
     margin-top: 4px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 14px;
     word-wrap: break-word;
 }
 
 #cardGenre {
+    font-size: 16px;
     height: 17px;
     margin: 3px 0 0 -1px;
 }

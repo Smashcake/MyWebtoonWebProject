@@ -37,6 +37,7 @@
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
         {
             var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(input.TitleNumber);
+            webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
             var episodesCount = webtoon.Episodes.Count + 1;
             string episodeName = "Episode" + episodesCount;
             string topFolder = $@"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons\{webtoon.Title}";

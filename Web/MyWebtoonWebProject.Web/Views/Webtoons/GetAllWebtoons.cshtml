@@ -6,23 +6,24 @@
 
     <link rel="stylesheet" type="text/css" href="/css/allwebtoons.css"  asp-append-version="true"/>
 
-<ul class="list-unstyled">
+<div class="card-deck" id="webtoons">
     @foreach (var webtoon in Model.Webtoons)
     {
-        <li>
+        <div class="card-body">
             <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@webtoon.TitleNumber">
                 <img id="coverPhoto" src="~/Webtoons/@webtoon.CoverPhoto" />
                 <div id="cardInfo" style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px" >
                     <p id="cardTitle">@webtoon.Title</p>
                     <p id="cardAuthor">@webtoon.Author</p>
                     <p id="cardGenre">@webtoon.Genre</p>
+                    <br />
                     <p id="cardLikes"><i class="fas fa-heart"></i> @webtoon.Likes</p>
                 </div>
             </a>
-        </li>
+        </div>
     }
 
-</ul>
+</div>
 
 
 

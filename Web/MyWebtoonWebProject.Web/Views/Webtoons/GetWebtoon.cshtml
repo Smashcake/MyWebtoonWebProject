@@ -1,4 +1,5 @@
 ﻿@using MyWebtoonWebProject.Web.ViewModels.Webtoons
+@using System.Globalization 
 @using System.Security.Claims
 @model WebtoonInfoViewModel
 @{
@@ -9,125 +10,134 @@
     <span>
         <img src="~/Webtoons/@Model.CoverPhoto" height="240px">
     </span>
-    <div style="position:absolute;top:0;left:0;transform:translate(200%,40%);">
+    <div class="centered position-absolute" style="top:50%;left:50%;transform: translate(-50%, -50%)">
         <h2 style="color:forestgreen">@Model.GenreName</h2>
         <h1 style="text-align:center">@Model.Title</h1>
         <h3>@Model.AuthorName</h3>
     </div>
+    <br />
 </div>
 
-<div name="Body" class="col-md-8">
-    <div name="Details" class="col-md-5">
-        <span name="Note"></span>
-        <div name="EpisodeInfo">
-            <span>Episodes</span>
-            <ul class="list-group">
-                @foreach (var episode in Model.Episodes)
-                {
-                    <li id="episodeCard" class="list-group-item">
-                        <div>
-                            <a class="d-inline-flex" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
-                                <p># @episode.EpisodeNumber.Replace("Episode", string.Empty)</p>
-                                <p><i class="fas fa-calendar"></i> @episode.CreatedOn.ToString("dd-MM-yyyy")</p>
-                                <p><i class="fas fa-thumbs-up"></i> @episode.Likes</p>
-                            </a>
-                        </div>
-                    </li>
-                }
-            </ul>
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item @if (!Model.HasPreviousEpisodePage) { <text>disabled</text> } ">
-                        <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.PreviousEpisodePage">Previous</a>
-                    </li>
-                    @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
-                    {
-                        if (i > 0)
+<div class="container">
+    <div class="row">
+        <div name="Body" class="col-md-8">
+            <div name="Details">
+                <span name="Note"></span>
+                <div name="EpisodeInfo">
+                    <span>Episodes</span>
+                    <ul class="list-group">
+                        @foreach (var episode in Model.Episodes)
                         {
-                            <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
-                        }
-                    }
-                    <li class="page-item active">
-                        <span class="page-link">
-                            @Model.PageNumber
-                            <span class="sr-only">(current)</span>
-                        </span>
-                    </li>
-                    @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
-                    {
-                        if (i <= Model.EpisodePagesCount)
-                        {
-                            <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
-                        }
-                    }
-                    <li class="page-item @if (!Model.HasNextEpisodePage) { <text>disabled</text> } ">
-                        <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <div name="Side" class="col-md-3 offset-md-11">
-        <div style="display:inline-block">
-            <button class="btn btn-success" id="subscribe">
-                @if (Model.IsUserSubscribed)
-                {<text>Subscribed</text>}
-            else
-            {<text>Subscribe</text>}
-            </button>
-            <button class="btn btn-success" name="Rate">Rate</button>
-        </div>
-        <p style="font-size: 16px; line-height: 25px; color:#000; width:357px; height:47px" name="Upload Day"> @Model.UploadDay</p>
-        <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word; width:300px; height:125px" name="Synopsis">
-            @Model.Synopsis
-        </p>
-        @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
-        }
-
-    </div>
-    <div name="Reviews" class="col-md-5">
-        <span>Reviews</span>
-        <ul class="list-group">
-            @foreach (var review in Model.Reviews)
-            {
-                <li class="list-group-item">
-                    <div class="d-md-block">
-                        <p><i class="fas fa-user"></i> Author: @review.AuthorUsername</p>
-                        <div>
-                            <p>@review.ReviewInfo</p>
-                            <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-                            <div class="d-inline-flex">
+                            <li id="episodeCard" class="list-group-item">
                                 <div>
-                                    <a href="#" onclick="sendReviewVote(@review.ReviewNumber, true)">
-                                        <i class="fas fa-thumbs-up"></i>
-                                        Likes: <p id="reviewLikes">@review.Likes</p>
-
+                                    <a class="d-inline-flex" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                                        <span style="margin-right:150px">@episode.EpisodeNumber</span>
+                                        <span style="margin-right:150px">@episode.CreatedOn.ToString("dd MMMM,yyyy", CultureInfo.InvariantCulture)</span>
+                                        <span style="margin-right:100px"><i class="fas fa-heart"></i> @episode.Likes</span>
+                                        <span># @episode.EpisodeNumber.Replace("Episode",string.Empty)</span>
                                     </a>
                                 </div>
-                                <div>
-                                    <a href="#" onclick="sendReviewVote(@review.ReviewNumber, false)">
-                                        <i class="fas fa-thumbs-down"></i>
-                                        Dislikes: <p id="reviewDislikes">@review.Dislikes</p>
-                                    </a>
-                                </div>
-                            </div>
-                            @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == review.AuthorId)
+                            </li>
+                        }
+                    </ul>
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item @if (!Model.HasPreviousEpisodePage) { <text>disabled</text> } ">
+                                <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.PreviousEpisodePage">Previous</a>
+                            </li>
+                            @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
                             {
-                                <button class="btn btn-secondary" onclick="deleteReview(@review.ReviewNumber)">DELETE</button>
+                                if (i > 0)
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                                }
                             }
-                        </div>
-                    </div>
-                </li>
-            }
-        </ul>
-        @if (User.Identity.IsAuthenticated && Model.DoesCurrentUserHaveAReview == false)
-        {
-            <textarea id="userReview" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Leave a review"></textarea>
-            <button class="btn btn-secondary" id="reviewButton">Submit</button>
-        }
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    @Model.PageNumber
+                                    <span class="sr-only">(current)</span>
+                                </span>
+                            </li>
+                            @for (int i = Model.PageNumber + 1; i <= Model.PageNumber + 3; i++)
+                            {
+                                if (i <= Model.EpisodePagesCount)
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                                }
+                            }
+                            <li class="page-item @if (!Model.HasNextEpisodePage) { <text>disabled</text> } ">
+                                <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div name="Side" class="col-md-4">
+            <div style="display:inline-block">
+                <button class="btn btn-success" id="subscribe">
+                    @if (Model.IsUserSubscribed)
+                    {<text>Subscribed</text>}
+                else
+                {<text>Subscribe</text>}
+                </button>
+                <button class="btn btn-success" name="Rate">Rate</button>
+            </div>
+            <hr />
+            <p style="font-size: 16px; line-height: 25px; color:#000; width:357px; height:47px" name="Upload Day"> @Model.UploadDay</p>
+            <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word;" name="Synopsis">
+                @Model.Synopsis
+            </p>
+            <div>
+                @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
+                }
+
+            </div>
+        </div>
     </div>
+</div>
+<div name="Reviews" class="col-md-5">
+    <span>Reviews</span>
+    <ul class="list-group">
+        @foreach (var review in Model.Reviews)
+        {
+            <li class="list-group-item">
+                <div class="d-md-block">
+                    <p><i class="fas fa-user"></i> Author: @review.AuthorUsername</p>
+                    <div>
+                        <p>@review.ReviewInfo</p>
+                        <p><i class="fas fa-calendar"></i>Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
+                        <div class="d-inline-flex">
+                            <div>
+                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, true)">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    Likes: <p id="reviewLikes">@review.Likes</p>
+
+                                </a>
+                            </div>
+                            <div>
+                                <a href="#" onclick="sendReviewVote(@review.ReviewNumber, false)">
+                                    <i class="fas fa-thumbs-down"></i>
+                                    Dislikes: <p id="reviewDislikes">@review.Dislikes</p>
+                                </a>
+                            </div>
+                        </div>
+                        @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == review.AuthorId)
+                        {
+                            <button class="btn btn-secondary" onclick="deleteReview(@review.ReviewNumber)">DELETE</button>
+                        }
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    @if (User.Identity.IsAuthenticated && Model.DoesCurrentUserHaveAReview == false)
+    {
+        <textarea id="userReview" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Leave a review"></textarea>
+        <button class="btn btn-secondary" id="reviewButton">Submit</button>
+    }
 </div>
 <form method="post" id="antiForgeryForm"></form>
 @section Scripts{

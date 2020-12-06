@@ -25,8 +25,6 @@
             var pagesToReturn = new List<Page>();
             var pageCounter = 0;
 
-            pages.OrderBy(p => p.FileName);
-
             foreach (var page in pages)
             {
                 if (!this.IsImageValid(page))
@@ -46,6 +44,7 @@
                 {
                     FilePath = pageName,
                     EpisodeId = episodeId,
+                    PageNumber = (short)pageCounter,
                 };
 
                 await this.pagesRepository.AddAsync(currentPage);

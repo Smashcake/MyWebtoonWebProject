@@ -4,6 +4,6 @@
 
     public interface IReviewsVotesService
     {
-        Task UserReviewVote(string reviewId, bool isUpvote, string userId);
+        Task UserReviewVoteAsync(string reviewId, bool isUpvote, string userId);
     }
 }

@@ -12,11 +12,14 @@
 
         public string Id { get; set; }
 
+        [Required]
         public string EpisodeId { get; set; }
 
         public Episode Episode { get; set; }
 
         [Required]
         public string FilePath { get; set; }
+
+        public short PageNumber { get; set; }
     }
 }

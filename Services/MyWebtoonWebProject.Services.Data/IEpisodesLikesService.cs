@@ -6,6 +6,6 @@
     {
         int GetEpisodeLikes(string episodeId);
 
-        Task UserLike(string episodeId, string userId);
+        Task UserLikeAsync(string episodeId, string userId);
     }
 }

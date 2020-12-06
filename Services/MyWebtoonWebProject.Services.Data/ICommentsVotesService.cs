@@ -4,6 +4,6 @@
 
     public interface ICommentsVotesService
     {
-        Task UserCommentVote(string commentNumber, bool isUpVote, string userId);
+        Task UserCommentVoteAsync(string commentNumber, bool isUpVote, string userId);
     }
 }

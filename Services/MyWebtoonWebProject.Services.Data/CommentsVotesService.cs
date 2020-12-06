@@ -17,7 +17,7 @@
             this.commentsVotesRepository = commentsVotesRepository;
         }
 
-        public async Task UserCommentVote(string commentNumber, bool isUpVote, string userId)
+        public async Task UserCommentVoteAsync(string commentNumber, bool isUpVote, string userId)
         {
             var commentId = this.commentsRepository.GetCommentByCommentNumber(commentNumber).Id;
 

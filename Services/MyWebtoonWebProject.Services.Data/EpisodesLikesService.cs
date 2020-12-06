@@ -22,7 +22,7 @@
                 .Sum(el => el.HasLiked ? 1 : 0);
         }
 
-        public async Task UserLike(string episodeId, string userId)
+        public async Task UserLikeAsync(string episodeId, string userId)
         {
             var userLike = this.episodesLikesRepository.All().FirstOrDefault(e => e.EpisodeId == episodeId && e.ApplicationUserId == userId);
             if (userLike == null)

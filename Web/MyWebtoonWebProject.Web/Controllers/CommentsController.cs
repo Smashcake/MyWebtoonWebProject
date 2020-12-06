@@ -32,7 +32,7 @@
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.commentsService.CreateComment(input, userId);
+            await this.commentsService.CreateCommentAsync(input, userId);
             return this.RedirectToAction($"GetEpisode", "Episodes", new { webtoonTitleNumber = input.WebtoonTitleNumber, episodeNumber = input.EpisodeNumber });
         }
 
@@ -46,7 +46,7 @@
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.commentsService.DeleteComment(input.CommentNumber, userId);
+            await this.commentsService.DeleteCommentAsync(input.CommentNumber, userId);
             return true;
         }
     }

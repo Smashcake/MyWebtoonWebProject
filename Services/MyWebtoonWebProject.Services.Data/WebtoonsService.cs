@@ -83,17 +83,23 @@
 
         public ICollection<GetWebtoonInfoViewModel> GetAllWebtoons()
         {
-            var webtoons = this.webtoonsRepository
-                .AllAsNoTracking()
+            var allWebtoons = this.webtoonsRepository.All().ToList();
+
+            foreach (var webtoon in allWebtoons)
+            {
+                webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
+            }
+
+            var webtoons = allWebtoons
                 .Select(w => new GetWebtoonInfoViewModel
                 {
-                    Author = w.Author.UserName,
+                    Author = this.applicationUserRepository.GetAuthorUsername(w.AuthorId),
                     Title = w.Title,
                     CoverPhoto = w.CoverPhoto,
-                    Genre = w.Genre.Name,
+                    Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,
                     TitleNumber = w.TitleNumber,
                     Episodes = this.episodesRepository.GetEpisodesByWebtoonId(w.Id),
-                    //Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
+                    Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
                 })
                 .ToList();
 

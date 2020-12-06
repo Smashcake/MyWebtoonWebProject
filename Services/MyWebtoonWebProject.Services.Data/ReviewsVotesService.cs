@@ -18,7 +18,7 @@
             this.reviewsRepository = reviewsRepository;
         }
 
-        public async Task UserReviewVote(string reviewNumber, bool isUpVote, string userId)
+        public async Task UserReviewVoteAsync(string reviewNumber, bool isUpVote, string userId)
         {
             var reviewId = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber).Id;
 
