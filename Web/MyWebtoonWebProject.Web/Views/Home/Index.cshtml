@@ -1,9 +1,24 @@
-﻿@using MyWebtoonWebProject.Common
+﻿@using MyWebtoonWebProject.Web.ViewModels.Home
+@using MyWebtoonWebProject.Common
+@model HomeIndexViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h4>Uploaded today</h4>
+<div class="card-deck">
+    @foreach (var webtoon in Model.DailyUploads)
+    {
+        <div class="card">
+            <img class="card-img-top" src="~/Webtoons/@webtoon.CoverPhoto" alt="Card image cap">
+            <div class="card-body">
+                <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@webtoon.TitleNumber">
+                    <h5 class="card-title">@webtoon.Title</h5>
+                </a>
+                <p class="card-text"><i class="fas fa-user"></i> @webtoon.Author</p>
+                <p class="card-text"><i class="fas fa-heart"></i> @webtoon.Likes</p>
+                <p class="card-text"><small class="text-muted">@webtoon.Genre</small></p>
+            </div>
+        </div>
+    }
 </div>

@@ -1,15 +1,26 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels;
+    using MyWebtoonWebProject.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IWebtoonsService webtoonsService;
+
+        public HomeController(IWebtoonsService webtoonsService)
         {
-            return this.View();
+            this.webtoonsService = webtoonsService;
+        }
+
+        public IActionResult Index(HomeIndexViewModel input)
+        {
+            input.DailyUploads = this.webtoonsService.GetDailyUploads(DateTime.UtcNow.DayOfWeek.ToString());
+            return this.View(input);
         }
 
         public IActionResult Privacy()

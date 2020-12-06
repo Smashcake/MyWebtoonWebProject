@@ -11,6 +11,8 @@
 
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
 
+        ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay);
+
         WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage, string userId);
     }
 }

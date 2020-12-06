@@ -149,5 +149,32 @@
                 TitleNumber = webtoon.TitleNumber,
             };
         }
+
+        public ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay)
+        {
+            var allWebtoons = this.webtoonsRepository.All().ToList();
+            var dailyUploads = allWebtoons.Where(w => w.UploadDay.ToString() == currentDay).ToList();
+
+            foreach (var webtoon in dailyUploads)
+            {
+                webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
+            }
+
+            var webtoons = dailyUploads.Select(w => new GetWebtoonInfoViewModel
+            {
+                Author = this.applicationUserRepository.GetAuthorUsername(w.AuthorId),
+                Title = w.Title,
+                CoverPhoto = w.CoverPhoto,
+                Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,
+                TitleNumber = w.TitleNumber,
+                Episodes = w.Episodes,
+                Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
+            })
+            .OrderBy(w => Guid.NewGuid())
+            .Take(10)
+            .ToList();
+
+            return webtoons;
+        }
     }
 }
