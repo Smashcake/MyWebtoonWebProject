@@ -9,6 +9,6 @@
     {
         ICollection<Episode> GetEpisodesByWebtoonId(string webtoonId);
 
-        Episode GetEpisodeByWebtoonTitleNumber(string webtoonTitleNumber, string episodeNumber);
+        Episode GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(string webtoonTitleNumber, string episodeNumber);
     }
 }

@@ -17,6 +17,7 @@
         private readonly IPagesService pagesService;
         private readonly IEpisodesLikesService episodesLikesService;
         private readonly ICommentsRepository commentsRepository;
+        private readonly IApplicationUserRepository applicationUserRepository;
 
         public EpisodesService(
             IWebtoonsRepository webtoonsRepository,
@@ -24,7 +25,8 @@
             IPagesRepository pagesRepository,
             IPagesService pagesService,
             IEpisodesLikesService episodesLikesService,
-            ICommentsRepository commentsRepository)
+            ICommentsRepository commentsRepository,
+            IApplicationUserRepository applicationUserRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
@@ -32,6 +34,7 @@
             this.pagesService = pagesService;
             this.episodesLikesService = episodesLikesService;
             this.commentsRepository = commentsRepository;
+            this.applicationUserRepository = applicationUserRepository;
         }
 
         public async Task AddEpisodeAsync(AddEpisodeInputModel input)
@@ -63,7 +66,9 @@
         public GetEpisodeViewModel GetEpisode(string webtoonTitleNumber, string episodeNumber)
         {
             var viewModel = new GetEpisodeViewModel();
-            var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumber(webtoonTitleNumber, episodeNumber);
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
+            var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(webtoonTitleNumber, episodeNumber);
+            viewModel.EpisodeAuthorId = webtoon.AuthorId;
             viewModel.EpisodeTitle = episode.Name;
             viewModel.EpisodeNumber = episode.EpisodeNumber;
             viewModel.WebtoonTitleNumber = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).TitleNumber;
@@ -77,6 +82,20 @@
         public string GetEpisodeId(string webtoonTitleNumber, string episodeNumber)
         {
             return this.episodesRepository.All().FirstOrDefault(e => e.Webtoon.TitleNumber == webtoonTitleNumber && e.EpisodeNumber == episodeNumber).Id;
+        }
+
+        public async Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber)
+        {
+            var webtoonId = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Id;
+            var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(webtoonId, episodeNumber);
+
+            if (episode == null)
+            {
+                throw new ArgumentNullException("Invalid data!");
+            }
+
+            this.episodesRepository.Delete(episode);
+            await this.episodesRepository.SaveChangesAsync();
         }
     }
 }

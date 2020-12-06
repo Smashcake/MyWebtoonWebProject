@@ -34,8 +34,13 @@
                                         <span style="margin-right:150px">@episode.EpisodeNumber</span>
                                         <span style="margin-right:150px">@episode.CreatedOn.ToString("dd MMMM,yyyy", CultureInfo.InvariantCulture)</span>
                                         <span style="margin-right:100px"><i class="fas fa-heart"></i> @episode.Likes</span>
-                                        <span># @episode.EpisodeNumber.Replace("Episode",string.Empty)</span>
+                                        <span># @episode.EpisodeNumber.Replace("Episode", string.Empty)</span>
                                     </a>
+                                    @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                                    {
+                                        <div>
+                                            <a class="offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">DELETE</a>
+                                        </div>}
                                 </div>
                             </li>
                         }

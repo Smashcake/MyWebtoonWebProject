@@ -40,5 +40,11 @@
             var viewModel = this.episodesService.GetEpisode(webtoonNumber, episodeNumber);
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber)
+        {
+            await this.episodesService.DeleteEpisodeAsync(webtoonTitleNumber, episodeNumber);
+            return this.RedirectToAction("GetWebtoon", "Webtoons", webtoonTitleNumber);
+        }
     }
 }

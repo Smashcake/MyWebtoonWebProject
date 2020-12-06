@@ -12,9 +12,9 @@
         {
         }
 
-        public Episode GetEpisodeByWebtoonTitleNumber(string webtoonTitleNumber, string episodeNumber) =>
+        public Episode GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(string webToonId, string episodeNumber) =>
             this.DbSet
-            .FirstOrDefault(e => e.Webtoon.TitleNumber == webtoonTitleNumber && e.Name == episodeNumber);
+            .FirstOrDefault(e => e.Webtoon.Id == webToonId && e.EpisodeNumber == episodeNumber);
 
         public ICollection<Episode> GetEpisodesByWebtoonId(string webtoonId) =>
             this.DbSet

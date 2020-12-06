@@ -17,10 +17,15 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <div class="o">
+        <div>
             <button class="btn btn-success offset-md-6" onclick="likeEpisode(@Model.WebtoonTitleNumber,@Model.EpisodeNumber)"><i class="fas fa-heart"></i>Like <span id="episodeLikes">@Model.Likes</span></button>
             <br />
         </div>
+        @if (Model.EpisodeAuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <div>
+                <a class="btn btn-danger offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.WebtoonTitleNumber" asp-route-EpisodeNumber="@Model.EpisodeNumber">DELETE EPISODE</a>
+            </div>}
         <textarea class="col-md-7" id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
         <button class="btn btn-secondary" id="commentButton">Submit</button>
     }
