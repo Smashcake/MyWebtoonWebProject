@@ -8,7 +8,7 @@
     {
         Task AddEpisodeAsync(AddEpisodeInputModel input);
 
-        Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber);
+        Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber, string userId);
 
         GetEpisodeViewModel GetEpisode(string webtoonTitleNumber, string episodeNumber);
 

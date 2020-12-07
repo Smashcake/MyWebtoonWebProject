@@ -106,10 +106,10 @@
             return webtoons;
         }
 
-        public WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage, string userId)
+        public WebtoonInfoViewModel GetWebtoon(string webtoonTitleNumber, int page, int episodesPerPage, string userId)
         {
             var webtoon = this.webtoonsRepository
-                .GetWebtoonByTitleNumber(titleNumber);
+                .GetWebtoonByTitleNumber(webtoonTitleNumber);
 
             webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
             webtoon.Reviews = this.reviewsRepository.GetReviewsByWebtoonId(webtoon.Id);
@@ -126,7 +126,7 @@
                 AuthorId = webtoon.AuthorId,
                 Episodes = webtoon.Episodes.Select(e => new EpisodeWebtoonViewModel
                 {
-                    EpisodeNumber = e.Name,
+                    EpisodeNumber = e.EpisodeNumber,
                     CreatedOn = e.CreatedOn,
                     Likes = this.episodesLikesService.GetEpisodeLikes(e.Id),
                 })

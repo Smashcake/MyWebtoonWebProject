@@ -84,12 +84,12 @@
             return this.episodesRepository.All().FirstOrDefault(e => e.Webtoon.TitleNumber == webtoonTitleNumber && e.EpisodeNumber == episodeNumber).Id;
         }
 
-        public async Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber)
+        public async Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber, string userId)
         {
-            var webtoonId = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Id;
-            var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(webtoonId, episodeNumber);
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
+            var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(webtoonTitleNumber, episodeNumber);
 
-            if (episode == null)
+            if (episode == null || webtoon.AuthorId != userId)
             {
                 throw new ArgumentNullException("Invalid data!");
             }

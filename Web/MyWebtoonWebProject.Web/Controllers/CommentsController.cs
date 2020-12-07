@@ -33,7 +33,7 @@
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.CreateCommentAsync(input, userId);
-            return this.RedirectToAction($"GetEpisode", "Episodes", new { webtoonTitleNumber = input.WebtoonTitleNumber, episodeNumber = input.EpisodeNumber });
+            return this.RedirectToAction($"GetEpisode", "Episodes", new { input.WebtoonTitleNumber, input.EpisodeNumber });
         }
 
         [HttpDelete]

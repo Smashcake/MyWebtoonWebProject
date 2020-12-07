@@ -10,7 +10,7 @@
     @foreach (var webtoon in Model.Webtoons)
     {
         <div class="card-body">
-            <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@webtoon.TitleNumber">
+            <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
                 <img id="coverPhoto" src="~/Webtoons/@webtoon.CoverPhoto" />
                 <div id="cardInfo" style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px" >
                     <p id="cardTitle">@webtoon.Title</p>

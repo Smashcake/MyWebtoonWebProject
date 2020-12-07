@@ -1,5 +1,6 @@
 ﻿namespace MyWebtoonWebProject.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -43,8 +44,9 @@
 
         public async Task<IActionResult> DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber)
         {
-            await this.episodesService.DeleteEpisodeAsync(webtoonTitleNumber, episodeNumber);
-            return this.RedirectToAction("GetWebtoon", "Webtoons", webtoonTitleNumber);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.episodesService.DeleteEpisodeAsync(webtoonTitleNumber, episodeNumber, userId);
+            return this.RedirectToAction("GetWebtoon", "Webtoons", new { webtoonTitleNumber });
         }
     }
 }

@@ -39,7 +39,7 @@
                                     @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                                     {
                                         <div>
-                                            <a class="offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">DELETE</a>
+                                            <a class="btn btn-danger offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">DELETE</a>
                                         </div>}
                                 </div>
                             </li>
