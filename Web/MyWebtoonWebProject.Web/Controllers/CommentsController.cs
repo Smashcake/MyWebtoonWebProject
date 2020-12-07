@@ -24,7 +24,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateComment(CommentInputModel input)
+        public async Task<ActionResult<bool>> CreateComment(CommentInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -33,7 +33,7 @@
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.CreateCommentAsync(input, userId);
-            return this.RedirectToAction($"GetEpisode", "Episodes", new { input.WebtoonTitleNumber, input.EpisodeNumber });
+            return true;
         }
 
         [HttpDelete]

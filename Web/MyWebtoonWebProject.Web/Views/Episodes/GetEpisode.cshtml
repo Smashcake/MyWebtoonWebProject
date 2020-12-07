@@ -92,8 +92,10 @@
 @section Scripts{
     <script>
         function deleteComment(commentNumber) {
+            var webtoonTitleNumber = @Model.WebtoonTitleNumber;
+            var episodeNumber = @Model.EpisodeNumber;
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-            var data = { commentNumber: commentNumber.toString() }
+            var data = { commentNumber: commentNumber.toString(), webtoonTitleNumber: webtoonTitleNumber.toString(), episodeNumber: episodeNumber.toString() }
             $.ajax({
                 type: "DELETE",
                 url: "/api/Comments",
@@ -102,7 +104,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                   //TODO: REDIRECT TO SAME PAGE
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
@@ -142,7 +144,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    //console.log("succsess");
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
@@ -162,7 +164,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log("succsess");
+                    location.reload();
                 },
                 contentType: 'application/json',
             });

@@ -149,7 +149,7 @@
     <script>
         function deleteReview(reviewNumber) {
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-            var data = { reviewNumber: reviewNumber.toString() }
+            var data = { reviewNumber: reviewNumber.toString(),}
             $.ajax({
                 type: "DELETE",
                 url: "/api/Reviews",
@@ -158,7 +158,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log("works!");
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
@@ -195,7 +195,7 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log(data);
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
@@ -213,7 +213,7 @@
                     'X-CSRF-TOKEN': antiForgeryToken
                 },
                 success: function (data) {
-                    console.log(data);
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
