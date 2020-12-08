@@ -5,6 +5,8 @@
 
     public interface IApplicationUserRepository : IDeletableEntityRepository<ApplicationUser>
     {
-        public string GetAuthorUsername(string webtoonAuthorId);
+        public string GetWebtoonAuthorUsername(string webtoonAuthorId);
+
+        public string GetUsersUsernameById(string applicationUserId);
     }
 }

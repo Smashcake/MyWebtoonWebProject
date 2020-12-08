@@ -93,7 +93,7 @@
             var webtoons = allWebtoons
                 .Select(w => new GetWebtoonInfoViewModel
                 {
-                    Author = this.applicationUserRepository.GetAuthorUsername(w.AuthorId),
+                    Author = this.applicationUserRepository.GetWebtoonAuthorUsername(w.AuthorId),
                     Title = w.Title,
                     CoverPhoto = w.CoverPhoto,
                     Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,
@@ -122,7 +122,7 @@
 
             return new WebtoonInfoViewModel
             {
-                AuthorName = this.applicationUserRepository.GetAuthorUsername(webtoon.AuthorId),
+                AuthorName = this.applicationUserRepository.GetWebtoonAuthorUsername(webtoon.AuthorId),
                 AuthorId = webtoon.AuthorId,
                 Episodes = webtoon.Episodes.Select(e => new EpisodeWebtoonViewModel
                 {
@@ -168,7 +168,7 @@
 
             var webtoons = dailyUploads.Select(w => new GetWebtoonInfoViewModel
             {
-                Author = this.applicationUserRepository.GetAuthorUsername(w.AuthorId),
+                Author = this.applicationUserRepository.GetWebtoonAuthorUsername(w.AuthorId),
                 Title = w.Title,
                 CoverPhoto = w.CoverPhoto,
                 Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,

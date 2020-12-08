@@ -20,6 +20,6 @@
 
         public ICollection<string> PagesPaths { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<EpisodeCommentViewModel> Comments { get; set; }
     }
 }
