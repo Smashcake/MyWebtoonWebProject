@@ -58,5 +58,12 @@
             input.EpisodesPerPage = episodesPerPage;
             return this.View(input);
         }
+
+        public async Task<IActionResult> DeleteWebtoon(string webtoonTitleNumber)
+        {
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.webtoonsService.DeleteWebtoon(webtoonTitleNumber, currentUserId);
+            return this.RedirectToAction("GetAllWebtoons");
+        }
     }
 }

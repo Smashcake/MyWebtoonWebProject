@@ -182,5 +182,18 @@
 
             return webtoons;
         }
+
+        public async Task DeleteWebtoon(string webtoonTitleNumber, string userId)
+        {
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
+
+            if (webtoon.AuthorId != userId)
+            {
+                throw new ArgumentException("Invalid data!");
+            }
+
+            this.webtoonsRepository.Delete(webtoon);
+            await this.webtoonsRepository.SaveChangesAsync();
+        }
     }
 }

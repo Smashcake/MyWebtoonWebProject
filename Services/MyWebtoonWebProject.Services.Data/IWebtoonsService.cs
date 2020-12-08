@@ -9,6 +9,8 @@
     {
         Task CreateWebtoonAsync(CreateWebtoonInputModel input);
 
+        Task DeleteWebtoon(string webtoonTitleNumber, string userId);
+
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
 
         ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay);

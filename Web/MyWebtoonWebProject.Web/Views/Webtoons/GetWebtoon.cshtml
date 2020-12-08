@@ -1,5 +1,5 @@
 ﻿@using MyWebtoonWebProject.Web.ViewModels.Webtoons
-@using System.Globalization 
+@using System.Globalization
 @using System.Security.Claims
 @model WebtoonInfoViewModel
 @{
@@ -96,7 +96,10 @@
             <div>
                 @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {
-                    <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
+                    <div style="display:inline-block">
+                        <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-TitleNumber="@Model.TitleNumber">Add Episode</a>
+                        <a class="btn btn-danger" asp-controller="Webtoons" asp-action="DeleteWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">DELETE Webtoon</a>
+                    </div>
                 }
 
             </div>
