@@ -42,13 +42,13 @@
                         <div>
                             <a href="#" onclick="sendCommentVote(@comment.CommentNumber, true)">
                                 <i class="fas fa-thumbs-up"></i>
-                                Likes: <p id="commentLikes">@comment.Likes</p>
+                                Likes: <p id="@("commentLikes"+ @comment.CommentNumber)">@comment.Likes</p>
                             </a>
                         </div>
                         <div>
                             <a href="#" onclick="sendCommentVote(@comment.CommentNumber, false)">
                                 <i class="fas fa-thumbs-down"></i>
-                                Dislikes: <p id="commentDislikes">@comment.Dislikes</p>
+                                Dislikes: <p id="@("commentDislikes"+ @comment.CommentNumber)">@comment.Dislikes</p>
                             </a>
                         </div>
                     </div>
@@ -59,26 +59,42 @@
                             <button class="btn btn-secondary" onclick="deleteComment(@comment.CommentNumber)">DELETE</button>
                         }
                         <div>
-                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#commentReplies" aria-expanded="false" aria-controls="collapseExample">
+                            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#@("commentReplies" + comment.CommentNumber)" aria-expanded="false" aria-controls="collapseExample">
                                 Replies @comment.CommentReplies.Count
                             </button>
-                            <ul class="list-group col-md-8 collapse" id="commentReplies">
-                                @foreach (var reply in comment.CommentReplies)
-                                {
+                            <div class="col-md-8 collapse" id="@("commentReplies" +comment.CommentNumber)">
+                                <ul class="list-group">
+                                    @foreach (var reply in comment.CommentReplies)
+                                    {
                                     <li class="list-group-item">
-                                        <p><i class="fas fa-user"></i> @reply.CommentAuthorId</p>
+                                        <p><i class="fas fa-user"></i> @reply.CommentAuthorUsername</p>
                                         <p>@reply.CommentInfo</p>
                                         <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
                                         @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
                                         {
                                             <button class="btn btn-secondary" onclick="deleteComment(@reply.CommentNumber)">DELETE</button>
                                         }
+                                        <div class="d-inline-flex">
+                                            <div>
+                                                <a href="#" onclick="sendReplyVote(@reply.CommentNumber, true)">
+                                                    <i class="fas fa-thumbs-up"></i>
+                                                    Likes: <p id="@("replyLikes"+ reply.CommentNumber)">@comment.Likes</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="#" onclick="sendReplyVote(@reply.CommentNumber, false)">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                    Dislikes: <p id="@("replyDislikes"+ reply.CommentNumber)">@comment.Dislikes</p>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </li>
-                                }
-                            </ul>
-                            <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>
-                            <input type="hidden" id="replyParentId" value="@comment.Id">
-                            <button class="btn btn-outline-primary" id="replyButton">Reply</button>
+                                    }
+                                </ul>
+                                <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>
+                                <input type="hidden" id="replyParentId" value="@comment.Id">
+                                <button class="btn btn-outline-primary" id="replyButton">Reply</button>
+                            </div>
                         </div>
                     }
                 </li>
@@ -110,6 +126,26 @@
             });
         };
 
+        function sendReplyVote(commentNumber, isUpvote) {
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { commentNumber: commentNumber.toString(), isUpvote: isUpvote }
+            $.ajax({
+                type: "POST",
+                url: "/api/CommentsVotes",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    var replyLikes = "replyLikes" + data.commentNumber.toString();
+                    var replyDislikes = "replyDislikes" + data.commentNumber.toString();
+                    $(`#${replyLikes}`).html(data.likes);
+                    $(`#${replyDislikes}`).html(data.dislikes);
+                },
+                contentType: 'application/json',
+            });
+        };
+
         function sendCommentVote(commentNumber, isUpvote) {
             var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
             var data = { commentNumber: commentNumber.toString(), isUpvote: isUpvote }
@@ -121,9 +157,10 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log(data);
-                    $('#commentLikes').html(data.likes);
-                    $('#commentDislikes').html(data.dislikes);
+                    var commentLikes = "commentLikes" + data.commentNumber.toString();
+                    var commentDislikes = "commentDislikes" + data.commentNumber.toString();
+                    $(`#${commentLikes}`).html(data.likes);
+                    $(`#${commentDislikes}`).html(data.dislikes);
                 },
                 contentType: 'application/json',
             });

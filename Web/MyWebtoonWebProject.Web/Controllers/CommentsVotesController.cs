@@ -21,11 +21,12 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<string>> Vote(CommentVoteInputModel input)
+        public async Task<ActionResult<CommentVoteResponseModel>> Vote(CommentVoteInputModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsVotesService.UserCommentVoteAsync(input.CommentNumber, input.IsUpVote, userId);
-            return "success";
+            var commentLikesAndDislikes = this.commentsVotesService.GetCommentVotes(input.CommentNumber);
+            return commentLikesAndDislikes;
         }
     }
 }

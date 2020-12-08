@@ -93,6 +93,7 @@
                 Id = c.Id,
                 CommentReplies = c.Comments.Select(r => new CommentReplyViewModel
                 {
+                    CommentAuthorUsername = this.applicationUserRepository.GetUsersUsernameById(r.CommentAuthorId),
                     CommentAuthorId = r.CommentAuthorId,
                     CommentInfo = r.CommentInfo,
                     CommentNumber = r.CommentNumber,

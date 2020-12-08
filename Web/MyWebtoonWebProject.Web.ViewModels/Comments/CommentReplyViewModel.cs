@@ -6,6 +6,8 @@
     {
         public string ParentId { get; set; }
 
+        public string CommentAuthorUsername { get; set; }
+
         public string CommentAuthorId { get; set; }
 
         public string CommentInfo { get; set; }
