@@ -19,11 +19,11 @@
         }
 
         [Authorize]
-        public IActionResult AddEpisode(string titleNumber)
+        public IActionResult AddEpisode(string webtoonTitleNumber)
         {
             var input = new AddEpisodeInputModel
             {
-                TitleNumber = titleNumber,
+                TitleNumber = webtoonTitleNumber,
             };
             return this.View(input);
         }

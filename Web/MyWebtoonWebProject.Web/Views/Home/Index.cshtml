@@ -12,7 +12,7 @@
         <div class="card">
             <img class="card-img-top" src="~/Webtoons/@webtoon.CoverPhoto" alt="Card image cap">
             <div class="card-body">
-                <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-TitleNumber="@webtoon.TitleNumber">
+                <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
                     <h5 class="card-title">@webtoon.Title</h5>
                 </a>
                 <p class="card-text"><i class="fas fa-user"></i> @webtoon.Author</p>

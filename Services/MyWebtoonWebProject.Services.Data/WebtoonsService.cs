@@ -195,5 +195,25 @@
             this.webtoonsRepository.Delete(webtoon);
             await this.webtoonsRepository.SaveChangesAsync();
         }
+
+        public EditWebtoonInputModel GetWebtoonToEdit(string webtoonTitleNumber, string userId)
+        {
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
+
+            if (webtoon.AuthorId != userId)
+            {
+                throw new ArgumentException("Invalid data!");
+            }
+
+            var info = new EditWebtoonInputModel
+            {
+                OldTitle = webtoon.Title,
+                Title = webtoon.Title,
+                Synopsis = webtoon.Synopsis,
+                UploadDay = webtoon.UploadDay,
+            };
+
+            return info;
+        }
     }
 }

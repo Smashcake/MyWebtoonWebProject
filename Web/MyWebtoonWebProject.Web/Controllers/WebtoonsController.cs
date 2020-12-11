@@ -59,11 +59,21 @@
             return this.View(input);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteWebtoon(string webtoonTitleNumber)
         {
             var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.webtoonsService.DeleteWebtoon(webtoonTitleNumber, currentUserId);
             return this.RedirectToAction("GetAllWebtoons");
+        }
+
+        [Authorize]
+        public IActionResult EditWebtoon(string webtoonTitleNumber)
+        {
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var webtoon = this.webtoonsService.GetWebtoonToEdit(webtoonTitleNumber, currentUserId);
+            webtoon.Genres = this.genresService.GetAllAsKeyValuePairs();
+            return this.View(webtoon);
         }
     }
 }
