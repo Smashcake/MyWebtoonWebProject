@@ -15,17 +15,23 @@
         private readonly IReviewsRepository reviewsRepository;
         private readonly ICommentsRepository commentsRepository;
         private readonly ICommentsVotesRepository commentsVotesRepository;
+        private readonly IEpisodesLikesService episodesLikesService;
+        private readonly IEpisodesRepository episodesRepository;
 
         public ApplicationUsersService(
             IWebtoonsRepository webtoonsRepository,
             IReviewsRepository reviewsRepository,
             ICommentsRepository commentsRepository,
-            ICommentsVotesRepository commentsVotesRepository)
+            ICommentsVotesRepository commentsVotesRepository,
+            IEpisodesLikesService episodesLikesService,
+            IEpisodesRepository episodesRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.reviewsRepository = reviewsRepository;
             this.commentsRepository = commentsRepository;
             this.commentsVotesRepository = commentsVotesRepository;
+            this.episodesLikesService = episodesLikesService;
+            this.episodesRepository = episodesRepository;
         }
 
         public ICollection<GetWebtoonInfoViewModel> GetUserSubscribtions(string userId)
@@ -38,10 +44,15 @@
                     Author = w.Author.UserName,
                     CoverPhoto = w.CoverPhoto,
                     Genre = w.Genre.Name,
-                    //Likes = w.Episodes.Sum(e => e.EpisodeLikes.Sum(el => el.HasLiked ? 1 : 0)),
+                    Episodes = this.episodesRepository.GetEpisodesByWebtoonId(w.Id),
                     Title = w.Title,
                     TitleNumber = w.TitleNumber,
                 }).ToList();
+
+            foreach (var webtoon in webtoonsInfo)
+            {
+                webtoon.Likes = webtoon.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id));
+            }
 
             return webtoonsInfo;
         }
