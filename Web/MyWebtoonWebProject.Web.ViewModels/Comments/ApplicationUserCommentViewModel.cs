@@ -4,6 +4,8 @@
 
     public class ApplicationUserCommentViewModel
     {
+        public string CommentId { get; set; }
+
         public string WebtoonTitle { get; set; }
 
         public string WebtoonTitleNumber { get; set; }

@@ -14,12 +14,18 @@
         private readonly IWebtoonsRepository webtoonsRepository;
         private readonly IReviewsRepository reviewsRepository;
         private readonly ICommentsRepository commentsRepository;
+        private readonly ICommentsVotesRepository commentsVotesRepository;
 
-        public ApplicationUsersService(IWebtoonsRepository webtoonsRepository, IReviewsRepository reviewsRepository, ICommentsRepository commentsRepository)
+        public ApplicationUsersService(
+            IWebtoonsRepository webtoonsRepository,
+            IReviewsRepository reviewsRepository,
+            ICommentsRepository commentsRepository,
+            ICommentsVotesRepository commentsVotesRepository)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.reviewsRepository = reviewsRepository;
             this.commentsRepository = commentsRepository;
+            this.commentsVotesRepository = commentsVotesRepository;
         }
 
         public ICollection<GetWebtoonInfoViewModel> GetUserSubscribtions(string userId)
@@ -68,6 +74,7 @@
                 .Where(c => c.CommentAuthorId == userId)
                 .Select(c => new ApplicationUserCommentViewModel
                 {
+                    CommentId = c.Id,
                     CommentInfo = c.CommentInfo,
                     CommentAuthorId = c.CommentAuthorId,
                     CommentNumber = c.CommentNumber,
@@ -76,6 +83,13 @@
                     WebtoonTitle = c.Episode.Webtoon.Title,
                     WebtoonTitleNumber = c.Episode.Webtoon.TitleNumber,
                 }).ToList();
+
+            // If the repository method is put into the select projection above Entity Framework brakes so i did this to fix it at the cost of some performance
+            foreach (var comment in commentsInfo)
+            {
+                comment.Likes = this.commentsVotesRepository.GetCommentVotesByCommentId(comment.CommentId).Sum(cv => cv.Vote.Equals(VoteType.UpVote) ? 1 : 0);
+                comment.Dislikes = this.commentsVotesRepository.GetCommentVotesByCommentId(comment.CommentId).Sum(cv => cv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
+            }
 
             return commentsInfo;
         }

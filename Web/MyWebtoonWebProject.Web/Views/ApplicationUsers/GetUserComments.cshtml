@@ -5,25 +5,25 @@
     ViewBag.Title = this.User.FindFirstValue(ClaimTypes.Name) + "'s Comments";
 }
 
-<div class="position-absolute col-md-6">
-    <ul class="list-md-group">
+<div class="container-fluid h-auto w-auto" style="background-color:#eee">
+    <ul class="card-deck" style="font-family:Arial, Verdana, sans-serif;font-size:16px">
         @foreach (var comment in Model.Comments)
         {
-            <li class="list-group-item">              
-                    @if (User.Identity.IsAuthenticated)
+            <li class="card" style="border-color:#e88905; padding:10px">
+                <a style="font-weight:bold" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@comment.WebtoonTitleNumber" asp-route-EpisodeNumber="@comment.EpisodeNumber">@comment.WebtoonTitle # @comment.EpisodeNumber</a>
+                <p><i class="fas fa-calendar"></i> Created on: @comment.CreatedOn.ToString("dd-MM-yyyy")</p>
+                <p>@comment.CommentInfo</p>
+                <div class="d-md-inline-flex">
+                    <p><i class="fas fa-thumbs-up"></i> Likes: @comment.Likes</p>
+                    <p><i class="fas fa-thumbs-down"></i> Dislikes: @comment.Dislikes</p>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.CommentAuthorId)
                     {
-                        @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == comment.CommentAuthorId)
-                        {
-                            <button class="btn btn-secondary position-relative" onclick="deleteComment(@comment.CommentNumber)">DELETE</button>
-                        }
+                        <button class="btn btn-secondary position-relative" onclick="deleteComment(@comment.CommentNumber)">DELETE</button>
                     }
-                    <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@comment.WebtoonTitleNumber" asp-route-EpisodeNumber="@comment.EpisodeNumber">@comment.WebtoonTitle # @comment.EpisodeNumber</a>
-                    <p><i class="fas fa-calendar"></i> Created on: @comment.CreatedOn.ToString("dd-MM-yyyy")</p>
-                    <p>@comment.CommentInfo</p>
-                    <div class="d-md-inline-flex">
-                        <p><i class="fas fa-thumbs-up"></i> Likes: @comment.Likes</p>
-                        <p><i class="fas fa-thumbs-down"></i> Dislikes: @comment.Dislikes</p>
-                    </div>
+                }
             </li>
         }
     </ul>
