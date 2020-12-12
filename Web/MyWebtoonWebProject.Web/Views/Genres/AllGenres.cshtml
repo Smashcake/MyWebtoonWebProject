@@ -1,0 +1,18 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Genres
+@model AllGenresViewModel
+@{
+    ViewBag.Title = "All Genres";
+}
+
+<div class="container">
+    <ul class="list-group">
+        @foreach (var genre in Model.Genres)
+        {
+            <li class="list-group-item">
+                <p>@genre.Name</p>
+                <a class="btn btn-danger" asp-area="Administration" asp-controller="Genres" asp-action="DeleteGenre" asp-route-id="@genre.Id">DELETE</a>
+                <a class="btn btn-primary" asp-area="Administration" asp-controller="Genres" asp-action="EditGenre" asp-route-id="@genre.Id">Edit</a>
+            </li>
+        }
+    </ul>
+</div> 

@@ -1,0 +1,19 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Genres
+@model EditGenreInputModel
+@{ 
+    ViewBag.Title = "Edit " + Model.Name;
+}
+
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name"></span>
+        </div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <input type="submit"  class="btn btn-success"/>
+    </form>

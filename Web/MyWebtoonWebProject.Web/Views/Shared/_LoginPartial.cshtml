@@ -12,7 +12,7 @@
         </li>
         <li>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Get Started!
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdown-menu">
@@ -25,8 +25,17 @@
         </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownAdminMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin Panel
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownAdminMenuButton" id="dropdown-menu">
+                        <a asp-area="Administration" asp-controller="Genres" asp-action="AllGenres">All Genres</a>
+                        <br />
+                        <a asp-area="Administration" asp-controller="Genres" asp-action="CreateGenre">Create Genre</a>                     
+                    </div>
+                </div>
             </li>
         }
         <li class="nav-item">
