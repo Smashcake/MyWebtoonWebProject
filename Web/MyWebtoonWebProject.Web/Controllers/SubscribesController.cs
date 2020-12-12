@@ -13,7 +13,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
-    public class SubscribesController : BaseController
+    public class SubscribesController : ControllerBase
     {
         private readonly IWebtoonsRepository webtoonsRepository;
         private readonly IWebtoonsSubscribersService webtoonsSubscribersService;

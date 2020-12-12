@@ -21,14 +21,14 @@
         [DataType(DataType.MultilineText)]
         public string Synopsis { get; set; }
 
-        [Required]
-        [IsValidImageAttribute]
-        public IFormFile Cover { get; set; }
-
         public DayOfWeek UploadDay { get; set; }
 
         public IEnumerable<KeyValuePair<string, string>> Genres { get; set; }
 
+        [Required]
         public string OldTitle { get; set; }
+
+        [Required]
+        public string WebtoonTitleNumber { get; set; }
     }
 }

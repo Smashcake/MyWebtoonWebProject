@@ -11,7 +11,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
-    public class EpisodesLikesController : BaseController
+    public class EpisodesLikesController : ControllerBase
     {
         private readonly IEpisodesService episodesService;
         private readonly IEpisodesLikesService episodesLikesService;

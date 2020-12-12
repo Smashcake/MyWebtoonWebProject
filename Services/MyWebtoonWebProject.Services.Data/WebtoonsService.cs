@@ -211,9 +211,35 @@
                 Title = webtoon.Title,
                 Synopsis = webtoon.Synopsis,
                 UploadDay = webtoon.UploadDay,
+                WebtoonTitleNumber = webtoon.TitleNumber,
             };
 
             return info;
+        }
+
+        public async Task EditWebtoon(EditWebtoonInputModel input, string userId)
+        {
+            var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(input.WebtoonTitleNumber);
+
+            if (webtoon.AuthorId != userId)
+            {
+                throw new ArgumentException("Invalid operation.");
+            }
+
+            var topFolder = @"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons";
+            var webtoonFolder = Path.Combine(topFolder, input.OldTitle);
+            var newWebtoonFolder = Path.Combine(topFolder, input.Title);
+            var extention = Path.GetExtension(webtoon.CoverPhoto).TrimStart('.');
+
+            Directory.Move(webtoonFolder, newWebtoonFolder);
+
+            webtoon.GenreId = input.GenreId;
+            webtoon.UploadDay = input.UploadDay;
+            webtoon.Title = input.Title;
+            webtoon.Synopsis = input.Synopsis;
+            webtoon.CoverPhoto = input.Title + $"/cover.{extention}";
+
+            await this.webtoonsRepository.SaveChangesAsync();
         }
     }
 }

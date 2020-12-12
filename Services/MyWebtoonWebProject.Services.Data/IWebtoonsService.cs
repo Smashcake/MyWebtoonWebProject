@@ -11,6 +11,8 @@
 
         Task DeleteWebtoon(string webtoonTitleNumber, string userId);
 
+        Task EditWebtoon(EditWebtoonInputModel input, string userId);
+
         ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
 
         ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay);

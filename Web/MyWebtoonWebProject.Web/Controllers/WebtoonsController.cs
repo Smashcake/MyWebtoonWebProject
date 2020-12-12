@@ -75,5 +75,20 @@
             webtoon.Genres = this.genresService.GetAllAsKeyValuePairs();
             return this.View(webtoon);
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditWebtoon(EditWebtoonInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                input.Genres = this.genresService.GetAllAsKeyValuePairs();
+                return this.View(input);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.webtoonsService.EditWebtoon(input, userId);
+            return this.RedirectToAction("GetAllWebtoons");
+        }
     }
 }

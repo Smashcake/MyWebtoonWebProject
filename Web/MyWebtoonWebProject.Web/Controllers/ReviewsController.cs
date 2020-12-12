@@ -11,7 +11,7 @@
 
     [ApiController]
     [Route("api/Reviews")]
-    public class ReviewsController : BaseController
+    public class ReviewsController : ControllerBase
     {
         private readonly IReviewsService reviewsService;
 

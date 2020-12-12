@@ -10,7 +10,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
-    public class CommentsVotesController : BaseController
+    public class CommentsVotesController : ControllerBase
     {
         private readonly ICommentsVotesService commentsVotesService;
 
