@@ -6,6 +6,8 @@
     {
         public string EpisodeNumber { get; set; }
 
+        public string EpisodeName { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int Likes { get; set; }

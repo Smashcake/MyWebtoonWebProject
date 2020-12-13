@@ -131,6 +131,7 @@
                     EpisodeNumber = e.EpisodeNumber,
                     CreatedOn = e.CreatedOn,
                     Likes = this.episodesLikesService.GetEpisodeLikes(e.Id),
+                    EpisodeName = e.Name,
                 })
                 .OrderByDescending(e => e.EpisodeNumber)
                 .Skip((page - 1) * episodesPerPage)
