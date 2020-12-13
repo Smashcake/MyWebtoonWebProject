@@ -32,8 +32,10 @@
                     throw new ArgumentException("A invalid picture was found.Acceptable formats are png/jpg/jpeg with a maximum size of 1mb.");
                 }
 
+                var extention = Path.GetExtension(page.FileName).TrimStart('.');
+
                 pageCounter++;
-                string pageName = $"/page{pageCounter}.png";
+                string pageName = $"/page{pageCounter}.{extention}";
                 string pagePath = episodeDirectory + pageName;
                 using (FileStream fs = new FileStream(pagePath, FileMode.Create))
                 {
@@ -45,6 +47,7 @@
                     FilePath = pageName,
                     EpisodeId = episodeId,
                     PageNumber = (short)pageCounter,
+                    FileExtention = extention,
                 };
 
                 await this.pagesRepository.AddAsync(currentPage);

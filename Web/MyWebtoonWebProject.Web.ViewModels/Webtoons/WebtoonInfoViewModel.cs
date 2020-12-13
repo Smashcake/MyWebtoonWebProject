@@ -24,6 +24,8 @@
 
         public string Synopsis { get; set; }
 
+        public double AverageRating { get; set; }
+
         public string TitleNumber { get; set; }
 
         public IEnumerable<EpisodeWebtoonViewModel> Episodes { get; set; }

@@ -14,6 +14,7 @@
             this.Subscribers = new HashSet<WebtoonsSubscribers>();
             this.Episodes = new HashSet<Episode>();
             this.Reviews = new HashSet<Review>();
+            this.WebtoonRatings = new HashSet<WebtoonRating>();
         }
 
         [Required]
@@ -27,23 +28,23 @@
         [Required]
         public string CoverPhoto { get; set; }
 
-        public decimal Rating { get; set; }
-
         public virtual ICollection<WebtoonsSubscribers> Subscribers { get; set; }
 
         public string GenreId { get; set; }
 
-        public Genre Genre { get; set; }
+        public virtual Genre Genre { get; set; }
 
         public string AuthorId { get; set; }
 
-        public ApplicationUser Author { get; set; }
+        public virtual ApplicationUser Author { get; set; }
 
         public Enums.DayOfWeek UploadDay { get; set; }
 
         public virtual ICollection<Episode> Episodes { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<WebtoonRating> WebtoonRatings { get; set; }
 
         public bool Completed { get; set; }
 

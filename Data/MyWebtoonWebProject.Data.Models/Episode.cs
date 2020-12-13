@@ -14,6 +14,7 @@
             this.Pages = new HashSet<Page>();
             this.Comments = new HashSet<Comment>();
             this.EpisodeLikes = new HashSet<EpisodeLike>();
+            this.EpisodeViews = new HashSet<EpisodeViews>();
         }
 
         [Required]
@@ -26,12 +27,12 @@
 
         public virtual ICollection<EpisodeLike> EpisodeLikes { get; set; }
 
-        public int Views { get; set; }
+        public virtual ICollection<EpisodeViews> EpisodeViews { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string WebtoonId { get; set; }
 
-        public Webtoon Webtoon { get; set; }
+        public virtual Webtoon Webtoon { get; set; }
     }
 }

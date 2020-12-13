@@ -3,14 +3,14 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class Page
+    using MyWebtoonWebProject.Data.Common.Models;
+
+    public class Page : BaseModel<string>
     {
         public Page()
         {
             this.Id = Guid.NewGuid().ToString();
         }
-
-        public string Id { get; set; }
 
         [Required]
         public string EpisodeId { get; set; }
@@ -21,5 +21,8 @@
         public string FilePath { get; set; }
 
         public short PageNumber { get; set; }
+
+        [Required]
+        public string FileExtention { get; set; }
     }
 }

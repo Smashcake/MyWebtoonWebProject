@@ -23,6 +23,7 @@
         private readonly IReviewsRepository reviewsRepository;
         private readonly IReviewsVotesRepository reviewsVotesRepository;
         private readonly IEpisodesLikesService episodesLikesService;
+        private readonly IWebtoonsRatingsService webtoonsRatingsService;
 
         public WebtoonsService(
             IWebtoonsRepository webtoonsRepository,
@@ -32,7 +33,8 @@
             IWebtoonsSubscribersRepository webtoonsSubscribersRepository,
             IReviewsRepository reviewsRepository,
             IReviewsVotesRepository reviewsVotesRepository,
-            IEpisodesLikesService episodesLikesService)
+            IEpisodesLikesService episodesLikesService,
+            IWebtoonsRatingsService webtoonsRatingsService)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
@@ -42,6 +44,7 @@
             this.reviewsRepository = reviewsRepository;
             this.reviewsVotesRepository = reviewsVotesRepository;
             this.episodesLikesService = episodesLikesService;
+            this.webtoonsRatingsService = webtoonsRatingsService;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -72,7 +75,6 @@
                 UploadDay = input.UploadDay,
                 AuthorId = input.AuthorId,
                 CreatedOn = DateTime.UtcNow,
-                Rating = 0M,
                 Completed = false,
                 TitleNumber = (this.webtoonsRepository.GetWebtoonsCount() + 1).ToString(),
             };
@@ -137,6 +139,7 @@
                 EpisodesCount = webtoon.Episodes.Count,
                 GenreName = webtoon.Genre.Name,
                 Synopsis = webtoon.Synopsis,
+                //AverageRating = this.webtoonsRatingsService.GetWebtoonAverageRating(webtoon.TitleNumber),
                 Title = webtoon.Title,
                 CoverPhoto = webtoon.CoverPhoto,
                 UploadDay = webtoon.UploadDay.ToString(),

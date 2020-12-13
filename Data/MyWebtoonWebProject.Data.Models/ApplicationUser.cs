@@ -19,6 +19,8 @@ namespace MyWebtoonWebProject.Data.Models
             this.SubcribedTo = new HashSet<WebtoonsSubscribers>();
             this.Comments = new HashSet<Comment>();
             this.Reviews = new HashSet<Review>();
+            this.WebtoonRatings = new HashSet<WebtoonRating>();
+            this.EpisodeViews = new HashSet<EpisodeViews>();
         }
 
         // Audit info
@@ -42,5 +44,9 @@ namespace MyWebtoonWebProject.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<WebtoonRating> WebtoonRatings { get; set; }
+
+        public virtual ICollection<EpisodeViews> EpisodeViews { get; set; }
     }
 }

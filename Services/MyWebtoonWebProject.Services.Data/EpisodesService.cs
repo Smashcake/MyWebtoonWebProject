@@ -55,7 +55,6 @@
             var episode = new Episode
             {
                 Name = episodeName,
-                Views = 0,
                 WebtoonId = webtoon.Id,
                 IsDeleted = false,
                 CreatedOn = DateTime.UtcNow,

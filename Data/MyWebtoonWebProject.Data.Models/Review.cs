@@ -16,11 +16,11 @@
 
         public string ReviewAuthorId { get; set; }
 
-        public ApplicationUser ReviewAuthor { get; set; }
+        public virtual ApplicationUser ReviewAuthor { get; set; }
 
         public string WebtoonId { get; set; }
 
-        public Webtoon Webtoon { get; set; }
+        public virtual Webtoon Webtoon { get; set; }
 
         [Required]
         [MaxLength(800)]

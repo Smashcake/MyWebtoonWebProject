@@ -17,11 +17,11 @@
 
         public string CommentAuthorId { get; set; }
 
-        public ApplicationUser CommentAuthor { get; set; }
+        public virtual ApplicationUser CommentAuthor { get; set; }
 
         public string EpisodeId { get; set; }
 
-        public Episode Episode { get; set; }
+        public virtual Episode Episode { get; set; }
 
         public virtual ICollection<CommentVote> CommentVotes { get; set; }
 

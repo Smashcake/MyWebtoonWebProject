@@ -4,10 +4,10 @@
     {
         public string SubscriberId { get; set; }
 
-        public ApplicationUser Subscriber { get; set; }
+        public virtual ApplicationUser Subscriber { get; set; }
 
         public string WebtoonId { get; set; }
 
-        public Webtoon Webtoon { get; set; }
+        public virtual Webtoon Webtoon { get; set; }
     }
 }
