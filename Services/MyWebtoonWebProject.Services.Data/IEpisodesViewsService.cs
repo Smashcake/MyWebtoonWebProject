@@ -5,5 +5,7 @@
     public interface IEpisodesViewsService
     {
         Task UserEpisodeView(string webtoonTitleNumber, string episodeNumber, string userId);
+
+        double EpisodeTotalViews(string webtoonTitleNumber, string episodeNumber);
     }
 }

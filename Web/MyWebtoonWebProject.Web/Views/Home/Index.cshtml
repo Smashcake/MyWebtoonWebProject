@@ -1,24 +1,65 @@
 ﻿@using MyWebtoonWebProject.Web.ViewModels.Home
 @using MyWebtoonWebProject.Common
+@using MyWebtoonWebProject.Data.Models
 @model HomeIndexViewModel
 @{
     this.ViewData["Title"] = "Home Page";
+    var mostPopular = Model.MostPopular.ToArray();
 }
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height:240px">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner" style="background-color:#eee">
+        <a class="carousel-item active" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@mostPopular[0].TitleNumber">
+            <img class="d-block img-fluid" src="~/Webtoons/@mostPopular[0].CoverPhoto" alt="First slide">
+            <div class="carousel-caption d-none d-md-block" style="color:#000;font:bold;font-size:20px">
+                <h5>@mostPopular[0].Title</h5>
+                <p>@mostPopular[0].Genre</p>
+                <p>@mostPopular[0].Synopsis</p>
+            </div>
+        </a>
+        @for (int i = 1; i < mostPopular.Length; i++)
+        {
+            <a class="carousel-item" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@mostPopular[i].TitleNumber">
+                <img class="d-block img-fluid" src="~/Webtoons/@mostPopular[i].CoverPhoto" alt="First slide">
+                <div class="carousel-caption d-none d-md-block" style="color:#000;font:bold;font-size:20px">
+                    <h5>@mostPopular[i].Title</h5>
+                    <p>@mostPopular[i].Genre</p>
+                    <p>@mostPopular[i].Synopsis</p>
+                </div>
+            </a>
+        }
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<br />
 
 <h4>Uploaded today</h4>
 <div class="card-deck">
     @foreach (var webtoon in Model.DailyUploads)
     {
-        <div class="card">
+        <a class="card" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
             <img class="card-img-top" src="~/Webtoons/@webtoon.CoverPhoto" alt="Card image cap">
             <div class="card-body">
-                <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
-                    <h5 class="card-title">@webtoon.Title</h5>
-                </a>
+                <h5 id="webtoon" class="card-title">@webtoon.Title</h5>
                 <p class="card-text"><i class="fas fa-user"></i> @webtoon.Author</p>
                 <p class="card-text"><i class="fas fa-heart"></i> @webtoon.Likes</p>
                 <p class="card-text"><small class="text-muted">@webtoon.Genre</small></p>
             </div>
-        </div>
+        </a>
     }
 </div>

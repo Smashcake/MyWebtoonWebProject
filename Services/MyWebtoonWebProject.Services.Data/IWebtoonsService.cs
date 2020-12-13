@@ -17,6 +17,8 @@
 
         ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay);
 
+        ICollection<MostPopularWebtoonsViewModel> MostPopular();
+
         WebtoonInfoViewModel GetWebtoon(string titleNumber, int page, int episodesPerPage, string userId);
 
         EditWebtoonInputModel GetWebtoonToEdit(string webtoonTitleNumber, string userId);

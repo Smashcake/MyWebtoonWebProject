@@ -6,6 +6,8 @@
 
     public class HomeIndexViewModel
     {
+        public ICollection<MostPopularWebtoonsViewModel> MostPopular { get; set; }
+
         public ICollection<GetWebtoonInfoViewModel> DailyUploads { get; set; }
     }
 }

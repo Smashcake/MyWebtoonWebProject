@@ -24,6 +24,7 @@
         private readonly IReviewsVotesRepository reviewsVotesRepository;
         private readonly IEpisodesLikesService episodesLikesService;
         private readonly IWebtoonsRatingsService webtoonsRatingsService;
+        private readonly IEpisodesViewsService episodesViewsService;
 
         public WebtoonsService(
             IWebtoonsRepository webtoonsRepository,
@@ -34,7 +35,8 @@
             IReviewsRepository reviewsRepository,
             IReviewsVotesRepository reviewsVotesRepository,
             IEpisodesLikesService episodesLikesService,
-            IWebtoonsRatingsService webtoonsRatingsService)
+            IWebtoonsRatingsService webtoonsRatingsService,
+            IEpisodesViewsService episodesViewsService)
         {
             this.webtoonsRepository = webtoonsRepository;
             this.episodesRepository = episodesRepository;
@@ -45,6 +47,7 @@
             this.reviewsVotesRepository = reviewsVotesRepository;
             this.episodesLikesService = episodesLikesService;
             this.webtoonsRatingsService = webtoonsRatingsService;
+            this.episodesViewsService = episodesViewsService;
         }
 
         public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
@@ -182,6 +185,34 @@
             })
             .OrderBy(w => Guid.NewGuid())
             .Take(10)
+            .ToList();
+
+            return webtoons;
+        }
+
+        public ICollection<MostPopularWebtoonsViewModel> MostPopular()
+        {
+            var allWebtoons = this.webtoonsRepository.All().ToList();
+
+            foreach (var webtoon in allWebtoons)
+            {
+                webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
+            }
+
+            var webtoons = allWebtoons.Select(w => new MostPopularWebtoonsViewModel
+            {
+                Title = w.Title,
+                CoverPhoto = w.CoverPhoto,
+                Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,
+                TitleNumber = w.TitleNumber,
+                Synopsis = w.Synopsis.Substring(0, w.Synopsis.Length > 100 ? 100 : w.Synopsis.Length) + "...",
+                Episodes = w.Episodes,
+                TotalViews = w.Episodes.Sum(e => this.episodesViewsService.EpisodeTotalViews(w.TitleNumber, e.EpisodeNumber)),
+                Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
+            })
+            .OrderBy(w => w.TotalViews)
+            .ThenBy(w => w.Likes)
+            .Take(5)
             .ToList();
 
             return webtoons;

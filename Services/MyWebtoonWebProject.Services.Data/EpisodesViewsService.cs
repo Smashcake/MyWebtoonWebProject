@@ -48,5 +48,11 @@
 
             await this.episodesViewsRepository.SaveChangesAsync();
         }
+
+        public double EpisodeTotalViews(string webtoonTitleNumber, string episodeNumber)
+        {
+            var episodeId = this.episodesService.GetEpisodeId(webtoonTitleNumber, episodeNumber);
+            return this.episodesViewsRepository.All().Where(ev => ev.EpisodeId == episodeId).Sum(ev => ev.ViewCount);
+    }
     }
 }

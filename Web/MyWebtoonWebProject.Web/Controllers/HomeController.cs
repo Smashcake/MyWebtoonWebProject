@@ -19,6 +19,7 @@
 
         public IActionResult Index(HomeIndexViewModel input)
         {
+            input.MostPopular = this.webtoonsService.MostPopular();
             input.DailyUploads = this.webtoonsService.GetDailyUploads(DateTime.UtcNow.DayOfWeek.ToString());
             return this.View(input);
         }
