@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyWebtoonWebProject.Data.Migrations
+﻿namespace MyWebtoonWebProject.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddEpisodeNumberColumn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

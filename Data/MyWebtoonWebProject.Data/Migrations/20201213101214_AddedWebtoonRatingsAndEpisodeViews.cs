@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyWebtoonWebProject.Data.Migrations
+﻿namespace MyWebtoonWebProject.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddedWebtoonRatingsAndEpisodeViews : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +26,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                 name: "FileExtention",
                 table: "Pages",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "ModifiedOn",
@@ -39,7 +40,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     EpisodeId = table.Column<string>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false),
                     LastViewedOn = table.Column<DateTime>(nullable: false),
-                    ViewCount = table.Column<int>(nullable: false)
+                    ViewCount = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -67,7 +68,7 @@ namespace MyWebtoonWebProject.Data.Migrations
                     Id = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    RatingValue = table.Column<byte>(nullable: false)
+                    RatingValue = table.Column<byte>(nullable: false),
                 },
                 constraints: table =>
                 {

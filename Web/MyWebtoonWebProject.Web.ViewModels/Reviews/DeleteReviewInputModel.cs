@@ -6,6 +6,5 @@
     {
         [Required]
         public string ReviewNumber { get; set; }
-
     }
 }
