@@ -14,7 +14,7 @@
             this.Pages = new HashSet<Page>();
             this.Comments = new HashSet<Comment>();
             this.EpisodeLikes = new HashSet<EpisodeLike>();
-            this.EpisodeViews = new HashSet<EpisodeViews>();
+            this.EpisodeViews = new HashSet<EpisodeView>();
         }
 
         [Required]
@@ -27,7 +27,7 @@
 
         public virtual ICollection<EpisodeLike> EpisodeLikes { get; set; }
 
-        public virtual ICollection<EpisodeViews> EpisodeViews { get; set; }
+        public virtual ICollection<EpisodeView> EpisodeViews { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 

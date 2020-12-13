@@ -58,7 +58,7 @@
                 WebtoonId = webtoon.Id,
                 IsDeleted = false,
                 CreatedOn = DateTime.UtcNow,
-                EpisodeNumber = (episodesCount + 1).ToString(),
+                EpisodeNumber = episodesCount.ToString(),
             };
 
             episode.Pages = this.pagesService.AddPagesAsync(input.Pages, episodeFolder, episode.Id).Result;

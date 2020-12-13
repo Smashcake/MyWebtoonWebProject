@@ -45,7 +45,7 @@
 
         public DbSet<WebtoonRating> WebtoonsRatings { get; set; }
 
-        public DbSet<EpisodeViews> EpisodesViews { get; set; }
+        public DbSet<EpisodeView> EpisodesViews { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -73,7 +73,7 @@
             builder.Entity<CommentVote>().HasKey(cv => new { cv.ApplicationUserId, cv.CommentId });
             builder.Entity<ReviewVote>().HasKey(rv => new { rv.ApplicationUserId, rv.ReviewId });
             builder.Entity<WebtoonRating>().HasKey(wr => new { wr.ApplicationUserId, wr.WebtoonId });
-            builder.Entity<EpisodeViews>().HasKey(ev => new { ev.ApplicationUserId, ev.EpisodeId });
+            builder.Entity<EpisodeView>().HasKey(ev => new { ev.ApplicationUserId, ev.EpisodeId });
 
             // Needed for Identity models configuration
             base.OnModelCreating(builder);

@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class EpisodeViews
+    public class EpisodeView
     {
         [Required]
         public string EpisodeId { get; set; }

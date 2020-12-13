@@ -12,10 +12,12 @@
     public class EpisodesController : Controller
     {
         private readonly IEpisodesService episodesService;
+        private readonly IEpisodesViewsService episodesViewsService;
 
-        public EpisodesController(IEpisodesService episodesService)
+        public EpisodesController(IEpisodesService episodesService, IEpisodesViewsService episodesViewsService)
         {
             this.episodesService = episodesService;
+            this.episodesViewsService = episodesViewsService;
         }
 
         [Authorize]
@@ -36,8 +38,14 @@
             return this.Redirect("/");
         }
 
-        public IActionResult GetEpisode(string webtoonNumber, string episodeNumber)
+        public async Task<IActionResult> GetEpisode(string webtoonNumber, string episodeNumber)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != null)
+            {
+                await this.episodesViewsService.UserEpisodeView(webtoonNumber, episodeNumber, userId);
+            }
+
             var viewModel = this.episodesService.GetEpisode(webtoonNumber, episodeNumber);
             return this.View(viewModel);
         }
