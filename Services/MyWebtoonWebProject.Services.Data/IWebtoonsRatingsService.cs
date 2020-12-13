@@ -7,5 +7,7 @@
         Task RateWebtoonAsync(string webtoonTitleNumber, string userId, byte ratingValue);
 
         double GetWebtoonAverageRating(string webtoonTitleNumber);
+
+        bool DoesWebtoonHaveARating(string webtoonTitleNumber);
     }
 }

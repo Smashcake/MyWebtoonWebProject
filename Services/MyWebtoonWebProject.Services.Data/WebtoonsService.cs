@@ -139,7 +139,7 @@
                 EpisodesCount = webtoon.Episodes.Count,
                 GenreName = webtoon.Genre.Name,
                 Synopsis = webtoon.Synopsis,
-                //AverageRating = this.webtoonsRatingsService.GetWebtoonAverageRating(webtoon.TitleNumber),
+                AverageRating = this.webtoonsRatingsService.DoesWebtoonHaveARating(webtoon.TitleNumber) ? this.webtoonsRatingsService.GetWebtoonAverageRating(webtoon.TitleNumber) : 0,
                 Title = webtoon.Title,
                 CoverPhoto = webtoon.CoverPhoto,
                 UploadDay = webtoon.UploadDay.ToString(),

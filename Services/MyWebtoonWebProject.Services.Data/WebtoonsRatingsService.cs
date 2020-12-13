@@ -47,5 +47,12 @@
 
             return averageWebtoonRating;
         }
+
+        public bool DoesWebtoonHaveARating(string webtoonTitleNumber)
+        {
+            var webtoonId = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Id;
+
+            return this.webtoonsRatingsRepository.All().Any(wr => wr.WebtoonId == webtoonId);
+        }
     }
 }
