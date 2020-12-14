@@ -5,7 +5,7 @@
     ViewBag.Title = Model.EpisodeTitle;
 }
 
-<div id="body" class="col-md-8 offset-md-2">
+<div id="body" class="col-md-7 offset-md-2">
     <ul class="list-unstyled">
         @foreach (var pageSrc in Model.PagesPaths)
         {
@@ -14,6 +14,16 @@
             </li>
         }
     </ul>
+    <div class="d-inline-flex">
+        @if (Model.HasPreviousEpisode)
+        {
+            <a class="btn btn-primary offset-4" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.WebtoonTitleNumber" asp-route-EpisodeNumber="@Model.PreviousEpisodeNumber">Previous Episode</a>
+        }
+        @if (Model.HasNextEpisode)
+        {
+            <a class="btn btn-primary offset-10" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.WebtoonTitleNumber" asp-route-EpisodeNumber="@Model.NextEpisodeNumber">Next Episode</a>
+        }
+    </div>
 
     @if (User.Identity.IsAuthenticated)
     {
@@ -29,7 +39,7 @@
         <textarea class="col-md-7" id="userComment" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Your comment"></textarea>
         <button class="btn btn-secondary" id="commentButton">Submit</button>
     }
-    <ul class="list-group col-md-8">
+    <ul class="list-group col-md-8 offset-2">
         @foreach (var comment in Model.Comments)
         {
             if (comment.ParentId == null)
@@ -66,29 +76,29 @@
                                 <ul class="list-group">
                                     @foreach (var reply in comment.CommentReplies)
                                     {
-                                    <li class="list-group-item">
-                                        <p><i class="fas fa-user"></i> @reply.CommentAuthorUsername</p>
-                                        <p>@reply.CommentInfo</p>
-                                        <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
-                                        @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
-                                        {
-                                            <button class="btn btn-secondary" onclick="deleteComment(@reply.CommentNumber)">DELETE</button>
-                                        }
-                                        <div class="d-inline-flex">
-                                            <div>
-                                                <a href="#" onclick="sendReplyVote(@reply.CommentNumber, true)">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                    Likes: <p id="@("replyLikes"+ reply.CommentNumber)">@comment.Likes</p>
-                                                </a>
+                                        <li class="list-group-item">
+                                            <p><i class="fas fa-user"></i> @reply.CommentAuthorUsername</p>
+                                            <p>@reply.CommentInfo</p>
+                                            <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
+                                            @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
+                                            {
+                                                <button class="btn btn-secondary" onclick="deleteComment(@reply.CommentNumber)">DELETE</button>
+                                            }
+                                            <div class="d-inline-flex">
+                                                <div>
+                                                    <a href="#" onclick="sendReplyVote(@reply.CommentNumber, true)">
+                                                        <i class="fas fa-thumbs-up"></i>
+                                                        Likes: <p id="@("replyLikes"+ reply.CommentNumber)">@comment.Likes</p>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a href="#" onclick="sendReplyVote(@reply.CommentNumber, false)">
+                                                        <i class="fas fa-thumbs-down"></i>
+                                                        Dislikes: <p id="@("replyDislikes"+ reply.CommentNumber)">@comment.Dislikes</p>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <a href="#" onclick="sendReplyVote(@reply.CommentNumber, false)">
-                                                    <i class="fas fa-thumbs-down"></i>
-                                                    Dislikes: <p id="@("replyDislikes"+ reply.CommentNumber)">@comment.Dislikes</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
                                     }
                                 </ul>
                                 <textarea id="commentReply" cols="30" rows="5" maxlength="800" required spellcheck="false"></textarea>

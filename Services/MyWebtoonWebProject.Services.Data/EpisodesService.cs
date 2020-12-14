@@ -69,8 +69,11 @@
 
         public GetEpisodeViewModel GetEpisode(string webtoonTitleNumber, string episodeNumber)
         {
+            var nextEpisodeNumber = int.Parse(episodeNumber) + 1;
+            var previousEpisodeNumber = int.Parse(episodeNumber) - 1;
             var viewModel = new GetEpisodeViewModel();
             var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
+            webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
             var episode = this.episodesRepository.GetEpisodeByWebtoonTitleNumberAndEpisodeNumber(webtoonTitleNumber, episodeNumber);
             viewModel.EpisodeAuthorId = webtoon.AuthorId;
             viewModel.EpisodeTitle = episode.Name;
@@ -79,6 +82,10 @@
             viewModel.WebtoonTitle = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Title;
             viewModel.PagesPaths = this.pagesRepository.GetPagePathsForEpisodeByEpisodeId(episode.Id);
             viewModel.Likes = this.episodesLikesService.GetEpisodeLikes(episode.Id);
+            viewModel.HasNextEpisode = webtoon.Episodes.Any(e => e.EpisodeNumber == nextEpisodeNumber.ToString());
+            viewModel.HasPreviousEpisode = webtoon.Episodes.Any(e => e.EpisodeNumber == previousEpisodeNumber.ToString());
+            viewModel.NextEpisodeNumber = nextEpisodeNumber.ToString();
+            viewModel.PreviousEpisodeNumber = previousEpisodeNumber.ToString();
             viewModel.Comments = this.commentsRepository.GetEpisodeComments(episode.Id).Select(c => new EpisodeCommentViewModel
             {
                 ParentId = c.ParentId,

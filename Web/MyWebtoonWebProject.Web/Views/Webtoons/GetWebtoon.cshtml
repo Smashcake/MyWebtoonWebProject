@@ -104,7 +104,7 @@
                 @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {
                     <div style="display:inline-block">
-                        <a class="btn btn-secondary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Add Episode</a>
+                        <a class="btn btn-primary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Add Episode</a>
                         <a class="btn btn-primary" asp-controller="Webtoons" asp-action="EditWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Edit Webtoon</a>
                         <a class="btn btn-danger" asp-controller="Webtoons" asp-action="DeleteWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">DELETE Webtoon</a>
                     </div>

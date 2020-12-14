@@ -18,6 +18,14 @@
 
         public string EpisodeAuthorId { get; set; }
 
+        public bool HasPreviousEpisode { get; set; }
+
+        public bool HasNextEpisode { get; set; }
+
+        public string NextEpisodeNumber { get; set; }
+
+        public string PreviousEpisodeNumber { get; set; }
+
         public ICollection<string> PagesPaths { get; set; }
 
         public ICollection<EpisodeCommentViewModel> Comments { get; set; }
