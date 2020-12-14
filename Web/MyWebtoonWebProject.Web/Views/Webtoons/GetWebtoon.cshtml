@@ -38,9 +38,33 @@
                                     </a>
                                     @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                                     {
+                                        <button type="button" class="btn btn-danger offset-7" data-toggle="modal" data-target="#@("deleteEpisodeModal" + episode.EpisodeNumber)">
+                                            DELETE
+                                        </button>
                                         <div>
-                                            <a class="btn btn-danger offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">DELETE</a>
-                                        </div>}
+
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="@("deleteEpisodeModal" + episode.EpisodeNumber)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Episode?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this episode?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <a class="btn btn-danger offset-md-6" asp-controller="Episodes" asp-action="DeleteEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">Confirm Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </li>
                         }
@@ -79,22 +103,22 @@
             </div>
         </div>
         <div name="Side" class="col-md-4">
-                <button class="btn btn-success" id="subscribe">
-                    @if (Model.IsUserSubscribed)
-                    {<text>Subscribed</text>}
-                else
-                {<text>Subscribe</text>}
-                </button>
-                <div style="display:inline-block">
-                    <ul class="list-unstyled">
-                        <li class="star-fill" data-vote="1"><i class="fas fa-star"></i></li>
-                        <li class="star-fill" data-vote="2"><i class="fas fa-star"></i></li>
-                        <li class="star-fill" data-vote="3"><i class="fas fa-star"></i></li>
-                        <li class="star-fill" data-vote="4"><i class="fas fa-star"></i></li>
-                        <li class="star-fill" data-vote="5"><i class="fas fa-star"></i></li>
-                        <li><span id="averageWebtoonRating">@Model.AverageRating.ToString("0.0")</span><span> / 5</span> </li>
-                    </ul>
-                </div>
+            <button class="btn btn-success" id="subscribe">
+                @if (Model.IsUserSubscribed)
+                {<text>Subscribed</text>}
+            else
+            {<text>Subscribe</text>}
+            </button>
+            <div style="display:inline-block">
+                <ul class="list-unstyled">
+                    <li class="star-fill" data-vote="1"><i class="fas fa-star"></i></li>
+                    <li class="star-fill" data-vote="2"><i class="fas fa-star"></i></li>
+                    <li class="star-fill" data-vote="3"><i class="fas fa-star"></i></li>
+                    <li class="star-fill" data-vote="4"><i class="fas fa-star"></i></li>
+                    <li class="star-fill" data-vote="5"><i class="fas fa-star"></i></li>
+                    <li><span id="averageWebtoonRating">@Model.AverageRating.ToString("0.0")</span><span> / 5</span> </li>
+                </ul>
+            </div>
             <hr />
             <p style="font-size: 16px; line-height: 25px; color:#000; width:357px; height:47px" name="Upload Day"> @Model.UploadDay</p>
             <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word;" name="Synopsis">
@@ -106,7 +130,9 @@
                     <div style="display:inline-block">
                         <a class="btn btn-primary" asp-controller="Episodes" asp-action="AddEpisode" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Add Episode</a>
                         <a class="btn btn-primary" asp-controller="Webtoons" asp-action="EditWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Edit Webtoon</a>
-                        <a class="btn btn-danger" asp-controller="Webtoons" asp-action="DeleteWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">DELETE Webtoon</a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteWebtoonModal">
+                            DELETE WEBTOON
+                        </button>
                     </div>
                 }
 
@@ -252,3 +278,24 @@
         });
     </script>
 }
+
+<!-- Modal -->
+<div class="modal fade" id="deleteWebtoonModal" tabindex="-1" role="dialog" aria-labelledby="deleteWebtoonModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete webtoon?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this webtoon?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-danger" asp-controller="Webtoons" asp-action="DeleteWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber">Confirm Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
