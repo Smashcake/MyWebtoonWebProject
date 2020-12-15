@@ -48,7 +48,7 @@
                 <li class="list-group-item">
                     <p><i class="fas fa-user"></i> @comment.CommentAuthorUsername</p>
                     <p>@comment.CommentInfo</p>
-                    <p><i class="fas fa-calendar"></i> @comment.CreatedOn.ToString("dd-MM-yyyy")</p>
+                    <p><i class="fas fa-calendar"></i> @comment.CreatedOn.ToString("dd MM yyyy")</p>
                     <div class="d-inline-flex">
                         <div>
                             <a href="#" onclick="sendCommentVote(@comment.CommentNumber, true)">
@@ -103,7 +103,7 @@
                                         <li class="list-group-item">
                                             <p><i class="fas fa-user"></i> @reply.CommentAuthorUsername</p>
                                             <p>@reply.CommentInfo</p>
-                                            <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd-MM-yyyy")</p>
+                                            <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd MM yyyy")</p>
                                             @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
                                             {
                                                 <!-- Button trigger modal -->

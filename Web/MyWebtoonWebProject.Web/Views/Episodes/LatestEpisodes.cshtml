@@ -1,0 +1,26 @@
+﻿@using MyWebtoonWebProject.Web.ViewModels.Episodes
+@model LatestEpisodesViewModel
+@{ 
+    ViewBag.Title = "Latest Uploads";
+}
+
+<h3>Latest Uploads</h3>
+
+<div class="row">
+    <ul class="card-deck">
+        @foreach (var episode in Model.LatestEpisodes)
+        {
+            <li class="card">
+                <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@episode.WebtoonTitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                <img class="card-img" src="~/Webtoons/@episode.WebtoonCoverPhoto"/>
+                <div class="card-body">
+                    <p class="card-text"><i class="fas fa-book-open"></i> @episode.WebtoonTitle</p>
+                    <p class="card-text"><i class="far fa-clipboard"></i> @episode.EpisodeTitle</p>
+                    <p class="card-text"><i class="far fa-calendar-alt"></i> @episode.EpisodeCreatedOn.ToString("dd MM yyyy hh:mm")</p>
+                    <p class="card-text"><i class="fas fa-box"></i> @episode.WebtoonGenreName</p>
+                </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

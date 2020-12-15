@@ -1,6 +1,7 @@
 ﻿namespace MyWebtoonWebProject.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -131,6 +132,23 @@
 
             this.episodesRepository.Delete(episode);
             await this.episodesRepository.SaveChangesAsync();
+        }
+
+        public ICollection<LatestEpisodeViewModel> LatestEpisodes()
+        {
+            return this.episodesRepository.All()
+                .OrderBy(e => e.CreatedOn)
+                .Take(10)
+                .Select(e => new LatestEpisodeViewModel
+                {
+                    WebtoonCoverPhoto = e.Webtoon.CoverPhoto,
+                    WebtoonTitle = e.Webtoon.Title,
+                    WebtoonTitleNumber = e.Webtoon.TitleNumber,
+                    WebtoonGenreName = e.Webtoon.Genre.Name,
+                    EpisodeTitle = e.Name,
+                    EpisodeNumber = e.EpisodeNumber,
+                    EpisodeCreatedOn = e.CreatedOn,
+                }).ToList();
         }
     }
 }
