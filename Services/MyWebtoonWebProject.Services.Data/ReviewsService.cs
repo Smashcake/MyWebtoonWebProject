@@ -65,5 +65,18 @@
             this.reviewsRepository.Delete(review);
             await this.reviewsRepository.SaveChangesAsync();
         }
+
+        public async Task EditReviewAsync(string reviewNumber, string userId, string reviewInfo)
+        {
+            var review = this.reviewsRepository.GetReviewByReviewNumber(reviewNumber);
+
+            if (review.ReviewAuthorId != userId)
+            {
+                throw new ArgumentException("Invalid action taken!");
+            }
+
+            review.ReviewInfo = reviewInfo;
+            await this.reviewsRepository.SaveChangesAsync();
+        }
     }
 }

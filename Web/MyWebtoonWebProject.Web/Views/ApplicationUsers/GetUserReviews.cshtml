@@ -14,7 +14,11 @@
                     <a class="card-text" style="font-size:24px;font-weight:bold" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@review.WebtoonTitleNumber">@review.WebtoonTitle</a>
                     <br />
                     <p><i class="fas fa-calendar"></i> Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
-                    <p>@review.ReviewInfo</p>
+                    <button onclick="editReview(@review.ReviewNumber)"><i class="fas fa-edit"></i></button>
+                    <br />
+                    <input class="card-text container-fluid h-25" value="@review.ReviewInfo" id="#@("editReviewInfo" + review.ReviewNumber)" disabled />
+                    <br />
+                    <button class="btn btn-outline-primary" onclick="sendEditedReview(@review.ReviewNumber)" style="display : none" id="#@("sendEditButton" + review.ReviewNumber)">Edit</button>
                     <p><i class="fas fa-thumbs-up"></i> Likes: @review.Likes</p>
                     <p><i class="fas fa-thumbs-down"></i> Dislikes: @review.Dislikes</p>
                     @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == review.ReviewAuthorId)
@@ -41,10 +45,46 @@
                     "X-CSRF-TOKEN": antiForgeryToken
                 },
                 success: function (data) {
-                    console.log("works!");
+                    location.reload();
                 },
                 contentType: 'application/json',
             });
         };
+
+        function editReview(reviewNumber) {
+            var reviewInfo = document.getElementById(`#editReviewInfo${reviewNumber}`);
+            if (reviewInfo.disabled == true) {
+                reviewInfo.disabled = false;
+            }
+            else {
+                reviewInfo.disabled = true;
+            }
+            var buttonToEdin = document.getElementById(`#sendEditButton${reviewNumber}`);
+            if (buttonToEdin.style.display == "none") {
+                buttonToEdin.style.display = "block";
+            }
+            else {
+                buttonToEdin.style.display = "none";
+            }
+        };
+
+        function sendEditedReview(reviewNumber) {
+            var reviewInfo = document.getElementById(`#editReviewInfo${reviewNumber}`).value;
+            var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+            var data = { reviewInfo: reviewInfo.toString(), reviewNumber: reviewNumber.toString() }
+            $.ajax({
+                type: "PUT",
+                url: "/api/Reviews",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken
+                },
+                success: function (data) {
+                    location.reload();
+                },
+                contentType: 'application/json',
+            });
+        };
+
     </script>
 }

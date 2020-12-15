@@ -37,5 +37,14 @@
             await this.reviewsService.DeleteReviewAsync(input.ReviewNumber, userId);
             return true;
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<bool>> EditReview(EditReviewInputModel input)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.reviewsService.EditReviewAsync(input.ReviewNumber, userId, input.ReviewInfo);
+            return true;
+        }
     }
 }

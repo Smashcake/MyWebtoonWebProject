@@ -26,11 +26,6 @@
         [Authorize]
         public async Task<ActionResult<bool>> CreateComment(CommentInputModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                throw new ArgumentException("Invalid data");
-            }
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.CreateCommentAsync(input, userId);
             return true;
@@ -40,11 +35,6 @@
         [Authorize]
         public async Task<ActionResult<bool>> DeleteComment(CommentDeleteInputModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                throw new ArgumentException("Invalid data");
-            }
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.DeleteCommentAsync(input.CommentNumber, userId);
             return true;
@@ -54,11 +44,6 @@
         [Authorize]
         public async Task<ActionResult<bool>> EditComment(CommentEditInputModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                throw new ArgumentException("Invalid data");
-            }
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.commentsService.EditCommentAsync(input.CommentNumber, userId, input.CommentInfo);
             return true;

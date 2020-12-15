@@ -10,6 +10,8 @@
 
         Task DeleteReviewAsync(string reviewNumber, string userId);
 
+        Task EditReviewAsync(string reviewNumber, string userId, string reviewInfo);
+
         ReviewVoteResponseModel ReviewLikesAndDislikes(string reviewId);
     }
 }
