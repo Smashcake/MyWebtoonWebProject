@@ -49,5 +49,19 @@
             await this.commentsService.DeleteCommentAsync(input.CommentNumber, userId);
             return true;
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<bool>> EditComment(CommentEditInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                throw new ArgumentException("Invalid data");
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.commentsService.EditCommentAsync(input.CommentNumber, userId, input.CommentInfo);
+            return true;
+        }
     }
 }

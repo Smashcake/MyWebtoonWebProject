@@ -9,5 +9,7 @@
         Task CreateCommentAsync(CommentInputModel input, string userId);
 
         Task DeleteCommentAsync(string commentNumber, string userId);
+
+        Task EditCommentAsync(string commentNumber, string userId, string commentInfo);
     }
 }

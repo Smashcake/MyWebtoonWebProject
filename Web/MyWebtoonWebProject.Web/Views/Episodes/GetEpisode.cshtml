@@ -47,7 +47,7 @@
             {
                 <li class="list-group-item">
                     <p><i class="fas fa-user"></i> @comment.CommentAuthorUsername</p>
-                    <p>@comment.CommentInfo</p>
+                    <p><i class="far fa-comment"></i> @comment.CommentInfo</p>
                     <p><i class="fas fa-calendar"></i> @comment.CreatedOn.ToString("dd MM yyyy")</p>
                     <div class="d-inline-flex">
                         <div>
@@ -102,7 +102,7 @@
                                     {
                                         <li class="list-group-item">
                                             <p><i class="fas fa-user"></i> @reply.CommentAuthorUsername</p>
-                                            <p>@reply.CommentInfo</p>
+                                            <p><i class="far fa-comment"></i> @reply.CommentInfo</p>
                                             <p><i class="fas fa-calendar"></i> @reply.CreatedOn.ToString("dd MM yyyy")</p>
                                             @if (this.User.FindFirstValue(ClaimTypes.NameIdentifier) == reply.CommentAuthorId)
                                             {

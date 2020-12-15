@@ -53,8 +53,25 @@
             else
             {
                 this.commentsRepository.Delete(comment);
-                await this.commentsRepository.SaveChangesAsync();
             }
+
+            await this.commentsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditCommentAsync(string commentNumber, string userId, string commentInfo)
+        {
+            var comment = this.commentsRepository.GetCommentByCommentNumber(commentNumber);
+
+            if (comment.CommentAuthorId != userId)
+            {
+                throw new ArgumentException("Invalid action taken!");
+            }
+            else
+            {
+                comment.CommentInfo = commentInfo;
+            }
+
+            await this.commentsRepository.SaveChangesAsync();
         }
     }
 }

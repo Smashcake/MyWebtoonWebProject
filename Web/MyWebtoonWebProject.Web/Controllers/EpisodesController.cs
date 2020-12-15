@@ -57,7 +57,7 @@
             return this.RedirectToAction("GetWebtoon", "Webtoons", new { webtoonTitleNumber });
         }
 
-        public async Task<IActionResult> LatestEpisodes(LatestEpisodesViewModel input)
+        public IActionResult LatestEpisodes(LatestEpisodesViewModel input)
         {
             input.LatestEpisodes = this.episodesService.LatestEpisodes();
             return this.View(input);
