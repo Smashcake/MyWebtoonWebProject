@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     using MyWebtoonWebProject.Services.Data;
@@ -13,11 +14,13 @@
     {
         private readonly IEpisodesService episodesService;
         private readonly IEpisodesViewsService episodesViewsService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public EpisodesController(IEpisodesService episodesService, IEpisodesViewsService episodesViewsService)
+        public EpisodesController(IEpisodesService episodesService, IEpisodesViewsService episodesViewsService, IWebHostEnvironment webHostEnvironment)
         {
             this.episodesService = episodesService;
             this.episodesViewsService = episodesViewsService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize]
@@ -34,7 +37,8 @@
         [HttpPost]
         public async Task<IActionResult> AddEpisodeAsync(AddEpisodeInputModel input)
         {
-            await this.episodesService.AddEpisodeAsync(input);
+            var webRootPath = this.webHostEnvironment.WebRootPath;
+            await this.episodesService.AddEpisodeAsync(input, webRootPath);
             return this.Redirect("/");
         }
 

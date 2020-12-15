@@ -1,28 +1,46 @@
 ﻿@using MyWebtoonWebProject.Web.ViewModels.Webtoons
-@model GetAllWebtoonsViewModel
+@model AllWebtoonsViewModel
 @{
     ViewBag.Title = "Webtoons";
 }
 
-    <link rel="stylesheet" type="text/css" href="/css/allwebtoons.css"  asp-append-version="true"/>
+<link rel="stylesheet" type="text/css" href="/css/allwebtoons.css" asp-append-version="true" />
 
-<div class="card-deck" id="webtoons">
-    @foreach (var webtoon in Model.Webtoons)
+<div class="d-inline-block">
+    <div class="btn-group" role="group">
+    <a class="btn btn-primary" href="#Action">Action</a>
+    <a class="btn btn-primary" href="#Comedy">Comedy</a>
+    <a class="btn btn-primary" href="#Fantasy">Fantasy</a>
+    <a class="btn btn-primary" href="#Sports">Sports</a>
+    <a class="btn btn-primary" href="#Superhero">Superhero</a>
+    <a class="btn btn-primary" href="#Supernatural">Supernatural</a>
+    </div>
+    <hr />
+</div>
+
+<div id="webtoons" class="row">
+    @foreach (var genre in Model.Genres)
     {
-        <div class="card-body">
-            <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
-                <img id="coverPhoto" src="~/Webtoons/@webtoon.CoverPhoto" />
-                <div id="cardInfo" style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px" >
-                    <p id="cardTitle">@webtoon.Title</p>
-                    <p id="cardAuthor">@webtoon.Author</p>
-                    <p id="cardGenre">@webtoon.Genre</p>
-                    <br />
-                    <p id="cardLikes"><i class="fas fa-heart"></i> @webtoon.Likes</p>
-                </div>
-            </a>
-        </div>
+        <h2 id="@genre.GenreName" class="col-md-10" style="font-family:Arial, Helvetica, sans-serif">@genre.GenreName</h2>
+        <ul class="card-deck list-unstyled">
+            @foreach (var webtoon in genre.Webtoons)
+            {
+                <li class="card-body">
+                    <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
+                        <img id="coverPhoto" src="~/Webtoons/@webtoon.CoverPhoto" />
+                        <div id="cardInfo" style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px">
+                            <p id="cardTitle">@webtoon.Title</p>
+                            <br />
+                            <p id="cardAuthor">@webtoon.Author</p>
+                            <br />
+                            <p id="cardLikes"><i class="fas fa-heart"></i> @webtoon.Likes</p>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+        <hr />
     }
-
 </div>
 
 

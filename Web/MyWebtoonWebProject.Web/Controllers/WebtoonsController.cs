@@ -48,9 +48,9 @@
             return this.Redirect("/");
         }
 
-        public IActionResult GetAllWebtoons(GetAllWebtoonsViewModel input)
+        public IActionResult GetAllWebtoons(AllWebtoonsViewModel input)
         {
-            input.Webtoons = this.webtoonsService.GetAllWebtoons();
+            input.Genres = this.webtoonsService.GetAllWebtoons();
             return this.View(input);
         }
 

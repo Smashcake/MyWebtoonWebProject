@@ -7,7 +7,7 @@
 
     public interface IEpisodesService
     {
-        Task AddEpisodeAsync(AddEpisodeInputModel input);
+        Task AddEpisodeAsync(AddEpisodeInputModel input, string webRootPath);
 
         Task DeleteEpisodeAsync(string webtoonTitleNumber, string episodeNumber, string userId);
 

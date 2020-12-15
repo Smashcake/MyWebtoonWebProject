@@ -57,7 +57,7 @@
                 throw new ArgumentException("Webtoon already exists!");
             }
 
-            string topFolder = @$"{webRootPath}\Webtoons";
+            string topFolder = $@"{webRootPath}\Webtoons";
             string webtoonFolder = Path.Combine(topFolder, input.Title);
             Directory.CreateDirectory(webtoonFolder);
 
@@ -86,7 +86,7 @@
             await this.webtoonsRepository.SaveChangesAsync();
         }
 
-        public ICollection<GetWebtoonInfoViewModel> GetAllWebtoons()
+        public ICollection<GetAllWebtoonsByGenreViewModel> GetAllWebtoons()
         {
             var allWebtoons = this.webtoonsRepository.All().ToList();
 
@@ -95,20 +95,27 @@
                 webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
             }
 
-            var webtoons = allWebtoons
-                .Select(w => new GetWebtoonInfoViewModel
+            var groupedWebtoons = this.webtoonsRepository.All()
+                .ToList()
+                .GroupBy(w => this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name)
+                .ToList()
+                .Select(w => new GetAllWebtoonsByGenreViewModel
                 {
-                    Author = this.applicationUserRepository.GetWebtoonAuthorUsername(w.AuthorId),
-                    Title = w.Title,
-                    CoverPhoto = w.CoverPhoto,
-                    Genre = this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name,
-                    TitleNumber = w.TitleNumber,
-                    Episodes = this.episodesRepository.GetEpisodesByWebtoonId(w.Id),
-                    Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
+                    GenreName = w.Key,
+                    Webtoons = w.Select(x => new GetWebtoonInfoViewModel
+                    {
+                        Author = this.applicationUserRepository.GetWebtoonAuthorUsername(x.AuthorId),
+                        Title = x.Title,
+                        CoverPhoto = x.CoverPhoto,
+                        TitleNumber = x.TitleNumber,
+                        Episodes = this.episodesRepository.GetEpisodesByWebtoonId(x.Id),
+                        Likes = x.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
+                    }).ToList(),
                 })
+                .OrderBy(w => w.GenreName)
                 .ToList();
 
-            return webtoons;
+            return groupedWebtoons;
         }
 
         public WebtoonInfoViewModel GetWebtoon(string webtoonTitleNumber, int page, int episodesPerPage, string userId)

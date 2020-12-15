@@ -13,7 +13,7 @@
 
         Task EditWebtoon(EditWebtoonInputModel input, string userId);
 
-        ICollection<GetWebtoonInfoViewModel> GetAllWebtoons();
+        ICollection<GetAllWebtoonsByGenreViewModel> GetAllWebtoons();
 
         ICollection<GetWebtoonInfoViewModel> GetDailyUploads(string currentDay);
 
