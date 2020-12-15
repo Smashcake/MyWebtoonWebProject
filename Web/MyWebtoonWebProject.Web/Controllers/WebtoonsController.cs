@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using MyWebtoonWebProject.Services;
     using MyWebtoonWebProject.Web.ViewModels.Webtoons;
@@ -12,11 +13,13 @@
     {
         private readonly IWebtoonsService webtoonsService;
         private readonly IGenresService genresService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public WebtoonsController(IWebtoonsService webtoonsService, IGenresService genresService)
+        public WebtoonsController(IWebtoonsService webtoonsService, IGenresService genresService, IWebHostEnvironment webHostEnvironment)
         {
             this.webtoonsService = webtoonsService;
             this.genresService = genresService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize]
@@ -37,9 +40,11 @@
                 return this.View(input);
             }
 
+            var webRootPath = this.webHostEnvironment.WebRootPath;
+
             input.AuthorId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            await this.webtoonsService.CreateWebtoonAsync(input);
+            await this.webtoonsService.CreateWebtoonAsync(input, webRootPath);
             return this.Redirect("/");
         }
 

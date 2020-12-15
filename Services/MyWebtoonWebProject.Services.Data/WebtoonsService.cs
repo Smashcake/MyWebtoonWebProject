@@ -50,14 +50,14 @@
             this.episodesViewsService = episodesViewsService;
         }
 
-        public async Task CreateWebtoonAsync(CreateWebtoonInputModel input)
+        public async Task CreateWebtoonAsync(CreateWebtoonInputModel input, string webRootPath)
         {
             if (this.webtoonsRepository.WebtoonExists(input.Title))
             {
                 throw new ArgumentException("Webtoon already exists!");
             }
 
-            string topFolder = @"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons";
+            string topFolder = @$"{webRootPath}\Webtoons";
             string webtoonFolder = Path.Combine(topFolder, input.Title);
             Directory.CreateDirectory(webtoonFolder);
 

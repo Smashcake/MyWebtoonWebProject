@@ -7,7 +7,7 @@
 
     public interface IWebtoonsService
     {
-        Task CreateWebtoonAsync(CreateWebtoonInputModel input);
+        Task CreateWebtoonAsync(CreateWebtoonInputModel input, string webRootPath);
 
         Task DeleteWebtoon(string webtoonTitleNumber, string userId);
 
