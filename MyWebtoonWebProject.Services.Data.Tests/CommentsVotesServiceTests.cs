@@ -86,6 +86,13 @@
             Assert.Equal("test", commentVotes.First().CommentId);
             Assert.Equal("pesho", commentVotes.First().ApplicationUserId);
             Assert.Equal("DownVote", commentVotes.First().Vote.ToString());
+
+            await service.UserCommentVoteAsync("test123", true, "pesho");
+
+            Assert.Single(commentVotes);
+            Assert.Equal("test", commentVotes.First().CommentId);
+            Assert.Equal("pesho", commentVotes.First().ApplicationUserId);
+            Assert.Equal("UpVote", commentVotes.First().Vote.ToString());
         }
 
         [Fact]
@@ -113,7 +120,7 @@
             mockCommentsRepo.Setup(x => x.GetCommentByCommentNumber(comment.CommentNumber)).Returns(comment);
             var mockCommentVotesRepo = new Mock<ICommentsVotesRepository>();
             mockCommentVotesRepo.Setup(x => x.GetCommentVoteByIds(comment.Id, comment.CommentAuthorId)).Returns(commentVote);
-            mockCommentVotesRepo.Setup(x => x.AddAsync(It.IsAny<CommentVote>())).Callback((CommentVote commentVote) => commentVotes.Add(commentVote));
+            mockCommentVotesRepo.Setup(x => x.AddAsync(It.IsAny<CommentVote>())).Callback((CommentVote commentVoteToAdd) => commentVotes.Add(commentVoteToAdd));
 
             var service = new CommentsVotesService(mockCommentsRepo.Object, mockCommentVotesRepo.Object);
 
