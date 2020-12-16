@@ -37,7 +37,7 @@
         public ICollection<GetWebtoonInfoViewModel> GetUserSubscribtions(string userId)
         {
             var webtoonsInfo = this.webtoonsRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(w => w.Subscribers.Any(s => s.SubscriberId == userId))
                 .Select(w => new GetWebtoonInfoViewModel
                 {
@@ -60,7 +60,7 @@
         public ICollection<ApplicationUserReviewViewModel> GetUserReviews(string userId)
         {
             var reviewsInfo = this.reviewsRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(r => r.ReviewAuthorId == userId)
                 .Select(r => new ApplicationUserReviewViewModel
                 {
