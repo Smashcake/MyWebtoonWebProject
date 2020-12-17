@@ -30,7 +30,7 @@
         {
             var webtoonId = this.webtoonsRepository.GetWebtoonByTitleNumber(input.WebtoonTitleNumber).Id;
             var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isUserSubscribed = await this.webtoonsSubscribersService.SubscribeUserToWebtoon(webtoonId, currentUserId);
+            var isUserSubscribed = await this.webtoonsSubscribersService.SubscribeUserToWebtoonAsync(webtoonId, currentUserId);
             return new WebtoonSubscriberResponseModel { IsUserSubscribed = isUserSubscribed };
         }
     }

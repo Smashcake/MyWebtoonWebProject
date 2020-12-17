@@ -4,6 +4,6 @@
 
     public interface IWebtoonsSubscribersService
     {
-        Task<bool> SubscribeUserToWebtoon(string webtoonId, string userId);
+        Task<bool> SubscribeUserToWebtoonAsync(string webtoonId, string userId);
     }
 }

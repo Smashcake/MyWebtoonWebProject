@@ -15,7 +15,7 @@
             this.webtoonsSubscribersRepository = webtoonsSubscribersRepository;
         }
 
-        public async Task<bool> SubscribeUserToWebtoon(string webtoonId, string userId)
+        public async Task<bool> SubscribeUserToWebtoonAsync(string webtoonId, string userId)
         {
             var subscription = this.webtoonsSubscribersRepository
                 .All()
