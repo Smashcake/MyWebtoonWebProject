@@ -16,7 +16,7 @@ namespace MyWebtoonWebProject.Services.Data.Tests
     public class PagesServiceTests
     {
         [Fact]
-        public async Task AddPagesAsyncThrowsArgumentErrorWhenGivenAnInvalidFileFormat()
+        public async Task AddPagesAsyncThrowsArgumentExceptionWhenGivenAnInvalidFileFormat()
         {
             var pages = new List<Page>();
             var mockPagesRepo = new Mock<IPagesRepository>();
@@ -41,7 +41,7 @@ namespace MyWebtoonWebProject.Services.Data.Tests
         }
 
         [Fact]
-        public async Task AddPagesAsyncThrowsArgumentErrorWhenGivenAnInvalidFileSize()
+        public async Task AddPagesAsyncThrowsArgumentExceptionWhenGivenAnInvalidFileSize()
         {
             var pages = new List<Page>();
             var mockPagesRepo = new Mock<IPagesRepository>();
