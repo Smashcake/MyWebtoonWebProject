@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using MyWebtoonWebProject.Data;
     using MyWebtoonWebProject.Data.Models;
     using MyWebtoonWebProject.Data.Repositories;
     using MyWebtoonWebProject.Web.ViewModels.Genres;
