@@ -1,6 +1,9 @@
 ﻿namespace MyWebtoonWebProject.Web.ViewModels.Comments
 {
     using System;
+    using System.Collections.Generic;
+
+    using MyWebtoonWebProject.Data.Models;
 
     public class ApplicationUserCommentViewModel
     {
@@ -17,6 +20,8 @@
         public string EpisodeNumber { get; set; }
 
         public string CommentInfo { get; set; }
+
+        public ICollection<CommentVote> CommentVotes { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

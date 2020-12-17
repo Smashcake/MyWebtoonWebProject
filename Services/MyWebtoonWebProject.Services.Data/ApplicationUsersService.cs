@@ -93,13 +93,13 @@
                     EpisodeNumber = c.Episode.EpisodeNumber,
                     WebtoonTitle = c.Episode.Webtoon.Title,
                     WebtoonTitleNumber = c.Episode.Webtoon.TitleNumber,
+                    CommentVotes = c.CommentVotes,
                 }).ToList();
 
-            // If the repository method is put into the select projection above Entity Framework brakes so i did this to fix it at the cost of some performance
             foreach (var comment in commentsInfo)
             {
-                comment.Likes = this.commentsVotesRepository.GetCommentVotesByCommentId(comment.CommentId).Sum(cv => cv.Vote.Equals(VoteType.UpVote) ? 1 : 0);
-                comment.Dislikes = this.commentsVotesRepository.GetCommentVotesByCommentId(comment.CommentId).Sum(cv => cv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
+                comment.Likes = comment.CommentVotes.Sum(cv => cv.Vote.Equals(VoteType.UpVote) ? 1 : 0);
+                comment.Dislikes = comment.CommentVotes.Sum(cv => cv.Vote.Equals(VoteType.DownVote) ? 1 : 0);
             }
 
             return commentsInfo;
