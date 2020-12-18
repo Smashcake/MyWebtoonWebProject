@@ -9,9 +9,9 @@
     {
         Task CreateWebtoonAsync(CreateWebtoonInputModel input, string webRootPath);
 
-        Task DeleteWebtoon(string webtoonTitleNumber, string userId);
+        Task DeleteWebtoonAsync(string webtoonTitleNumber, string userId);
 
-        Task EditWebtoon(EditWebtoonInputModel input, string userId);
+        Task EditWebtoon(EditWebtoonInputModel input, string userId, string webRootPath);
 
         ICollection<GetAllWebtoonsByGenreViewModel> GetAllWebtoons();
 

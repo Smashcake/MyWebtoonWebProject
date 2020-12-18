@@ -68,7 +68,7 @@
         public async Task<IActionResult> DeleteWebtoon(string webtoonTitleNumber)
         {
             var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.webtoonsService.DeleteWebtoon(webtoonTitleNumber, currentUserId);
+            await this.webtoonsService.DeleteWebtoonAsync(webtoonTitleNumber, currentUserId);
             return this.RedirectToAction("GetAllWebtoons");
         }
 
@@ -92,7 +92,8 @@
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.webtoonsService.EditWebtoon(input, userId);
+            var webRootPath = this.webHostEnvironment.WebRootPath;
+            await this.webtoonsService.EditWebtoon(input, userId, webRootPath);
             return this.RedirectToAction("GetAllWebtoons");
         }
     }

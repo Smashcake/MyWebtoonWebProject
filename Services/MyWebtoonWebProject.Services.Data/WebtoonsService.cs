@@ -88,13 +88,6 @@
 
         public ICollection<GetAllWebtoonsByGenreViewModel> GetAllWebtoons()
         {
-            var allWebtoons = this.webtoonsRepository.All().ToList();
-
-            foreach (var webtoon in allWebtoons)
-            {
-                webtoon.Episodes = this.episodesRepository.GetEpisodesByWebtoonId(webtoon.Id);
-            }
-
             var groupedWebtoons = this.webtoonsRepository.All()
                 .ToList()
                 .GroupBy(w => this.genresRepository.GetGenreByWebtoonGenreId(w.GenreId).Name)
@@ -225,7 +218,7 @@
             return webtoons;
         }
 
-        public async Task DeleteWebtoon(string webtoonTitleNumber, string userId)
+        public async Task DeleteWebtoonAsync(string webtoonTitleNumber, string userId)
         {
             var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber);
 
@@ -259,7 +252,7 @@
             return info;
         }
 
-        public async Task EditWebtoon(EditWebtoonInputModel input, string userId)
+        public async Task EditWebtoon(EditWebtoonInputModel input, string userId, string webRootPath)
         {
             var webtoon = this.webtoonsRepository.GetWebtoonByTitleNumber(input.WebtoonTitleNumber);
 
@@ -268,12 +261,15 @@
                 throw new ArgumentException("Invalid operation.");
             }
 
-            var topFolder = @"C:\MyWebtoonWebProject\MyWebtoonWebProject\Web\MyWebtoonWebProject.Web\wwwroot\Webtoons";
-            var webtoonFolder = Path.Combine(topFolder, input.OldTitle);
-            var newWebtoonFolder = Path.Combine(topFolder, input.Title);
-            var extention = Path.GetExtension(webtoon.CoverPhoto).TrimStart('.');
+            if (input.Title != input.OldTitle)
+            {
+                var topFolder = $@"{webRootPath}\Webtoons";
+                var webtoonFolder = Path.Combine(topFolder, input.OldTitle);
+                var newWebtoonFolder = Path.Combine(topFolder, input.Title);
+                Directory.Move(webtoonFolder, newWebtoonFolder);
+            }
 
-            Directory.Move(webtoonFolder, newWebtoonFolder);
+            var extention = Path.GetExtension(webtoon.CoverPhoto).TrimStart('.');
 
             webtoon.GenreId = input.GenreId;
             webtoon.UploadDay = input.UploadDay;
