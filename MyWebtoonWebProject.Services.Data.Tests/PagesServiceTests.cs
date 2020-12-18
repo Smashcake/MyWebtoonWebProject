@@ -88,8 +88,7 @@ namespace MyWebtoonWebProject.Services.Data.Tests
             formFilePages.Add(mockIFormFile.Object);
             var service = new PagesService(mockPagesRepo.Object);
 
-            // Had to make a specific folder for this to go through
-            var result = await service.AddPagesAsync(formFilePages, @"C:\Users\Smashcake\Desktop\forUnitTest", "test");
+            var result = await service.AddPagesAsync(formFilePages, @"C:\MyWebtoonWebProject\MyWebtoonWebProject\TestResults", "test");
 
             Assert.Single(pages);
             Assert.Single(result);

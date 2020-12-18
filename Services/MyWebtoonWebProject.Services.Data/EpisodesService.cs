@@ -79,8 +79,8 @@
             viewModel.EpisodeAuthorId = webtoon.AuthorId;
             viewModel.EpisodeTitle = episode.Name;
             viewModel.EpisodeNumber = episode.EpisodeNumber;
-            viewModel.WebtoonTitleNumber = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).TitleNumber;
-            viewModel.WebtoonTitle = this.webtoonsRepository.GetWebtoonByTitleNumber(webtoonTitleNumber).Title;
+            viewModel.WebtoonTitleNumber = webtoon.TitleNumber;
+            viewModel.WebtoonTitle = webtoon.Title;
             viewModel.PagesPaths = this.pagesRepository.GetPagePathsForEpisodeByEpisodeId(episode.Id);
             viewModel.Likes = this.episodesLikesService.GetEpisodeLikes(episode.Id);
             viewModel.HasNextEpisode = webtoon.Episodes.Any(e => e.EpisodeNumber == nextEpisodeNumber.ToString());
@@ -137,7 +137,7 @@
         public ICollection<LatestEpisodeViewModel> LatestEpisodes()
         {
             return this.episodesRepository.All()
-                .OrderBy(e => e.CreatedOn)
+                .OrderByDescending(e => e.CreatedOn)
                 .Take(10)
                 .Select(e => new LatestEpisodeViewModel
                 {
