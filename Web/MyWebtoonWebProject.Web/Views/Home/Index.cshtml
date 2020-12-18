@@ -3,10 +3,11 @@
 @using MyWebtoonWebProject.Data.Models
 @model HomeIndexViewModel
 @{
-    this.ViewData["Title"] = "Home Page";
+    this.ViewData["Title"] = "My Webtoons Project";
     var mostPopular = Model.MostPopular.ToArray();
 }
 
+<h2>Most Popular</h2>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height:240px">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -49,10 +50,10 @@
 <br />
 
 <h4>Uploaded today</h4>
-<div class="card-deck">
+<div class="card-deck d-flex">
     @foreach (var webtoon in Model.DailyUploads)
     {
-        <a class="card" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
+        <a class="card" style="min-width: 11rem;" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
             <img class="card-img-top" src="~/Webtoons/@webtoon.CoverPhoto" alt="Card image cap">
             <div class="card-body">
                 <h5 id="webtoon" class="card-title">@webtoon.Title</h5>

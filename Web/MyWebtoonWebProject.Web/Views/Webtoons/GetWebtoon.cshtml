@@ -72,13 +72,13 @@
                     <nav aria-label="...">
                         <ul class="pagination justify-content-center">
                             <li class="page-item @if (!Model.HasPreviousEpisodePage) { <text>disabled</text> } ">
-                                <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.PreviousEpisodePage">Previous</a>
+                                <a class="page-link" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-id="@Model.PreviousEpisodePage">Previous</a>
                             </li>
                             @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
                             {
                                 if (i > 0)
                                 {
-                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
                                 }
                             }
                             <li class="page-item active">
@@ -91,11 +91,11 @@
                             {
                                 if (i <= Model.EpisodePagesCount)
                                 {
-                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-TitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
+                                    <li class="page-item"><a class="page-link" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-id="@i">@i</a></li>
                                 }
                             }
                             <li class="page-item @if (!Model.HasNextEpisodePage) { <text>disabled</text> } ">
-                                <a class="page-link" asp-action="GetWebtoon" asp-route-titleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
+                                <a class="page-link" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@Model.TitleNumber" asp-route-id="@Model.NextEpisodePage">Next</a>
                             </li>
                         </ul>
                     </nav>

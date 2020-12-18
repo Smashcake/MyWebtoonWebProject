@@ -6,11 +6,11 @@
 
 <h3>Latest Uploads</h3>
 
-<div class="row">
+<div class="container-fluid">
     <ul class="card-deck">
         @foreach (var episode in Model.LatestEpisodes)
         {
-            <li class="card">
+            <li class="card" style="min-width: 18rem;">
                 <a asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@episode.WebtoonTitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
                 <img class="card-img" src="~/Webtoons/@episode.WebtoonCoverPhoto"/>
                 <div class="card-body">

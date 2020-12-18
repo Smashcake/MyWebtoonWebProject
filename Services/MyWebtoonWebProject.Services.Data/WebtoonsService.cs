@@ -136,7 +136,7 @@
                     Likes = this.episodesLikesService.GetEpisodeLikes(e.Id),
                     EpisodeName = e.Name,
                 })
-                .OrderByDescending(e => e.EpisodeNumber)
+                .OrderByDescending(e => e.CreatedOn)
                 .Skip((page - 1) * episodesPerPage)
                 .Take(episodesPerPage),
                 IsUserSubscribed = this.webtoonsSubscribersRepository.IsUserSubscribed(webtoon.Id, userId),
@@ -210,7 +210,7 @@
                 TotalViews = w.Episodes.Sum(e => this.episodesViewsService.EpisodeTotalViews(w.TitleNumber, e.EpisodeNumber)),
                 Likes = w.Episodes.Sum(e => this.episodesLikesService.GetEpisodeLikes(e.Id)),
             })
-            .OrderBy(w => w.TotalViews)
+            .OrderByDescending(w => w.TotalViews)
             .ThenBy(w => w.Likes)
             .Take(5)
             .ToList();
