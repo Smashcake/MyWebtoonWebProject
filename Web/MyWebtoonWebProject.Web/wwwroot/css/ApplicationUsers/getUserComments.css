@@ -1,0 +1,17 @@
+﻿#cardDeck {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+#webtoonNumber {
+    font-weight: bold;
+}
+
+.customClass {
+    display: inline-block;
+    width: 220px;
+    height: 120px;
+    text-align: center;
+    text-align: justify
+}
+

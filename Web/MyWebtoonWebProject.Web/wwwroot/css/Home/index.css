@@ -1,0 +1,23 @@
+﻿#carouselExampleIndicators {
+    height: 240px;
+}
+
+.carousel-inner {
+    background-color: #eee;
+}
+
+#firstSlide {
+    color: #000000;
+    font: bold;
+    font-size: 20px;
+}
+
+#nextSlides {
+    color: #000000;
+    font: bold;
+    font-size: 20px;
+}
+
+.card {
+    min-width: 11rem;
+}

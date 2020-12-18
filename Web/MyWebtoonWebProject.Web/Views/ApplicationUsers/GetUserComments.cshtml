@@ -5,18 +5,20 @@
     ViewBag.Title = this.User.FindFirstValue(ClaimTypes.Name) + "'s Comments";
 }
 
+<link href="~/css/ApplicationUsers/getUserComments.css" rel="stylesheet" asp-append-version="true" />
+
 <div class="card-deck">
-    <ul class="card-deck" style="font-family:Arial, Verdana, sans-serif;font-size:16px">
+    <ul class="card-deck" id="cardDeck">
         @foreach (var comment in Model.Comments)
         {
             <li class="card">
                 <div class="card-body">
-                    <a style="font-weight:bold" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@comment.WebtoonTitleNumber" asp-route-EpisodeNumber="@comment.EpisodeNumber">@comment.WebtoonTitle # @comment.EpisodeNumber</a>
+                    <a id="webtoonNumber" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@comment.WebtoonTitleNumber" asp-route-EpisodeNumber="@comment.EpisodeNumber">@comment.WebtoonTitle # @comment.EpisodeNumber</a>
                     <hr />
                     <button onclick="editComment(@comment.CommentNumber)"><i class="fas fa-edit"></i></button>
                     <hr />
                     <p class="card-text"><i class="fas fa-calendar"></i> Created on: @comment.CreatedOn.ToString("dd-MM-yyyy")</p>
-                    <input class="" style="display:inline-block;width:220px;height:120px;text-align:center;text-align:justify" id="#@("editCommentInfo" + comment.CommentNumber)" value="@comment.CommentInfo" disabled />
+                    <input class="customClass" id="#@("editCommentInfo" + comment.CommentNumber)" value="@comment.CommentInfo" disabled />
                     <br />
                     <button class="btn btn-outline-primary" onclick="sendEditedComment(@comment.CommentNumber)" style="display : none" id="#@("sendEditButton" + comment.CommentNumber)">Edit</button>
                     <br />

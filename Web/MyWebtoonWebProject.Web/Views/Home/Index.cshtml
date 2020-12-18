@@ -7,8 +7,10 @@
     var mostPopular = Model.MostPopular.ToArray();
 }
 
+<link href="~/css/Home/index.css"  rel="stylesheet" asp-append-version="true"/>
+
 <h2>Most Popular</h2>
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height:240px">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -16,10 +18,10 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
     </ol>
-    <div class="carousel-inner" style="background-color:#eee">
+    <div class="carousel-inner">
         <a class="carousel-item active" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@mostPopular[0].TitleNumber">
             <img class="d-block img-fluid" src="~/Webtoons/@mostPopular[0].CoverPhoto" alt="First slide">
-            <div class="carousel-caption d-none d-md-block" style="color:#000;font:bold;font-size:20px">
+            <div class="carousel-caption d-none d-md-block" id="firstSlide">
                 <h5>@mostPopular[0].Title</h5>
                 <p>@mostPopular[0].Genre</p>
                 <p>@mostPopular[0].Synopsis</p>
@@ -29,7 +31,7 @@
         {
             <a class="carousel-item" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@mostPopular[i].TitleNumber">
                 <img class="d-block img-fluid" src="~/Webtoons/@mostPopular[i].CoverPhoto" alt="First slide">
-                <div class="carousel-caption d-none d-md-block" style="color:#000;font:bold;font-size:20px">
+                <div class="carousel-caption d-none d-md-block" id="nextSlides">
                     <h5>@mostPopular[i].Title</h5>
                     <p>@mostPopular[i].Genre</p>
                     <p>@mostPopular[i].Synopsis</p>
@@ -53,7 +55,7 @@
 <div class="card-deck d-flex">
     @foreach (var webtoon in Model.DailyUploads)
     {
-        <a class="card" style="min-width: 11rem;" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
+        <a class="card" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
             <img class="card-img-top" src="~/Webtoons/@webtoon.CoverPhoto" alt="Card image cap">
             <div class="card-body">
                 <h5 id="webtoon" class="card-title">@webtoon.Title</h5>

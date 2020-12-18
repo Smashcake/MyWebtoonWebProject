@@ -6,19 +6,21 @@
     ViewBag.Title = Model.Title;
 }
 
-<div name="Header" class="col-md-12" style="position:relative;font-size:18px;font-family:Arial, Helvetica, sans-serif">
+<link href="~/css/getWebtoon.css" rel="stylesheet" asp-append-version="true"/>
+
+<div name="Header" class="col-md-12" id="header">
     <span>
-        <img src="~/Webtoons/@Model.CoverPhoto" height="240px">
+        <img src="~/Webtoons/@Model.CoverPhoto" id="headerPhoto">
     </span>
-    <div class="centered position-absolute" style="top:50%;left:50%;transform: translate(-50%, -50%)">
-        <h2 style="color:forestgreen">@Model.GenreName</h2>
-        <h1 style="text-align:center">@Model.Title</h1>
+    <div class="centered position-absolute" id="headerText" >
+        <h2>@Model.GenreName</h2>
+        <h1>@Model.Title</h1>
         <h3>@Model.AuthorName</h3>
     </div>
     <br />
 </div>
 
-<div class="container" style="font-family:Arial, Helvetica, sans-serif;font-size:18px">
+<div class="container" id="bodyContainer">
     <div class="row">
         <div name="Body" class="col-md-8">
             <div name="Details">
@@ -30,11 +32,11 @@
                         {
                             <li id="episodeCard" class="list-group-item">
                                 <div>
-                                    <a class="d-inline-flex" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
-                                        <span style="margin-right:150px">@episode.EpisodeName</span>
-                                        <span style="margin-right:150px">@episode.CreatedOn.ToString("dd MMMM,yyyy", CultureInfo.InvariantCulture)</span>
-                                        <span style="margin-right:100px"><i class="fas fa-heart"></i> @episode.Likes</span>
-                                        <span># @episode.EpisodeNumber.Replace("Episode", string.Empty)</span>
+                                    <a class="d-inline-flex" id="episodeBody" asp-controller="Episodes" asp-action="GetEpisode" asp-route-WebtoonNumber="@Model.TitleNumber" asp-route-EpisodeNumber="@episode.EpisodeNumber">
+                                        <span>@episode.EpisodeName</span>
+                                        <span>@episode.CreatedOn.ToString("dd MMMM,yyyy", CultureInfo.InvariantCulture)</span>
+                                        <p id="episodeBodyLikes"><i class="fas fa-heart"></i> @episode.Likes</p>
+                                        <p># @episode.EpisodeNumber.Replace("Episode", string.Empty)</p>
                                     </a>
                                     @if (Model.AuthorId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                                     {
@@ -121,9 +123,9 @@
                 </div>
             </div>
             <hr />
-            <p style="line-height:25px;color:#000;width:357px;height:47px;font:bold" name="Upload Day">Upload day:  @Model.UploadDay</p>
+            <p id="uploadDay"name="Upload Day">Upload day:  @Model.UploadDay</p>
             <hr />
-            <p style="font-size:16px; line-height:25px; color:#313131; margin:3px 57px 0 0; word-wrap:break-word;" name="Synopsis">
+            <p id="synopsis" name="Synopsis">
                 @Model.Synopsis
             </p>
             <hr />
@@ -143,7 +145,7 @@
         </div>
     </div>
 </div>
-<div name="Reviews" class="col-md-5" style="font-family:Arial, Helvetica, sans-serif;font-size:18px">
+<div name="Reviews" class="col-md-5" id="reviewsBody">
     <span>Reviews</span>
     <ul class="list-group">
         @foreach (var review in Model.Reviews)
@@ -181,7 +183,7 @@
     @if (User.Identity.IsAuthenticated && Model.DoesCurrentUserHaveAReview == false)
     {
         <textarea id="userReview" cols="45" rows="5" maxlength="800" required spellcheck="false" placeholder="Leave a review"></textarea>
-        <button class="btn btn-secondary" id="reviewButton">Submit</button>
+        <button class="btn btn-primary" id="reviewButton">Submit</button>
     }
 </div>
 <form method="post" id="antiForgeryForm"></form>

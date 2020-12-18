@@ -4,14 +4,16 @@
     ViewBag.Title = this.User.FindFirstValue(ClaimTypes.Name) + "'s Reviews";
 }
 
+<link href="~/css/ApplicationUsers/getUserReviews.css" rel="stylesheet" asp-append-version="true"/>
+
 <div class="container-fluid">
     <ul class="card-deck">
         @foreach (var review in Model.Reviews)
         {
             <li class="card">
-                <div class="card-body" style="font-family:Arial, Helvetica, sans-serif">
+                <div class="card-body" id="body">
                     <img class="card-img" src="~/Webtoons/@review.CoverPhoto">
-                    <a class="card-text" style="font-size:24px;font-weight:bold" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@review.WebtoonTitleNumber">@review.WebtoonTitle</a>
+                    <a class="card-text" id="name" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@review.WebtoonTitleNumber">@review.WebtoonTitle</a>
                     <br />
                     <p><i class="fas fa-calendar"></i> Created on: @review.CreatedOn.ToString("dd-MM-yyyy")</p>
                     <button onclick="editReview(@review.ReviewNumber)"><i class="fas fa-edit"></i></button>

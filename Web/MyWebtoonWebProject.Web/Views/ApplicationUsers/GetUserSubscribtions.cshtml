@@ -4,7 +4,7 @@
     ViewBag.Title = this.User.FindFirstValue(ClaimTypes.Name) + "'s Subscribtions";
 }
 
-<link rel="stylesheet" type="text/css" href="/css/allwebtoons.css" asp-append-version="true" />
+<link href="/css/allwebtoons.css" rel="stylesheet" asp-append-version="true" />
 
 <div class="container-fluid">
 <ul class="card-deck">
@@ -13,7 +13,7 @@
         <li class="card">
             <a id="webtoon" asp-controller="Webtoons" asp-action="GetWebtoon" asp-route-WebtoonTitleNumber="@webtoon.TitleNumber">
                 <img id="coverPhoto" class="card-img w-100 " src="~/Webtoons/@webtoon.CoverPhoto" />
-                <div id="cardInfo" style="position: absolute;top: 14px;left: 18px;width: 157px;height: 178px">
+                <div id="cardInfo">
                     <p id="cardTitle">@webtoon.Title</p>
                     <p id="cardAuthor">@webtoon.Author</p>
                     <p id="cardGenre">@webtoon.Genre</p>
